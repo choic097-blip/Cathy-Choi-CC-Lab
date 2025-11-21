@@ -64,6 +64,148 @@
   </p>
 
   <main>
+
+    ///
+
+    function setup() {
+  createCanvas(400, 400);
+  canvas.parent("sketch-container");
+
+}
+
+function draw() {
+  background(255, 235, 196);
+  
+  push()
+  noStroke();
+  translate(10,10)
+  
+  //Wall
+  fill(255, 194, 69)
+  beginShape();
+  vertex(-10,330);
+  vertex(120,285);
+  vertex(400,285);
+  vertex(400,75);
+  vertex(120,75);
+  vertex(-10,30);
+  endShape(CLOSE);
+  
+  
+  //Window
+  fill(145, 184, 165); //
+  rect(140, 100, 240, 170);
+  
+  //mountains
+  fill(93, 126, 109);
+  beginShape();
+  vertex(140, 230);
+  vertex(200, 200);
+  vertex(260, 220);
+  vertex(320, 200);
+  vertex(380, 230);
+  vertex(380, 270);
+  vertex(140, 270);
+  endShape(CLOSE);
+
+  // trees
+  fill(46, 85, 69);
+  triangle(200, 230, 215, 180, 230, 230);
+  rect(212, 230, 6, 20);
+
+  triangle(270, 230, 285, 180, 300, 230);
+  rect(282, 230, 6, 20);
+
+  // White part
+  fill(246, 246, 246);
+  triangle(300, 170, 340, 130, 380, 170);
+  pop()
+  
+  // Lineworks
+  
+  push()
+  stroke(30, 60, 75);
+  strokeWeight(4);
+  noFill();
+  
+    // shelf 
+  line(0, 120, 112, 146)
+  line(50, 131, 50, 77)
+  line(112, 146, 112, 100)
+  
+    // sink
+  line(31, 115, 31, 104)
+  line(101, 133, 101, 122)
+  line(0, 223, 118, 226)
+  line(118, 226, 118, 312)
+  line(118, 226, 0, 240)
+  line(118, 312, 0, 385)
+  line(36, 225, 36, 190)
+  line(36, 200, 70, 200)
+  line(20, 238, 20, 370)
+  line(75, 233, 75, 335)
+  line(57, 248, 57, 280)
+  line(103, 240, 103, 265)
+  line(0, 350, 117, 299)
+  
+  rect(140, 100, 240, 170);
+  
+  
+  pop()
+  
+  // mouse coordinate
+  
+  push()
+  fill(255, 60, 100);
+  text("(" + mouseX + ", " + mouseY + ")",     mouseX, mouseY);
+  stroke(1);
+  pop()
+
+  // Overlay Gradient Layer
+  c1 = color(104, 140, 222);
+  c2 = color(222, 255, 255);
+  
+  push();
+  blendMode(BURN);
+  setGradient(c1, c2);
+  pop();
+
+  blendMode(BLEND);
+}
+
+function setGradient(c1, c2) {
+  noFill();
+  for (let y = 0; y < height; y++) {
+    let inter = map(y, 0, height, 0, 1);
+    let c = lerpColor(c1, c2, inter);
+    stroke(c);
+    line(0, y, width, y);
+  }
+
+  translate (30,0)
+  push();
+  blendMode(OVERLAY);
+  let inner = color(255, 140, 0, 180); // 오렌지 
+  let outer = color(255, 140, 0, 0);   // 투명
+  radialGradient(245, 188, 150, inner, outer);
+  pop();
+
+  blendMode(BLEND);
+
+function radialGradient(cx, cy, radius, innerCol, outerCol) {
+  noStroke();
+  for (let r = radius; r > 0; --r) {
+    let inter = map(r, 5, radius, 0, 1);
+    let c = lerpColor(innerCol, outerCol, inter);
+    fill(c);
+    ellipse(cx, cy, r * 2, r * 2);
+  }
+}
+
+
+
+}
+    ///
     
 </body>
 
