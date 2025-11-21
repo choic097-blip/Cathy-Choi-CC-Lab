@@ -65,9 +65,8 @@
 
   <main>
 
-    ///
 
-    function setup() {
+  function setup() {
   createCanvas(400, 400);
   canvas.parent("sketch-container");
 
@@ -80,7 +79,6 @@ function draw() {
   noStroke();
   translate(10,10)
   
-  //Wall
   fill(255, 194, 69)
   beginShape();
   vertex(-10,330);
@@ -92,11 +90,9 @@ function draw() {
   endShape(CLOSE);
   
   
-  //Window
-  fill(145, 184, 165); //
+  fill(145, 184, 165); 
   rect(140, 100, 240, 170);
   
-  //mountains
   fill(93, 126, 109);
   beginShape();
   vertex(140, 230);
@@ -108,7 +104,6 @@ function draw() {
   vertex(140, 270);
   endShape(CLOSE);
 
-  // trees
   fill(46, 85, 69);
   triangle(200, 230, 215, 180, 230, 230);
   rect(212, 230, 6, 20);
@@ -116,24 +111,20 @@ function draw() {
   triangle(270, 230, 285, 180, 300, 230);
   rect(282, 230, 6, 20);
 
-  // White part
   fill(246, 246, 246);
   triangle(300, 170, 340, 130, 380, 170);
   pop()
   
-  // Lineworks
   
   push()
   stroke(30, 60, 75);
   strokeWeight(4);
   noFill();
   
-    // shelf 
   line(0, 120, 112, 146)
   line(50, 131, 50, 77)
   line(112, 146, 112, 100)
   
-    // sink
   line(31, 115, 31, 104)
   line(101, 133, 101, 122)
   line(0, 223, 118, 226)
@@ -153,7 +144,6 @@ function draw() {
   
   pop()
   
-  // mouse coordinate
   
   push()
   fill(255, 60, 100);
@@ -161,7 +151,6 @@ function draw() {
   stroke(1);
   pop()
 
-  // Overlay Gradient Layer
   c1 = color(104, 140, 222);
   c2 = color(222, 255, 255);
   
@@ -185,8 +174,8 @@ function setGradient(c1, c2) {
   translate (30,0)
   push();
   blendMode(OVERLAY);
-  let inner = color(255, 140, 0, 180); // 오렌지 
-  let outer = color(255, 140, 0, 0);   // 투명
+  let inner = color(255, 140, 0, 180); 
+  let outer = color(255, 140, 0, 0);  
   radialGradient(245, 188, 150, inner, outer);
   pop();
 
@@ -205,7 +194,7 @@ function radialGradient(cx, cy, radius, innerCol, outerCol) {
 
 
 }
-    ///
+
     
 </body>
 
