@@ -1,7 +1,7 @@
 const words = [
   "a multi-content creator",
   "a game developer",
-  "a web developer",
+  "a web designer",
   "an artist",
   "a story director",
   "an author"
