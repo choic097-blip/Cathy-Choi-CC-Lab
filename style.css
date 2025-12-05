@@ -1,195 +1,193 @@
-
-/* Global styles */
-
+/* ───────────────────────────
+   Global Reset & Base Styles
+   ─────────────────────────── */
 * {
-
   box-sizing: border-box;
-
 }
-
 
 body {
   margin: 0;
-  padding: 40px;
-  font-family: "Inter", "Noto Sans KR", sans-serif;
-  background-color: #f4ecff;
-  color: #111;
-}
-
-
-/* Page layout */
-
-main {
-
-  max-width: 900px;
-
-  margin: 0 auto;
-
-}
-
-
-/* Navigation */
-
-nav ul {
-
-  list-style: none;
-
   padding: 0;
-
-  margin: 0 0 20px 0;
-
-  display: flex;
-
-  gap: 16px;
-
-}
-
-
-nav a {
-
-  text-decoration: none;
-
-  color: #333;
-
-  border-bottom: 2px solid transparent;
-
-  padding-bottom: 2px;
-
-}
-
-
-nav a:hover {
-
-  border-bottom-color: #a98fd3; /* purple accent */
-
-}
-
-
-/* Headings */
-
-h1 {
-
-  font-size: 2.4rem;
-
-  margin-bottom: 10px;
-
-  color: #111;
-
-}
-
-
-h2 {
-
-  font-size: 1.4rem;
-
-  margin-top: 30px;
-
-  margin-bottom: 8px;
-
-  color: #333;
-
-}
-
-
-/* Paragraphs */
-
-p {
-
-  line-height: 1.5;
-
-}
-
-
-/* Project iframe */
-
-iframe {
-
-  width: 100%;           /* fills the content width */
-
-  max-width: 800px;      /* don’t get too huge on big screens */
-
-  height: 500px;         /* taller so more of the sketch shows */
-
-  border: 2px solid #333;
-
-  border-radius: 4px;
-
-}
-
-
-/* Optional: keep content off the very edges on mobile */
-
-@media (max-width: 600px) {
-
-  body {
-
-    padding: 20px;
-
-  }
-
-}
-
-
-.container {
-  max-width: 850px;
-  margin: auto;
+  font-family: "Inter", "Noto Sans KR", sans-serif;
   background: white;
-  padding: 30px 40px;
-  border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  color: #111;
 }
 
 
-/* Centered top navigation */
-.top-nav ul {
-  justify-content: center;
-  gap: 40px;
+
+/* ───────────────────────────
+   Top Navigation (for homepage)
+   ─────────────────────────── */
+.topbar {
+  width: 100%;
+  padding: 30px 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.95rem;
+  font-weight: 500;
 }
 
-/* Hero section */
+.topbar a {
+  text-decoration: none;
+  color: black;
+}
+
+.nav-center a {
+  margin: 0 20px;
+}
+
+
+
+/* ───────────────────────────
+   Hero Section (homepage)
+   ─────────────────────────── */
 .hero {
-  text-align: center;
-  margin-top: 20px;
-  margin-bottom: 40px;
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 60px;
 }
 
-.hero-title {
-  font-size: 3rem;
+.hero h1 {
+  font-size: 6rem;
   font-weight: 700;
-  margin-bottom: 10px;
+  line-height: 1.08;
+  margin: 0;
 }
 
-.hero-subtitle {
-  font-size: 1.2rem;
-  color: #555;
+.scroll-indicator {
+  margin-top: 30px;
+  font-size: 1rem;
+  color: #333;
 }
 
-/* Project list clean style */
+
+
+/* ───────────────────────────
+   Projects Section (homepage)
+   ─────────────────────────── */
+.project-section {
+  padding: 120px 60px;
+}
+
+.project-section h2 {
+  font-size: 2.6rem;
+  margin-bottom: 25px;
+}
+
 .project-list {
   list-style: none;
   padding-left: 0;
 }
 
 .project-list li {
-  margin: 8px 0;
+  margin: 12px 0;
 }
 
 .project-list a {
-  font-size: 1.1rem;
-  color: #5a38a7;
-  font-weight: 600;
+  font-size: 1.3rem;
   text-decoration: none;
+  color: #333;
+  font-weight: 500;
 }
 
 .project-list a:hover {
-  color: #7d52d9;
+  color: black;
   text-decoration: underline;
 }
 
-/* Footer note */
-.footer-note {
-  margin-top: 40px;
-  text-align: center;
-  font-size: 0.9rem;
-  color: #777;
+
+
+/* ───────────────────────────
+   Container Layout (project pages, about page)
+   ─────────────────────────── */
+
+.container {
+  max-width: 850px;
+  margin: 60px auto;
+  background: white;
+  padding: 30px 40px;
+}
+
+
+
+/* Navigation inside container pages */
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+  padding: 0;
+  margin-bottom: 30px;
+}
+
+nav a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  border-bottom: 2px solid transparent;
+}
+
+nav a:hover {
+  border-bottom-color: #999;
+}
+
+
+
+/* ───────────────────────────
+   Typography (shared)
+   ─────────────────────────── */
+h1 {
+  font-size: 2.4rem;
+  margin-bottom: 10px;
+}
+
+h2 {
+  font-size: 1.5rem;
+  margin: 25px 0 10px;
+}
+
+p {
+  line-height: 1.6;
+}
+
+
+
+/* ───────────────────────────
+   p5.js iframe / embedded sketch
+   ─────────────────────────── */
+
+iframe {
+  width: 100%;
+  height: 500px;
+  border: none; /* cleaner for modern portfolio */
+}
+
+
+
+/* ───────────────────────────
+   Mobile Responsive
+   ─────────────────────────── */
+@media (max-width: 800px) {
+  .hero h1 {
+    font-size: 3.5rem;
+  }
+
+  .hero {
+    padding: 0 25px;
+  }
+
+  .topbar {
+    padding: 20px 25px;
+  }
+
+  .project-section {
+    padding: 80px 25px;
+  }
+
+  .container {
+    margin: 20px;
+    padding: 20px;
+  }
 }
