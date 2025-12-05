@@ -83,6 +83,55 @@ body.home .hero-black .sub {
   color: #d0d0d0;
 }
 
+/* ABOUT SECTION */
+.about-section {
+  background: #fff;
+  padding: 150px 0;
+  border-top: 1px solid #eee;
+}
+
+.about-inner {
+  max-width: 900px;
+  margin: auto;
+  padding: 0 20px;
+}
+
+.about-section h2 {
+  font-size: 2.6rem;
+  font-weight: 700;
+  margin-top: 80px;
+  margin-bottom: 20px;
+}
+
+.about-section p {
+  font-size: 1.25rem;
+  line-height: 1.75;
+  color: #333;
+  margin-bottom: 20px;
+  max-width: 800px;
+}
+
+.skills-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 20px 0;
+}
+
+.skills-list li {
+  font-size: 1.2rem;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.about-section a {
+  color: #111;
+  text-decoration: underline;
+}
+
+.about-section a:hover {
+  opacity: 0.6;
+}
+
 
 /* ───────────────────────────────
    UNIFIED PAGE LAYOUT (Extra / Projects)
