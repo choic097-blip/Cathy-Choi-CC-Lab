@@ -138,3 +138,58 @@ iframe {
   border-radius: 12px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
 }
+
+
+/* Centered top navigation */
+.top-nav ul {
+  justify-content: center;
+  gap: 40px;
+}
+
+/* Hero section */
+.hero {
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 40px;
+}
+
+.hero-title {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.hero-subtitle {
+  font-size: 1.2rem;
+  color: #555;
+}
+
+/* Project list clean style */
+.project-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.project-list li {
+  margin: 8px 0;
+}
+
+.project-list a {
+  font-size: 1.1rem;
+  color: #5a38a7;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.project-list a:hover {
+  color: #7d52d9;
+  text-decoration: underline;
+}
+
+/* Footer note */
+.footer-note {
+  margin-top: 40px;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #777;
+}
