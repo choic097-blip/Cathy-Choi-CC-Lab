@@ -25,7 +25,7 @@ body {
   justify-content: space-between;
   align-items: center;
 
-  background: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.5); 
   backdrop-filter: blur(6px);
   z-index: 1000;
 
@@ -43,10 +43,8 @@ body {
   margin: 0 16px;
 }
 
-
-
 /* ───────────────────────────────
-   HERO SECTION
+   HERO SECTION (Black Full Page)
 ──────────────────────────────── */
 .hero-black {
   height: 100vh;
@@ -80,54 +78,50 @@ body {
   line-height: 1.5;
 }
 
-
+#typing {
+  color: #fff;
+  font-weight: 700;
+}
 
 /* ───────────────────────────────
-   UNIFIED PAGE LAYOUT
-   (Projects / Extra / About / All non-hero pages)
+   UNIFIED PAGE LAYOUT (Extra, Projects, etc.)
 ──────────────────────────────── */
 .page-container {
   max-width: 950px;
-  margin: 140px auto 100px; /* consistent with Extra */
-  padding: 0 20px;
+  margin: 140px auto 100px; /* leave space for fixed nav */
+  padding: 0 25px;
 }
 
 .page-container h1 {
   font-size: 3.2rem;
   font-weight: 700;
-  margin-bottom: 14px;
+  margin-bottom: 15px;
 }
 
-.page-description {
-  font-size: 1.3rem;
+.page-description,
+.subtitle {
+  font-size: 1.25rem;
   color: #555;
   margin-bottom: 40px;
-  max-width: 700px;
-  line-height: 1.55;
+  line-height: 1.5;
 }
 
-
-/* Unified Sub-headings */
+/* Headers inside content */
 .page-container h2 {
   font-size: 1.6rem;
   margin-top: 40px;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
-
-/* Unified Paragraphs */
+/* Paragraphs */
 .page-container p {
-  font-size: 1rem;
-  color: #444;
+  font-size: 1.05rem;
   line-height: 1.65;
+  color: #444;
   margin-bottom: 20px;
 }
 
-
-
-/* ───────────────────────────────
-   LIST STYLES (Projects list, Extra lists)
-──────────────────────────────── */
+/* PROJECT LIST */
 .project-list.clean {
   list-style: none;
   padding-left: 0;
@@ -149,22 +143,14 @@ body {
   opacity: 0.6;
 }
 
-
-
-/* ───────────────────────────────
-   EMBEDDED SKETCHES (p5)
-──────────────────────────────── */
+/* p5 iframes */
 iframe {
   width: 100%;
   height: 500px;
   border: none;
 }
 
-
-
-/* ───────────────────────────────
-   MOBILE RESPONSIVE
-──────────────────────────────── */
+/* Responsive */
 @media (max-width: 800px) {
   .hero-black {
     padding: 150px 25px;
