@@ -9,17 +9,11 @@
 
 
 body {
-
   margin: 0;
-
   padding: 40px;
-
-  font-family: "Courier New", "Lucida Console", monospace; /* typewriter vibe */
-
-  background-color: #f4ecff; /* light purple */
-
+  font-family: "Inter", "Noto Sans KR", sans-serif;
+  background-color: #f4ecff;
   color: #111;
-
 }
 
 
