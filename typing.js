@@ -4,7 +4,7 @@ const words = [
   "a web developer",
   "an artist",
   "a story director",
-  "a writer"
+  "an author"
 ];
 
 let i = 0;
