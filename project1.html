@@ -3,63 +3,72 @@
 
 <head>
   <meta charset="UTF-8" />
-  <title>Lost & Found – My Portfolio</title>
+  <title>Lost & Found – Cathy Choi</title>
 
-  <!-- CSS -->
   <link rel="stylesheet" href="style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Noto+Sans+KR:wght@300;400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Noto+Sans+KR:wght@300;400;700&display=swap" rel="stylesheet">
 
-  <!-- p5.js libraries -->
+  <!-- p5.js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.1/p5.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.1/addons/p5.sound.min.js"></script>
 
   <style>
-    /* 캔버스 주변 여백 제거 */
     #sketch-container {
-      padding: 0;
-      margin: 0;
+      margin-top: 40px;
+      margin-bottom: 40px;
       text-align: center;
     }
-
     canvas {
       display: block;
-      margin: 0 auto; /* 중앙 정렬 */
+      margin: 0 auto;
+      border-radius: 10px;
     }
   </style>
 </head>
 
 <body>
-  <div class="container">
-    <main>
 
-      <nav>
-        <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="about.html">About</a></li>
-          <li><a href="extra.html">Extra</a></li>
-        </ul>
-      </nav>
+  <!-- 🔥 통일된 탑바 -->
+  <header class="fixed-nav">
+    <div class="nav-left">©Cathy Choi</div>
 
-      <h1>Lost & Found</h1>
+    <nav class="nav-center">
+      <a href="index.html">Main</a>
+      <a href="project_index.html">Projects</a>
+      <a href="extra.html">Extra</a>
+    </nav>
 
-      <h2>p5.js Sketch</h2>
+    <div class="nav-right">
+      <a href="#">Contact ↗</a>
+    </div>
+  </header>
 
-      <!-- p5 canvas가 들어갈 자리 -->
-      <div id="sketch-container"></div>
 
-      <h2>Description</h2>
-      <p>
-        This is a 1–2 sentence description of Project 1. Describe what it does,
-        what you were exploring, or what you learned.
-      </p>
+  <!-- 페이지 본문 -->
+  <div class="page-container">
 
-    </main>
+    <h1>Lost & Found</h1>
+
+    <p class="page-description">
+      A p5.js generative artwork inspired by interior spaces, framed landscapes, and warm reflected light.
+    </p>
+
+    <!-- 캔버스 자리 -->
+    <div id="sketch-container"></div>
+
+    <h2>Description</h2>
+    <p>
+      This sketch explores layered linework, gradient overlays, and the interplay between interior and exterior space.
+      The piece experiments with mood, perspective, and analog-style warmth inside digital drawing.
+    </p>
+
   </div>
 
-  <!-- ⭐ p5.js 코드 직접 포함 -->
+
+  <!-- p5.js code -->
   <script>
     function setup() {
-      let canvas = createCanvas(400, 400);
+      let canvas = createCanvas(450, 450);
       canvas.parent("sketch-container");
     }
 
@@ -70,7 +79,6 @@
       noStroke();
       translate(10, 10)
 
-      //Wall
       fill(255, 194, 69)
       beginShape();
       vertex(-10, 330);
@@ -81,47 +89,32 @@
       vertex(-10, 30);
       endShape(CLOSE);
 
-      //Window
       fill(145, 184, 165);
       rect(140, 100, 240, 170);
 
-      //mountains
       fill(93, 126, 109);
       beginShape();
-      vertex(140, 230);
-      vertex(200, 200);
-      vertex(260, 220);
-      vertex(320, 200);
-      vertex(380, 230);
-      vertex(380, 270);
+      vertex(140, 230); vertex(200, 200); vertex(260, 220);
+      vertex(320, 200); vertex(380, 230); vertex(380, 270);
       vertex(140, 270);
       endShape(CLOSE);
 
-      // trees
       fill(46, 85, 69);
       triangle(200, 230, 215, 180, 230, 230);
       rect(212, 230, 6, 20);
-
       triangle(270, 230, 285, 180, 300, 230);
       rect(282, 230, 6, 20);
 
-      // White part
       fill(246, 246, 246);
       triangle(300, 170, 340, 130, 380, 170);
       pop()
 
-      // Lineworks
       push()
-      stroke(30, 60, 75);
-      strokeWeight(4);
-      noFill();
-
-      // shelf 
+      stroke(30, 60, 75); strokeWeight(4); noFill();
       line(0, 120, 112, 146)
       line(50, 131, 50, 77)
       line(112, 146, 112, 100)
 
-      // sink
       line(31, 115, 31, 104)
       line(101, 133, 101, 122)
       line(0, 223, 118, 226)
@@ -137,10 +130,8 @@
       line(0, 350, 117, 299)
 
       rect(140, 100, 240, 170);
-
       pop()
 
-      // Overlay Gradient Layer
       c1 = color(104, 140, 222);
       c2 = color(222, 255, 255);
 
@@ -156,8 +147,7 @@
       noFill();
       for (let y = 0; y < height; y++) {
         let inter = map(y, 0, height, 0, 1);
-        let c = lerpColor(c1, c2, inter);
-        stroke(c);
+        stroke(lerpColor(c1, c2, inter));
         line(0, y, width, y);
       }
 
@@ -170,15 +160,14 @@
       pop();
 
       blendMode(BLEND);
+    }
 
-      function radialGradient(cx, cy, radius, innerCol, outerCol) {
-        noStroke();
-        for (let r = radius; r > 0; --r) {
-          let inter = map(r, 5, radius, 0, 1);
-          let c = lerpColor(innerCol, outerCol, inter);
-          fill(c);
-          ellipse(cx, cy, r * 2, r * 2);
-        }
+    function radialGradient(cx, cy, radius, innerCol, outerCol) {
+      noStroke();
+      for (let r = radius; r > 0; --r) {
+        let inter = map(r, 5, radius, 0, 1);
+        fill(lerpColor(innerCol, outerCol, inter));
+        ellipse(cx, cy, r * 2, r * 2);
       }
     }
   </script>
