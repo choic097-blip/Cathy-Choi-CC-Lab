@@ -135,3 +135,12 @@ iframe {
 
 }
 
+
+.container {
+  max-width: 850px;
+  margin: auto;
+  background: white;
+  padding: 30px 40px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
