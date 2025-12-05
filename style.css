@@ -38,6 +38,37 @@ body {
 }
 
 /* ───────────────────────────────
+   MAIN PAGE (INDEX) — HERO OVERRIDE
+──────────────────────────────── */
+
+body.home {
+  margin: 0;
+  padding: 0;
+}
+
+body.home .hero-black {
+  height: 100vh !important;
+  margin: 0 !important;
+  padding: 150px 60px !important;
+  background: black !important;
+  color: white !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+body.home .hero-black h1 {
+  font-size: 6rem;
+  color: white;
+}
+
+body.home .hero-black .sub {
+  font-size: 1.7rem;
+  color: #d0d0d0;
+}
+
+
+/* ───────────────────────────────
    UNIFIED PAGE LAYOUT (Extra / Projects)
 ──────────────────────────────── */
 .page-container {
