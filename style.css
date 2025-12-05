@@ -1,3 +1,92 @@
+/* RESET */
+body {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  color: #111;
+}
+
+/* ───────────────────────────────
+   FIXED NAVIGATION BAR
+──────────────────────────────── */
+.fixed-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 22px 60px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  backdrop-filter: blur(4px);
+  background: rgba(255, 255, 255, 0.55); /* 50% white */
+  z-index: 999;
+  font-size: 0.9rem;
+}
+
+.fixed-nav a {
+  text-decoration: none;
+  color: #111;
+  margin: 0 12px;
+}
+
+
+
+/* ───────────────────────────────
+   HERO SECTION (Black Background)
+──────────────────────────────── */
+.hero-black {
+  height: 100vh;
+  background: #000;
+  color: #fff;
+
+  padding: 150px 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.hero-black h1 {
+  font-size: 6rem;
+  line-height: 1;
+  margin-bottom: 30px;
+}
+
+.highlight {
+  color: #fff;
+}
+
+.sub {
+  font-size: 1.7rem;
+  color: #cccccc;
+  line-height: 1.5;
+}
+
+
+
+/* Typing text style */
+#typing {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+
+/* Responsive */
+@media (max-width: 800px) {
+  .hero-black h1 {
+    font-size: 3rem;
+  }
+
+  .sub {
+    font-size: 1.2rem;
+  }
+
+  .fixed-nav {
+    padding: 15px 25px;
+  }
+}
+
 /* ───────────────────────────
    Global Reset & Base Styles
    ─────────────────────────── */
