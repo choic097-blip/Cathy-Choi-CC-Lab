@@ -1,32 +1,31 @@
 const words = [
-  "Multimedia Creator",
-  "Game Developer",
-  "Web Developerr",
-  "Artist",
-  "Story Director",
-  "Author"
+  "multi-content creator",
+  "game developer",
+  "web developer",
+  "artist",
+  "story director",
+  "writer"
 ];
 
 let i = 0;
 let j = 0;
-let currentWord = "";
 let isDeleting = false;
 let speed = 120;
 
 function type() {
-  currentWord = words[i];
+  const current = words[i];
 
-  if (isDeleting) {
-    j--;
-  } else {
+  if (!isDeleting) {
     j++;
+  } else {
+    j--;
   }
 
-  document.getElementById("typing").textContent = currentWord.substring(0, j);
+  document.getElementById("typing").textContent = current.substring(0, j);
 
-  if (!isDeleting && j === currentWord.length) {
+  if (!isDeleting && j === current.length) {
     isDeleting = true;
-    speed = 900; // pause before deleting
+    speed = 900;
   } else if (isDeleting && j === 0) {
     isDeleting = false;
     i = (i + 1) % words.length;
