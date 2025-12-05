@@ -1,10 +1,10 @@
 const words = [
-  "multi-content creator",
-  "game developer",
-  "web developer",
-  "artist",
-  "story director",
-  "writer"
+  "a multi-content creator",
+  "a game developer",
+  "a web developer",
+  "an artist",
+  "a story director",
+  "a writer"
 ];
 
 let i = 0;
