@@ -1,17 +1,23 @@
-/* RESET */
+/* GLOBAL RESET */
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   font-family: "Inter", sans-serif;
+  background: white;
   color: #111;
 }
 
 /* ───────────────────────────────
-   FIXED NAVIGATION BAR
+   FIXED TOP NAVIGATION
 ──────────────────────────────── */
 .fixed-nav {
   position: fixed;
   top: 0;
   left: 0;
+
   width: 100%;
   padding: 22px 60px;
 
@@ -19,22 +25,28 @@ body {
   justify-content: space-between;
   align-items: center;
 
-  backdrop-filter: blur(4px);
-  background: rgba(255, 255, 255, 0.55); /* 50% white */
-  z-index: 999;
-  font-size: 0.9rem;
+  background: rgba(255, 255, 255, 0.5); /* 50% white */
+  backdrop-filter: blur(6px);
+  z-index: 1000;
+
+  font-size: 0.95rem;
+  font-weight: 500;
 }
 
 .fixed-nav a {
-  text-decoration: none;
   color: #111;
+  text-decoration: none;
   margin: 0 12px;
+}
+
+.nav-center a {
+  margin: 0 16px;
 }
 
 
 
 /* ───────────────────────────────
-   HERO SECTION (Black Background)
+   HERO SECTION (Full Black)
 ──────────────────────────────── */
 .hero-black {
   height: 100vh;
@@ -45,12 +57,22 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
+
+  /* smooth fade-in */
+  opacity: 0;
+  animation: fadeIn 1.2s ease forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 .hero-black h1 {
   font-size: 6rem;
+  font-weight: 700;
+  margin: 0 0 30px;
   line-height: 1;
-  margin-bottom: 30px;
 }
 
 .highlight {
@@ -59,148 +81,25 @@ body {
 
 .sub {
   font-size: 1.7rem;
-  color: #cccccc;
+  color: #d0d0d0;
   line-height: 1.5;
 }
 
-
-
-/* Typing text style */
 #typing {
-  color: #ffffff;
-  font-weight: 600;
-}
-
-
-/* Responsive */
-@media (max-width: 800px) {
-  .hero-black h1 {
-    font-size: 3rem;
-  }
-
-  .sub {
-    font-size: 1.2rem;
-  }
-
-  .fixed-nav {
-    padding: 15px 25px;
-  }
-}
-
-/* ───────────────────────────
-   Global Reset & Base Styles
-   ─────────────────────────── */
-* {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-  padding: 0;
-  font-family: "Inter", "Noto Sans KR", sans-serif;
-  background: white;
-  color: #111;
-}
-
-
-
-/* ───────────────────────────
-   Top Navigation (for homepage)
-   ─────────────────────────── */
-.topbar {
-  width: 100%;
-  padding: 30px 60px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 0.95rem;
-  font-weight: 500;
-}
-
-.topbar a {
-  text-decoration: none;
-  color: black;
-}
-
-.nav-center a {
-  margin: 0 20px;
-}
-
-
-
-/* ───────────────────────────
-   Hero Section (homepage)
-   ─────────────────────────── */
-.hero {
-  height: 90vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 0 60px;
-}
-
-.hero h1 {
-  font-size: 6rem;
+  color: #fff;
   font-weight: 700;
-  line-height: 1.08;
-  margin: 0;
-}
-
-.scroll-indicator {
-  margin-top: 30px;
-  font-size: 1rem;
-  color: #333;
 }
 
 
 
-/* ───────────────────────────
-   Projects Section (homepage)
-   ─────────────────────────── */
-.project-section {
-  padding: 120px 60px;
-}
-
-.project-section h2 {
-  font-size: 2.6rem;
-  margin-bottom: 25px;
-}
-
-.project-list {
-  list-style: none;
-  padding-left: 0;
-}
-
-.project-list li {
-  margin: 12px 0;
-}
-
-.project-list a {
-  font-size: 1.3rem;
-  text-decoration: none;
-  color: #333;
-  font-weight: 500;
-}
-
-.project-list a:hover {
-  color: black;
-  text-decoration: underline;
-}
-
-
-
-/* ───────────────────────────
-   Container Layout (project pages, about page)
-   ─────────────────────────── */
-
+/* ───────────────────────────────
+   OTHER PAGES (Projects, About, Extra)
+──────────────────────────────── */
 .container {
   max-width: 850px;
-  margin: 60px auto;
-  background: white;
+  margin: 120px auto; /* pushed down to avoid nav overlap */
   padding: 30px 40px;
 }
-
-
 
 /* Navigation inside container pages */
 nav ul {
@@ -215,26 +114,18 @@ nav a {
   text-decoration: none;
   color: #333;
   font-weight: 500;
-  border-bottom: 2px solid transparent;
-}
-
-nav a:hover {
-  border-bottom-color: #999;
 }
 
 
 
-/* ───────────────────────────
-   Typography (shared)
-   ─────────────────────────── */
+/* Typography */
 h1 {
   font-size: 2.4rem;
-  margin-bottom: 10px;
 }
 
 h2 {
   font-size: 1.5rem;
-  margin: 25px 0 10px;
+  margin-top: 25px;
 }
 
 p {
@@ -243,40 +134,32 @@ p {
 
 
 
-/* ───────────────────────────
-   p5.js iframe / embedded sketch
-   ─────────────────────────── */
-
+/* p5 Sketches */
 iframe {
   width: 100%;
   height: 500px;
-  border: none; /* cleaner for modern portfolio */
+  border: none;
 }
 
 
 
-/* ───────────────────────────
-   Mobile Responsive
-   ─────────────────────────── */
+/* ───────────────────────────────
+   MOBILE RESPONSIVE
+──────────────────────────────── */
 @media (max-width: 800px) {
-  .hero h1 {
-    font-size: 3.5rem;
+  .hero-black {
+    padding: 150px 25px;
   }
 
-  .hero {
-    padding: 0 25px;
+  .hero-black h1 {
+    font-size: 3.4rem;
   }
 
-  .topbar {
-    padding: 20px 25px;
+  .sub {
+    font-size: 1.2rem;
   }
 
-  .project-section {
-    padding: 80px 25px;
-  }
-
-  .container {
-    margin: 20px;
-    padding: 20px;
+  .fixed-nav {
+    padding: 15px 20px;
   }
 }
