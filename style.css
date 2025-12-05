@@ -11,13 +11,15 @@ body {
 }
 
 /* ───────────────────────────────
-   FIXED TOP NAVIGATION
+   FIXED TOP NAVIGATION — UNIFIED
 ──────────────────────────────── */
 .fixed-nav {
   position: fixed;
   top: 0;
+  left: 0;
+
   width: 100%;
-  padding: 22px 60px;
+  padding: 20px 60px;
 
   display: flex;
   justify-content: space-between;
@@ -27,15 +29,29 @@ body {
   backdrop-filter: blur(6px);
   z-index: 1000;
 
-  font-size: 0.95rem;
-  font-weight: 500;
+  font-size: 1rem;            /* 모든 페이지에서 동일한 크기 */
+  line-height: 1;             /* 높이 통일 */
+  font-weight: 500;           /* 굵기 통일 */
 }
 
 .fixed-nav a {
   color: #111;
   text-decoration: none;
-  margin: 0 12px;
+
+  font-size: 1rem;            /* anchor 폰트도 명확히 통일 */
+  font-weight: 500;
+  margin: 0 14px;
 }
+
+.nav-center a {
+  margin: 0 20px;             /* 내부 페이지 & 메인 동일 간격 */
+}
+
+.nav-left,
+.nav-right {
+  font-size: 1rem;            /* 모든 텍스트 동일 */
+}
+
 
 /* ───────────────────────────────
    MAIN PAGE (INDEX) — HERO OVERRIDE
