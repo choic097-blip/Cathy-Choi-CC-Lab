@@ -1,58 +1,205 @@
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
-
   <meta charset="UTF-8" />
+  <title>Project 6 – Data Portrait – Cathy Choi</title>
 
-  <title>Project 6 – My Portfolio</title>
-<link rel="stylesheet" href="style.css" />
-  
+  <!-- 공통 스타일 -->
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Noto+Sans+KR:wght@300;400;700&display=swap" rel="stylesheet">
+
+  <!-- p5.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.1/p5.js"></script>
+
+  <style>
+    #sketch-container {
+      margin: 40px 0;
+      text-align: center;
+      position: relative;
+    }
+
+    canvas {
+      display: block;
+      margin: 0 auto;
+      border-radius: 12px;
+    }
+
+    /* input 정렬 보정 */
+    input {
+      position: absolute !important;
+      left: 50% !important;
+      top: 60px !important;
+      transform: translateX(-50%);
+      width: 600px !important;
+    }
+  </style>
 </head>
 
 <body>
-<main>
-  <nav>
 
-    <ul>
+  <!-- FIXED NAV (통일) -->
+  <header class="fixed-nav">
+    <div class="nav-left">©Cathy Choi</div>
 
-      <li><a href="index.html">Home</a></li>
+    <nav class="nav-center">
+      <a href="index.html">Main</a>
+      <a href="project_index.html">Projects</a>
+      <a href="extra.html">Extra</a>
+    </nav>
 
-      <li><a href="about.html">About</a></li>
+    <div class="nav-right">
+      <a href="#">Contact ↗</a>
+    </div>
+  </header>
 
-      <li><a href="extra.html">Extra</a></li>
+  <!-- 본문 -->
+  <div class="page-container">
 
-    </ul>
+    <h1>Data Portrait: Drinks & Caffeine</h1>
 
-  </nav>
+    <p class="page-description">
+      An interactive data portrait visualizing daily drink consumption and caffeine levels
+      through color and text.
+    </p>
 
+    <!-- 캔버스 -->
+    <div id="sketch-container"></div>
 
-  <h1>Project 6 Title</h1>
-
-
-  <h2>p5.js Sketch</h2>
-
- 
-
-  <div>
-
-  
+    <h2>Description</h2>
+    <p>
+      Inspired by Vamoss’s <em>Technology is not neutral</em>, this sketch visualizes a week of
+      drink consumption. Typing a day reveals logged drinks and dynamically shifts the background
+      color based on caffeine intensity.
+    </p>
 
   </div>
 
+  <!-- ========================= -->
+  <!-- p5.js SKETCH (원본 그대로) -->
+  <!-- ========================= -->
+  <script>
+    /// I referenced Vamoss’s “Technology is not neutral” sketch (https://p5js.org/sketches/2215570/)
 
-  <h2>Description</h2>
+    const colorText = "white";
+    const fontSize = 24;
+    let message = "";
+    let inputBox; 
 
-  <p>
+    let colorLow, colorHigh;
 
-    This is a 1–2 sentence description of Project 6 Describe what it does,
+    const drinkData = {
+      monday: [
+        { time: "08:30", drink: "Water" },
+        { time: "13:15", drink: "Cafe Latte" },
+        { time: "15:30", drink: "Water" },
+        { time: "20:20", drink: "Iced Americano" }
+      ],
+      tuesday: [
+        { time: "09:00", drink: "Water" },
+        { time: "12:00", drink: "Pumpkin Spice Latte" },
+        { time: "14:40", drink: "Oolong Tea" },
+        { time: "19:30", drink: "Water" }
+      ],
+      wednesday: [
+        { time: "08:45", drink: "Water" },
+        { time: "11:00", drink: "Cafe Latte" },
+        { time: "16:00", drink: "Sparkling Water" },
+        { time: "19:00", drink: "Iced Americano" }
+      ],
+      thursday: [
+        { time: "09:30", drink: "Water" },
+        { time: "13:00", drink: "Pumpkin Spice Latte" },
+        { time: "15:20", drink: "Water" },
+        { time: "18:00", drink: "Celsius Peach Vibe" }
+      ],
+      friday: [
+        { time: "08:15", drink: "Lemon Water" },
+        { time: "11:30", drink: "Water" },
+        { time: "14:30", drink: "Matcha Latte" },
+        { time: "20:00", drink: "Water" }
+      ],
+      saturday: [
+        { time: "09:00", drink: "Jasmine Tea" },
+        { time: "12:45", drink: "Iced Americano" },
+        { time: "15:00", drink: "Water" },
+        { time: "19:10", drink: "Water" }
+      ]
+    };
 
-    what you were exploring, or what you learned.
+    function setup() {
+      const c = createCanvas(600, 600);
+      c.parent("sketch-container");
 
-  </p>
+      textAlign(CENTER, CENTER);
+      textFont("monospace");
+      colorMode(RGB);
 
-  <main>
+      colorLow = color(217, 196, 180); 
+      colorHigh = color(80, 40, 20);  
+
+      inputBox = createInput("");
+      inputBox.parent("sketch-container");
+      inputBox.attribute("placeholder", "Type here...");
+      inputBox.input(() => message = inputBox.value().toLowerCase());
+
+      inputBox.style("border", "none");
+      inputBox.style("background", "transparent");
+      inputBox.style("text-align", "center");
+      inputBox.style("font-size", fontSize + "px");
+      inputBox.style("color", "rgba(255,255,255,0.85)");
+      inputBox.style("caret-color", colorText);
+      inputBox.style("outline", "none");
+      inputBox.style("font-family", "monospace");
+    }
+
+    function draw() {
+      let bg = colorLow;
+      let caffeineRatio = 0;
+
+      if (message !== "" && drinkData[message]) {
+        const data = drinkData[message];
+        const caffeineCount = data.filter(d => hasCaffeine(d.drink)).length;
+        caffeineRatio = caffeineCount / data.length;
+        bg = lerpColor(colorLow, colorHigh, caffeineRatio);
+      }
+
+      background(bg);
+      fill(colorText);
+
+      textSize(fontSize * 0.45);
+      text("Type a day (monday ~ saturday)", width / 2, height * 0.92);
+
+      if (message === "" || !drinkData[message]) return;
+
+      const data = drinkData[message];
+
+      textSize(fontSize);
+      text(message.toUpperCase(), width / 2, height * 0.2);
+
+      textSize(fontSize * 0.7);
+      const startY = height * 0.35;
+      const gap = fontSize * 1.2;
+
+      for (let i = 0; i < data.length; i++) {
+        text(`${data[i].time} — ${data[i].drink}`, width / 2, startY + i * gap);
+      }
+
+      textSize(fontSize * 0.6);
+      text(`Caffeine Level: ${(caffeineRatio * 100).toFixed(0)}%`, width / 2, height * 0.1);
+    }
+
+    function hasCaffeine(drink) {
+      const d = drink.toLowerCase();
+      return (
+        d.includes("latte") ||
+        d.includes("americano") ||
+        d.includes("tea") ||
+        d.includes("matcha") ||
+        d.includes("celsius")
+      );
+    }
+  </script>
+
 </body>
-
 </html>
