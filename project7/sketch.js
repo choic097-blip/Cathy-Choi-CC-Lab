@@ -10,7 +10,6 @@ let playerInputs = [];
 let character1, character2, character3;
 let scene1music, scene2music, scene1sfx, scene2sfx;
 let customFont;
-
 let audioStarted = false;
 
 let autoSentences = [
@@ -58,7 +57,7 @@ function draw() {
   drawBubbles();
 }
 
-/* ───────── AUDIO UNLOCK ───────── */
+/* 🔊 AUDIO UNLOCK */
 function mousePressed() {
   if (!audioStarted) {
     userStartAudio();
@@ -67,7 +66,7 @@ function mousePressed() {
   }
 }
 
-/* ───────── SCENES ───────── */
+/* SCENES */
 
 function sceneOne() {
   textSize(24);
@@ -100,20 +99,26 @@ function sceneThree() {
     button.parent("sketch-container");
     button.size(120, 50);
     button.position(width / 2 - 60, height / 2 + 40);
-    button.style("cursor", "pointer");
     button.mousePressed(resetGame);
   }
 }
 
-/* ───────── INPUT ───────── */
+/* INPUT */
 
 function setupInput() {
   inputBox = createInput("");
   inputBox.parent("sketch-container");
-  inputBox.position(width / 2 - 200, height - 80);
+
+  // ✅ canvas 기준으로 위치 고정
+  inputBox.position(width / 2 - 200, height - 70);
   inputBox.size(400, 40);
   inputBox.attribute("placeholder", "Type here and press Enter");
   inputBox.style("text-align", "center");
+
+  // ✅ 이게 빠져 있었음 (핵심)
+  inputBox.input(() => {
+    message = inputBox.value();
+  });
 }
 
 function keyPressed() {
@@ -158,7 +163,7 @@ function resetGame() {
   scene1music.loop();
 }
 
-/* ───────── VISUALS ───────── */
+/* VISUALS */
 
 function drawCharacter() {
   imageMode(CENTER);
@@ -207,4 +212,3 @@ class Bubble {
     }
   }
 }
-
