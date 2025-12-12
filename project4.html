@@ -3,18 +3,33 @@
 
 <head>
   <meta charset="UTF-8" />
-  <title>Project 4 – Exquisite Corpse</title>
+  <title>Project 4 – Exquisite Corpse – Cathy Choi</title>
 
-  <!-- 공통 스타일 -->
   <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Noto+Sans+KR:wght@300;400;700&display=swap" rel="stylesheet">
 
-  <!-- p5.js CDN -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+  <!-- p5.js (다른 프로젝트들과 통일) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.1/p5.js"></script>
+
+  <style>
+    /* 캔버스 영역 통일 */
+    #sketch-container {
+      margin-top: 40px;
+      margin-bottom: 40px;
+      text-align: center;
+    }
+
+    canvas {
+      display: block;
+      margin: 0 auto;
+      border-radius: 10px;
+    }
+  </style>
 </head>
 
 <body>
 
-  <!-- FIXED NAV -->
+  <!-- FIXED NAV (통일) -->
   <header class="fixed-nav">
     <div class="nav-left">©Cathy Choi</div>
 
@@ -29,26 +44,25 @@
     </div>
   </header>
 
-  <main class="project-page">
+  <!-- 본문: page-container로 통일 -->
+  <div class="page-container">
 
-    <h1>Project 4 – Exquisite Corpse</h1>
+    <h1>Exquisite Corpse</h1>
 
-    <p class="project-sub">
-      A playful p5.js experiment exploring fragmented bodies, rotation, and
-      surreal interaction through mouse movement.
+    <p class="page-description">
+      A playful p5.js experiment exploring fragmented bodies, rotation, and surreal interaction through mouse movement.
     </p>
 
     <!-- p5 캔버스 자리 -->
-    <div id="sketch-holder"></div>
+    <div id="sketch-container"></div>
 
     <h2>Description</h2>
     <p>
-      This project reinterprets the surrealist “Exquisite Corpse” technique
-      through code. Each body part rotates independently in response to mouse
-      movement, creating unexpected and humorous recombinations.
+      This project reinterprets the surrealist “Exquisite Corpse” technique through code.
+      Each body part rotates independently in response to mouse movement, creating unexpected and humorous recombinations.
     </p>
 
-  </main>
+  </div>
 
   <!-- ========================= -->
   <!-- p5.js SKETCH (원본 그대로) -->
@@ -56,7 +70,7 @@
   <script>
     function setup() {
       const c = createCanvas(400, 600);
-      c.parent("sketch-holder");
+      c.parent("sketch-container");
     }
 
     function draw() {
