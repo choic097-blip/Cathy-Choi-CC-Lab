@@ -4,10 +4,10 @@
   <meta charset="UTF-8" />
   <title>Project 7 – Autobiographical Game</title>
 
-  <link rel="stylesheet" href="style.css" />
+  <!-- ✅ 경로 수정 -->
+  <link rel="stylesheet" href="../style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-  <!-- p5 -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.1/p5.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.1/addons/p5.sound.min.js"></script>
 </head>
@@ -17,10 +17,10 @@
 <header class="fixed-nav">
   <div class="nav-left">©Cathy Choi</div>
   <nav class="nav-center">
-    <a href="project_index.html">Projects</a>
-    <a href="extra.html">Extra</a>
+    <a href="../index.html">Main</a>
+    <a href="../project_index.html">Projects</a>
+    <a href="../extra.html">Extra</a>
   </nav>
-  <div class="nav-right"></div>
 </header>
 
 <main class="page-container">
@@ -31,14 +31,12 @@
     and emotional filtering through player input.
   </p>
 
-  <!-- GAME -->
   <div id="sketch-container"></div>
 
   <h2>About This Project</h2>
   <p>
     This game reacts to the player’s words, slowly reshaping them into
-    socially acceptable responses. It reflects on how language is corrected,
-    filtered, and erased.
+    socially acceptable responses.
   </p>
 
   <p><strong>Controls:</strong> Type and press Enter. Click once to enable sound.</p>
@@ -48,4 +46,3 @@
 <script src="sketch.js"></script>
 </body>
 </html>
-
