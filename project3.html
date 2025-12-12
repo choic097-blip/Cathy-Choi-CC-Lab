@@ -1,58 +1,186 @@
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
-
   <meta charset="UTF-8" />
+  <title>Project 3 – Ice Coffee</title>
 
-  <title>Project 3 – My Portfolio</title>
+  <!-- 공통 스타일 -->
   <link rel="stylesheet" href="style.css" />
 
+  <!-- p5.js CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
 </head>
 
 <body>
-<main>
-  <nav>
 
-    <ul>
+  <!-- FIXED NAV (프로젝트 1이랑 통일된 구조) -->
+  <header class="fixed-nav">
+    <div class="nav-left">©Cathy Choi</div>
 
-      <li><a href="index.html">Home</a></li>
+    <nav class="nav-center">
+      <a href="index.html">Main</a>
+      <a href="project_index.html">Projects</a>
+      <a href="extra.html">Extra</a>
+    </nav>
 
-      <li><a href="about.html">About</a></li>
+    <div class="nav-right">
+      <a href="#">Contact ↗</a>
+    </div>
+  </header>
 
-      <li><a href="extra.html">Extra</a></li>
+  <main class="project-page">
 
-    </ul>
+    <h1>Project 3 – Ice Coffee</h1>
 
-  </nav>
+    <p class="project-sub">
+      Interactive p5.js sketch exploring time, motion, and sensory interaction.
+    </p>
 
+    <!-- p5 캔버스 들어갈 자리 -->
+    <div id="sketch-holder"></div>
 
-  <h1>Project 3 Title</h1>
+    <h2>Description</h2>
+    <p>
+      This project visualizes an ice coffee whose surface reacts to time and mouse movement.
+      The background shifts based on real-world time, while ice cubes float, melt, and respond
+      to interaction.
+    </p>
 
+  </main>
 
-  <h2>p5.js Sketch</h2>
+  <!-- ========================= -->
+  <!-- p5.js SKETCH (원본 그대로) -->
+  <!-- ========================= -->
+  <script>
+    function setup() { 
+      const c = createCanvas(600, 600); 
+      c.parent("sketch-holder");
 
- 
+      // 시작 얼음 몇 개 
+      for (let i = 0; i < 5; i++) { 
+        addIce(); 
+      } 
+    } 
 
-  <div>
+    function draw() {
+      let h = hour();
+      let m = minute();
+      let s = second();
 
-  
+      if (h >= 6 && h < 18) {
+        background(200, 220, 255);
+      } else {
+        background(30, 30, 60);
+      }
 
-  </div>
+      fill(255);
+      textSize(16);
+      text("Time: " + h + ":" + nf(m,2) + ":" + nf(s,2), 20, 20);
 
+      drawCoffee(); 
 
-  <h2>Description</h2>
+      for (let ice of iceList) { 
+        updateIce(ice); 
+        drawIce(ice); 
+      } 
+    }
 
-  <p>
+    function drawCoffee() { 
+      let mouseSpeed = abs(mouseX - pmouseX) + abs(mouseY - pmouseY); 
+      let amp = map(mouseSpeed, 0, 80, 2, 12, true); 
+      wavePhase += map(mouseSpeed, 0, 80, 0.02, 0.2, true); 
 
-    This is a 1–2 sentence description of Project 3. Describe what it does,
+      function surfaceY(x) { 
+        return coffeeTopY + sin((x + wavePhase * 60) * 0.05) * amp; 
+      } 
 
-    what you were exploring, or what you learned.
+      noStroke(); 
+      fill(70, 35, 20); 
+      beginShape(); 
+      for (let x = topL; x <= topR; x += 4) { 
+        vertex(x, surfaceY(x)); 
+      } 
+      vertex(botR, coffeeBotY); 
+      vertex(botL, coffeeBotY); 
+      vertex(topL, surfaceY(topL)); 
+      endShape(CLOSE); 
+    } 
 
-  </p>
+    function addIce() { 
+      iceList.push({ 
+        x: cupX + random(-topHalfW + 20, topHalfW - 20),
+        y: coffeeTopY, 
+        size: random(34, 50), 
+        alpha: 220, 
+        vx: random(-0.4, 0.4),
+        bob: random(TWO_PI)
+      }); 
+    } 
 
-  <main>
+    function updateIce(ice) { 
+      let mouseSpeed = abs(mouseX - pmouseX) + abs(mouseY - pmouseY); 
+      let amp = map(mouseSpeed, 0, 80, 2, 12, true); 
+
+      let surf = coffeeTopY + sin((ice.x + wavePhase * 60) * 0.05) * amp; 
+
+      ice.bob += 0.04; 
+      ice.y = surf + sin(ice.bob) * 2 + 3; 
+
+      ice.vx += (mouseX - pmouseX) * 0.001 + random(-0.01, 0.01); 
+      ice.vx = constrain(ice.vx, -1, 1); 
+      ice.x += ice.vx; 
+
+      let minX = cupX - topHalfW + ice.size * 0.5; 
+      let maxX = cupX + topHalfW - ice.size * 0.5; 
+      if (ice.x < minX) { ice.x = minX; ice.vx *= -0.4; } 
+      if (ice.x > maxX) { ice.x = maxX; ice.vx *= -0.4; } 
+
+      ice.size -= 0.015; 
+      ice.alpha -= 0.08; 
+
+      if (ice.size < 6 || ice.alpha <= 0) { 
+        ice.x = cupX + random(-topHalfW + 20, topHalfW - 20); 
+        ice.size = random(34, 50); 
+        ice.alpha = 220; 
+        ice.vx = random(-0.4, 0.4); 
+        ice.bob = random(TWO_PI); 
+      } 
+    } 
+
+    function drawIce(ice) { 
+      noStroke(); 
+      fill(200, 240, 255, ice.alpha); 
+      rectMode(CENTER); 
+      rect(ice.x, ice.y, ice.size, ice.size, 8); 
+
+      fill(255, 180); 
+      rect(ice.x - ice.size * 0.2, ice.y - ice.size * 0.2, ice.size * 0.45, ice.size * 0.45, 6); 
+    } 
+
+    function mousePressed() { 
+      if (dist(mouseX, mouseY, cupX, cupY) < cupR) { 
+        addIce(); 
+      } 
+    } 
+
+    let cupX = 300;
+    let cupY = 360;
+    let cupR = 260;
+
+    let coffeeTopY = 300;
+    let coffeeBotY = 520;
+    let topHalfW = 180;
+    let botHalfW = 150;
+
+    let topL = cupX - topHalfW; 
+    let topR = cupX + topHalfW; 
+    let botL = cupX - botHalfW; 
+    let botR = cupX + botHalfW; 
+
+    let wavePhase = 0;
+    let iceList = [];
+  </script>
+
 </body>
-
 </html>
