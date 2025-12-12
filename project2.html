@@ -1,56 +1,174 @@
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
-
   <meta charset="UTF-8" />
+  <title>Face generator – Cathy Choi</title>
 
-  <title>Project 2 – My Portfolio</title>
-<link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Noto+Sans+KR:wght@300;400;700&display=swap" rel="stylesheet">
+
+  <!-- p5.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.1/p5.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.1/addons/p5.sound.min.js"></script>
+
+  <style>
+    #sketch-container {
+      margin-top: 40px;
+      margin-bottom: 40px;
+      text-align: center;
+    }
+    canvas {
+      display: block;
+      margin: 0 auto;
+      border-radius: 10px;
+    }
+  </style>
 </head>
 
 <body>
-<main>
-  <nav>
 
-    <ul>
+  <!-- 🔥 통일된 탑바 -->
+  <header class="fixed-nav">
+    <div class="nav-left">©Cathy Choi</div>
 
-      <li><a href="index.html">Home</a></li>
+    <nav class="nav-center">
+      <a href="index.html">Main</a>
+      <a href="project_index.html">Projects</a>
+      <a href="extra.html">Extra</a>
+    </nav>
 
-      <li><a href="about.html">About</a></li>
-
-      <li><a href="extra.html">Extra</a></li>
-
-    </ul>
-
-  </nav>
-
-
-  <h1>Project 2 Title</h1>
+    <div class="nav-right">
+      <a href="#">Contact ↗</a>
+    </div>
+  </header>
 
 
-  <h2>p5.js Sketch</h2>
+  <!-- 페이지 본문 -->
+  <div class="page-container">
 
- 
+    <h1>Lost & Found</h1>
 
-  <div>
+    <p class="page-description">
+      A p5.js generative artwork inspired by interior spaces, framed landscapes, and warm reflected light.
+    </p>
 
-  
+    <!-- 캔버스 자리 -->
+    <div id="sketch-container"></div>
+
+    <h2>Description</h2>
+    <p>
+
+      I started with the idea of a squishy smiley face, inspired both by my own sketches and by the example Ms. Myles showed us in class. 
+      I wanted the interaction to feel playful, so I added mouse input and color changes. 
+      I also thought it would be more fun if the expression itself could shift in real time, 
+      instead of staying static. Drawing from what I learned in my Unity class, I decided to use delta time to make the movements 
+      smoother and more fluid—rather than frantic or random, the transitions would feel organic, almost as if the character were breathing. 
+      Through sketching and iteration, I explored how different expressions could be exaggerated or simplified, and how these visual changes could be tied to user interaction. 
+      My goal was to strike a balance between simplicity and liveliness, so the design remains clear but also has personality.
+
+    </p>
 
   </div>
 
 
-  <h2>Description</h2>
+  <!-- p5.js code -->
+  <script>
+let bgColor; 
 
-  <p>
+function setup() {
+  createCanvas(400, 400);
 
-    This is a 1–2 sentence description of Project 2. Describe what it does,
 
-    what you were exploring, or what you learned.
+  // initial
+  faceSize = targetFaceSize = 200;
+  eyeSize = targetEyeSize = 40;
+  noseHeight = targetNoseHeight = 30;
+  mouthWidth = targetMouthWidth = 80;
+  mouthY = targetMouthY = 260;
 
-  </p>
-<main>
+  faceColor = targetFaceColor = color(255, 220, 180);
+  eyeColor = targetEyeColor = color(0);
+  mouthColor = targetMouthColor = color(200, 50, 50);
+  blushColor = color(255, 150, 150, 150);
+  bgColor = color(220)
+}
+
+function draw() {
+  
+  background(bgColor);
+  noStroke();
+
+  // smoothing
+  faceSize = lerp(faceSize, targetFaceSize, 0.05);
+  eyeSize = lerp(eyeSize, targetEyeSize, 0.05);
+  noseHeight = lerp(noseHeight, targetNoseHeight, 0.05);
+  mouthWidth = lerp(mouthWidth, targetMouthWidth, 0.05);
+  mouthY = lerp(mouthY, targetMouthY, 0.05);
+
+  faceColor = lerpColor(faceColor, targetFaceColor, 0.05);
+  eyeColor = lerpColor(eyeColor, targetEyeColor, 0.05);
+  mouthColor = lerpColor(mouthColor, targetMouthColor, 0.05);
+
+  // face
+  fill(faceColor);
+  ellipse(width/2, height/2, faceSize, faceSize * 1.1);
+
+  // blush
+  fill(blushColor);
+  ellipse(width/2 - 60, height/2 + 30, 30, 20);
+  ellipse(width/2 + 60, height/2 + 30, 30, 20);
+
+  // eyes
+  fill(255); 
+  ellipse(width/2 - 50, height/2 - 30, eyeSize, eyeSize * 1.2);
+  fill(eyeColor); // pupil
+  ellipse(width/2 - 50, height/2 - 30, eyeSize/2);
+  fill(255); // light
+  ellipse(width/2 - 55, height/2 - 35, 8);
+
+  fill(255);
+  ellipse(width/2 + 50, height/2 - 30, eyeSize, eyeSize * 1.2);
+  fill(eyeColor);
+  ellipse(width/2 + 50, height/2 - 30, eyeSize/2);
+  fill(255);
+  ellipse(width/2 + 45, height/2 - 35, 8);
+
+
+  // mouth
+  noFill();
+  stroke(mouthColor);
+  strokeWeight(5);
+
+  if (mouthWidth > 70) {
+    // smile
+    arc(width/2, mouthY, mouthWidth, 40, 0, PI);
+  } else {
+    // not smile
+    arc(width/2, mouthY + 20, mouthWidth, 40, PI, 0);
+  }
+  noStroke();
+}
+
+// interactive
+function mouseMoved() {
+  targetFaceSize = random(180, 240);
+  targetEyeSize = random(30, 50);
+  targetNoseHeight = random(20, 40);
+  targetMouthWidth = random(50, 100);
+  targetMouthY = random(250, 270);
+
+  targetFaceColor = color(random(255), random(255), random(255));
+  targetEyeColor = color(random(255), random(255), random(255));
+  targetMouthColor = color(random(255), random(255), random(255));
+  
+function mousePressed() {
+  bgColor = color(random(255), random(255), random(255));
+}
+
+
+}
+  </script>
+
 </body>
-
 </html>
