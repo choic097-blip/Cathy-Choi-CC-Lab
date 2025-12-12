@@ -1,57 +1,239 @@
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
-
   <meta charset="UTF-8" />
+  <title>Project 4 – Exquisite Corpse</title>
 
-  <title>Project 4 – My Portfolio</title>
+  <!-- 공통 스타일 -->
   <link rel="stylesheet" href="style.css" />
 
+  <!-- p5.js CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
 </head>
 
 <body>
-<main>
-  <nav>
 
-    <ul>
+  <!-- FIXED NAV -->
+  <header class="fixed-nav">
+    <div class="nav-left">©Cathy Choi</div>
 
-      <li><a href="index.html">Home</a></li>
+    <nav class="nav-center">
+      <a href="index.html">Main</a>
+      <a href="project_index.html">Projects</a>
+      <a href="extra.html">Extra</a>
+    </nav>
 
-      <li><a href="about.html">About</a></li>
+    <div class="nav-right">
+      <a href="#">Contact ↗</a>
+    </div>
+  </header>
 
-      <li><a href="extra.html">Extra</a></li>
+  <main class="project-page">
 
-    </ul>
+    <h1>Project 4 – Exquisite Corpse</h1>
 
-  </nav>
+    <p class="project-sub">
+      A playful p5.js experiment exploring fragmented bodies, rotation, and
+      surreal interaction through mouse movement.
+    </p>
 
+    <!-- p5 캔버스 자리 -->
+    <div id="sketch-holder"></div>
 
-  <h1>Project 4 Title</h1>
+    <h2>Description</h2>
+    <p>
+      This project reinterprets the surrealist “Exquisite Corpse” technique
+      through code. Each body part rotates independently in response to mouse
+      movement, creating unexpected and humorous recombinations.
+    </p>
 
+  </main>
 
-  <h2>p5.js Sketch</h2>
+  <!-- ========================= -->
+  <!-- p5.js SKETCH (원본 그대로) -->
+  <!-- ========================= -->
+  <script>
+    function setup() {
+      const c = createCanvas(400, 600);
+      c.parent("sketch-holder");
+    }
 
- 
+    function draw() {
+      background(255);
 
-  <div>
+      let angleFace = map(mouseX, 0, width, -0.1, 0.1);
+      let angleBody = map(mouseX, 0, width, -0.15, 0.15);
+      let angleLegs = map(mouseX, 0, width, -0.2, 0.2);
 
-  
+      // Lower Body
+      push();
+      translate(width/2, 500);
+      rotate(angleLegs);
+      translate(-width/2, -500);
+      drawShoes();
+      drawPants();
+      pop();
+      
+      // Upper body
+      push();
+      translate(width/2, 300);  
+      rotate(angleBody);
+      translate(-width/2, -300);
+      drawHands(139, 393, 293, 399, 40);
+      drawShirts();
+      drawSuit();
+      pop();
+      
+      // Face
+      push();
+      translate(width/2, 150);  
+      rotate(angleFace);
+      translate(-width/2, -150);
+      drawFace(200, 105, 220, 180);
+      drawEyes(148, 98, 40, 55, 248, 94, 40, 55);
+      drawTongue(177, 160);
+      drawSmile(154, 145, 234, 144);
+      pop();
+    }
 
-  </div>
+    function drawFace(x, y, w, h) {
+      let grad = drawingContext.createLinearGradient(x, y-80, x, y+80);
+      grad.addColorStop(0, color(255, 255, 0));
+      grad.addColorStop(1, color(255, 165, 0));
+      drawingContext.fillStyle = grad;
+      stroke(0, 100, 255);
+      strokeWeight(5);
+      ellipse(x, y, w, h);
+    }
 
+    function drawEyes(x1, y1, w1, h1, x2, y2, w2, h2) {
+      stroke(100, 200, 255);
+      strokeWeight(3);
+      fill(255);
+      ellipse(x1, y1, w1, h1);
+      ellipse(x2, y2, w2, h2);
+    }
 
-  <h2>Description</h2>
+    function drawTongue(x, y) {
+      fill(255);
+      stroke(0, 0, 255);
+      strokeWeight(3);
+      beginShape();
+      vertex(x, y);               
+      bezierVertex(190, 166, 205, 168, 216, 161);
+      bezierVertex(215, 185, 210, 200, 200, 200); 
+      bezierVertex(190, 200, 185, 185, 180, 161);
+      endShape(CLOSE);
+    }
 
-  <p>
+    function drawSmile(x1, y1, x2, y2) {
+      noFill();
+      stroke(139, 69, 19);
+      strokeWeight(6);
+      bezier(x1, y1, 187, 170, 210, 175, x2, y2);
+    }
 
-    This is a 1–2 sentence description of Project 4 Describe what it does,
+    function drawHands(x1, y1, x2, y2, r) {
+      push();
+      translate(0, -5);
+      stroke(0, 0, 255);
+      strokeWeight(4);
+      fill(255, 0, 171);
+      ellipse(x1, y1, r, r);
+      ellipse(x2, y2, r, r);
+      pop();
+    }
 
-    what you were exploring, or what you learned.
+    function drawShirts() {
+      push(); 
+      stroke(0, 0, 255);    
+      strokeWeight(3);
+      fill(176, 241, 255);    
+      beginShape();
+      vertex(197, 207);
+      vertex(165, 197);
+      vertex(143, 225);
+      vertex(208, 309);
+      vertex(261, 217);
+      vertex(229, 197);
+      endShape(CLOSE);
+      pop();
+    }
 
-  </p>
-<main>
+    function drawSuit() {
+      push();  
+      translate(-5, -10);
+      stroke(0, 0, 255); 
+      strokeWeight(4);
+      fill(63, 101, 117);  
+      beginShape();
+      vertex(202, 217);
+      vertex(188, 232);
+      vertex(196, 242);
+      vertex(190, 279);
+      vertex(151, 226);
+      vertex(53, 316);
+      vertex(122, 405);
+      vertex(148, 376);
+      vertex(104, 325);
+      vertex(118, 311);
+      vertex(111, 300);
+      vertex(146, 274);
+      vertex(160, 322);
+      vertex(153, 427);
+      vertex(294, 434);
+      vertex(265, 328);
+      vertex(286, 273);
+      vertex(325, 310);
+      vertex(325, 326);
+      vertex(338, 334);
+      vertex(291, 386);
+      vertex(315, 410);
+      vertex(379, 344);
+      vertex(375, 296);
+      vertex(264, 218);
+      vertex(234, 284);
+      vertex(214, 248);
+      vertex(220, 231);
+      endShape(CLOSE); 
+      pop();
+    }
+
+    function drawShoes() {
+      push(); 
+      noStroke();
+      fill(0);      
+      beginShape();
+      vertex(146,574);
+      vertex(125,590);
+      vertex(174,590);
+      vertex(215,452);
+      vertex(255,590);
+      vertex(300,590);
+      vertex(215,435);
+      vertex(159,515);
+      endShape(CLOSE);
+      pop();
+    }
+
+    function drawPants() {
+      push(); 
+      stroke(186, 67, 0);      
+      strokeWeight(3);
+      fill(173, 122, 69);       
+      beginShape();
+      vertex(146,420);
+      vertex(114,582);
+      vertex(186,582);
+      vertex(219,465);
+      vertex(243,579);
+      vertex(327,579);
+      vertex(287,425);
+      endShape(CLOSE);
+      pop();
+    }
+  </script>
+
 </body>
-
 </html>
