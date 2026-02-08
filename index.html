@@ -16,60 +16,47 @@
     <div class="container">
         <header>
             <div class="logo">Cathy Choi (Logo)</div>
-            <nav>
-                <a href="#">Home</a>
-                <a href="#">About</a>
-                <a href="#">Fall25</a>
-                <a href="#">Spring26</a>
-                <a href="#">Contact</a>
+            <nav class="nav-menu">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="fall25.html">Fall25</a>
+                <a href="spring26.html">Spring26</a>
+                <a href="contact.html">Contact</a>
             </nav>
         </header>
 
         <main class="hero-grid">
-            
             <div class="hero-image">
                 <img src="https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?q=80&w=2070&auto=format&fit=crop" alt="Portfolio Main">
             </div>
-
             <div class="hero-text-box">
                 <h1>Hi! I'm Cathy Choi.</h1>
                 <p>I am <span id="typed"></span></p>
             </div>
-
         </main>
 
-        <section class="slider-section">
+        <section class="slider-section" id="sliderArea">
             <div class="slider-track-container">
-                <div class="slider-track">
-                    <div class="project-box">Grid 3 <br>Project 1</div>
-                    <div class="project-box">Grid 3 <br>Project 2</div>
-                    <div class="project-box">Grid 3 <br>Project 3</div>
-                    <div class="project-box">Grid 3 <br>Project 4</div>
-                    <div class="project-box">Grid 3 <br>Project 1</div>
-                    <div class="project-box">Grid 3 <br>Project 2</div>
-                    <div class="project-box">Grid 3 <br>Project 3</div>
-                    <div class="project-box">Grid 3 <br>Project 4</div>
+                <div class="slider-track" id="track">
+                    <div class="project-box"><a href="project1.html">Project 01</a></div>
+                    <div class="project-box"><a href="project2.html">Project 02</a></div>
+                    <div class="project-box"><a href="project3.html">Project 03</a></div>
+                    <div class="project-box"><a href="project4.html">Project 04</a></div>
+
+                    <div class="project-box"><a href="project1.html">Project 01</a></div>
+                    <div class="project-box"><a href="project2.html">Project 02</a></div>
+                    <div class="project-box"><a href="project3.html">Project 03</a></div>
+                    <div class="project-box"><a href="project4.html">Project 04</a></div>
+                    
+                    <div class="project-box"><a href="project1.html">Project 01</a></div>
+                    <div class="project-box"><a href="project2.html">Project 02</a></div>
+                    <div class="project-box"><a href="project3.html">Project 03</a></div>
+                    <div class="project-box"><a href="project4.html">Project 04</a></div>
                 </div>
             </div>
         </section>
     </div>
 
     <script src="typing.js"></script>
-
-    <script>
-        const track = document.querySelector('.slider-track');
-        let isScrolling;
-
-        window.addEventListener('wheel', (e) => {
-            // 휠을 돌리면 애니메이션 속도를 5초(빠름)로 변경
-            track.style.animationDuration = '5s';
-
-            // 휠이 멈추면 0.5초 뒤에 다시 20초(느림)로 복구
-            window.clearTimeout(isScrolling);
-            isScrolling = setTimeout(() => {
-                track.style.animationDuration = '20s';
-            }, 500);
-        });
-    </script>
-</body>
+    <script src="script.js"></script> </body>
 </html>
