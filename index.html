@@ -2,38 +2,73 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>Cathy Choi Portfolio</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cathy Choi | Portfolio</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
 </head>
 <body>
+
     <nav class="navbar">
         <div class="logo">Cathy Choi (logo)</div>
         <ul class="nav-links">
-            <li>Home</li><li>About</li><li>Fall25</li><li>Spring26</li><li>Contact</li>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Fall25</a></li>
+            <li><a href="#">Spring26</a></li>
+            <li><a href="#">Contact</a></li>
         </ul>
     </nav>
 
-    <main class="grid-container">
-        <section class="hero-image">
-            <img src="your-image.jpg" alt="Hero Image">
+    <main class="main-container">
+        
+        <section class="hero-section">
+            <div class="grid-1-image">
+                <img src="https://via.placeholder.com/1200x600" alt="Main Portfolio Image">
+            </div>
+            
+            <div class="grid-2-intro">
+                <h2>Hi! I'm Cathy Choi.</h2>
+                <p>I'm <span id="typed"></span></p>
+            </div>
         </section>
 
-        <section class="intro-box">
-            <h1>Hi! I'm Cathy Choi.</h1>
-            <p>I'm <span id="typed"></span></p>
-        </section>
-
-        <section class="project-slider-wrapper">
-            <div class="slider-track">
-                <a href="project1.html" class="project-card">Project 1</a>
-                <a href="project2.html" class="project-card">Project 2</a>
-                <a href="project3.html" class="project-card">Project 3</a>
-                <a href="project4.html" class="project-card">Project 4</a>
+        <section class="grid-3-slider">
+            <div class="slider-container">
+                <div class="slider-track">
+                    <a href="project1.html" class="project-card">Past Project 1</a>
+                    <a href="project2.html" class="project-card">Past Project 2</a>
+                    <a href="project3.html" class="project-card">Past Project 3</a>
+                    <a href="project4.html" class="project-card">Past Project 4</a>
+                    <a href="project1.html" class="project-card">Past Project 1</a>
+                    <a href="project2.html" class="project-card">Past Project 2</a>
+                    <a href="project3.html" class="project-card">Past Project 3</a>
+                    <a href="project4.html" class="project-card">Past Project 4</a>
                 </div>
+            </div>
         </section>
+
     </main>
 
-    <script src="script.js"></script>
+    <script>
+        // Typing.js 초기화
+        var typed = new Typed('#typed', {
+            strings: ['a Creative Designer.', 'a Web Developer.', 'a Problem Solver.'],
+            typeSpeed: 60,
+            backSpeed: 40,
+            loop: true
+        });
+
+        // 스크롤 시 속도 조절 이벤트
+        const track = document.querySelector('.slider-track');
+        window.addEventListener('wheel', (e) => {
+            if (e.deltaY !== 0) {
+                track.style.animationDuration = '5s'; // 스크롤 시 빠르게
+                setTimeout(() => {
+                    track.style.animationDuration = '20s'; // 1초 후 원래 속도로
+                }, 1000);
+            }
+        });
+    </script>
 </body>
 </html>
