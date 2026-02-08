@@ -3,72 +3,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cathy Choi | Portfolio</title>
+    <title>Cathy Choi | Designer & Developer</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
 </head>
 <body>
 
     <nav class="navbar">
-        <div class="logo">Cathy Choi (logo)</div>
+        <div class="logo">CATHY CHOI</div>
         <ul class="nav-links">
-            <li><a href="#">Home</a></li>
-            <li><a href="#">About</a></li>
-            <li><a href="#">Fall25</a></li>
-            <li><a href="#">Spring26</a></li>
-            <li><a href="#">Contact</a></li>
+            <li>About</li>
+            <li>Fall '25</li>
+            <li>Spring '26</li>
+            <li>Contact</li>
         </ul>
     </nav>
 
-    <main class="main-container">
-        
-        <section class="hero-section">
-            <div class="grid-1-image">
-                <img src="https://via.placeholder.com/1200x600" alt="Main Portfolio Image">
+    <main class="viewport-wrapper">
+        <section class="hero-grid">
+            <div class="main-image-container">
+                <img src="https://images.unsplash.com/photo-1494438639946-1ebd1d20bf85?auto=format&fit=crop&w=1500&q=80" alt="Hero">
             </div>
             
-            <div class="grid-2-intro">
-                <h2>Hi! I'm Cathy Choi.</h2>
-                <p>I'm <span id="typed"></span></p>
-            </div>
-        </section>
-
-        <section class="grid-3-slider">
-            <div class="slider-container">
-                <div class="slider-track">
-                    <a href="project1.html" class="project-card">Past Project 1</a>
-                    <a href="project2.html" class="project-card">Past Project 2</a>
-                    <a href="project3.html" class="project-card">Past Project 3</a>
-                    <a href="project4.html" class="project-card">Past Project 4</a>
-                    <a href="project1.html" class="project-card">Past Project 1</a>
-                    <a href="project2.html" class="project-card">Past Project 2</a>
-                    <a href="project3.html" class="project-card">Past Project 3</a>
-                    <a href="project4.html" class="project-card">Past Project 4</a>
+            <div class="intro-overlay">
+                <div class="intro-content">
+                    <h1>Hi! I'm Cathy Choi.</h1>
+                    <p>I'm <span id="typed"></span></p>
                 </div>
             </div>
         </section>
 
+        <section class="project-section">
+            <div class="slider-wrapper">
+                <div class="slider-track" id="track">
+                    <div class="project-card"><span>Project 01</span></div>
+                    <div class="project-card"><span>Project 02</span></div>
+                    <div class="project-card"><span>Project 03</span></div>
+                    <div class="project-card"><span>Project 04</span></div>
+                    <div class="project-card"><span>Project 01</span></div>
+                    <div class="project-card"><span>Project 02</span></div>
+                    <div class="project-card"><span>Project 03</span></div>
+                    <div class="project-card"><span>Project 04</span></div>
+                </div>
+            </div>
+        </section>
     </main>
 
     <script>
-        // Typing.js 초기화
-        var typed = new Typed('#typed', {
-            strings: ['a Creative Designer.', 'a Web Developer.', 'a Problem Solver.'],
-            typeSpeed: 60,
-            backSpeed: 40,
+        // Typing Effect
+        new Typed('#typed', {
+            strings: ['a Visionary Designer.', 'a Creative Coder.', 'a Problem Solver.'],
+            typeSpeed: 50,
+            backSpeed: 30,
             loop: true
         });
 
-        // 스크롤 시 속도 조절 이벤트
-        const track = document.querySelector('.slider-track');
+        // Smooth Scroll Acceleration
+        const track = document.getElementById('track');
+        let baseSpeed = 20; // 기본 애니메이션 시간 (초)
+        let targetSpeed = 20;
+        let currentSpeed = 20;
+
         window.addEventListener('wheel', (e) => {
             if (e.deltaY !== 0) {
-                track.style.animationDuration = '5s'; // 스크롤 시 빠르게
-                setTimeout(() => {
-                    track.style.animationDuration = '20s'; // 1초 후 원래 속도로
-                }, 1000);
+                targetSpeed = 5; // 휠 돌릴 때 빨라짐
+                clearTimeout(window.scrollTimeout);
+                window.scrollTimeout = setTimeout(() => {
+                    targetSpeed = 20; // 멈추면 서서히 복구
+                }, 500);
             }
         });
+
+        // 프레임마다 속도를 부드럽게 보간 (Lerp)
+        function update() {
+            currentSpeed += (targetSpeed - currentSpeed) * 0.05;
+            track.style.animationDuration = `${currentSpeed}s`;
+            requestAnimationFrame(update);
+        }
+        update();
     </script>
 </body>
 </html>
