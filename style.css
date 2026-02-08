@@ -1,4 +1,6 @@
-/* RESET */
+/* ───────────────────────────────
+   1. RESET & BASIC SETUP
+──────────────────────────────── */
 * {
   box-sizing: border-box;
 }
@@ -8,179 +10,198 @@ body {
   font-family: "Inter", sans-serif;
   color: #111;
   background: #fff;
+  overflow-x: hidden; /* 가로 스크롤 방지 */
+}
+
+/* 링크 기본 스타일 제거 */
+a {
+  text-decoration: none;
+  color: inherit;
 }
 
 /* ───────────────────────────────
-   FIXED TOP NAVIGATION — UNIFIED
+   2. FIXED NAVIGATION
 ──────────────────────────────── */
 .fixed-nav {
   position: fixed;
   top: 0;
   left: 0;
-
   width: 100%;
-  padding: 20px 60px;
-
+  padding: 30px 50px; /* 여백 조정 */
   display: flex;
   justify-content: space-between;
   align-items: center;
-
-  background: rgba(255, 255, 255, 0.5);
-  backdrop-filter: blur(6px);
   z-index: 1000;
-
-  font-size: 1rem;            /* 모든 페이지에서 동일한 크기 */
-  line-height: 1;             /* 높이 통일 */
-  font-weight: 500;           /* 굵기 통일 */
+  
+  /* 기본 모드 (흰 배경 페이지용) */
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(5px);
+  font-size: 1rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
 }
 
 .fixed-nav a {
-  color: #111;
-  text-decoration: none;
-
-  font-size: 1rem;            /* anchor 폰트도 명확히 통일 */
-  font-weight: 500;
   margin: 0 14px;
 }
 
 .nav-center a {
-  margin: 0 20px;             /* 내부 페이지 & 메인 동일 간격 */
+  margin: 0 20px;
 }
 
-.nav-left,
-.nav-right {
-  font-size: 1rem;            /* 모든 텍스트 동일 */
+/* 메인 페이지일 때 네비게이션 스타일 변경 */
+body.home .fixed-nav {
+  background: transparent; /* 배경 투명하게 */
+  color: white; /* 글씨 흰색 */
+  backdrop-filter: none;
+  mix-blend-mode: difference; /* 배경이 밝으면 글씨가 어둡게 변하는 효과 */
+}
+
+body.home .fixed-nav a {
+  color: white; 
 }
 
 
 /* ───────────────────────────────
-   MAIN PAGE (INDEX) — HERO OVERRIDE
+   3. HOME PAGE 
+   ★ 과제 핵심 부분 ★
 ──────────────────────────────── */
 
+/* 메인 페이지 바디 설정 (Dark Theme) */
 body.home {
-  margin: 0;
-  padding: 0;
-}
-
-body.home .hero-black {
-  height: 100vh !important;
-  margin: 0 !important;
-  padding: 150px 60px !important;
-  background: black !important;
-  color: white !important;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-body.home .hero-black h1 {
-  font-size: 6rem;
+  background-color: #0a0a0a; /* 검정 배경 */
   color: white;
+  height: 100vh;
+  width: 100vw;
 }
 
-body.home .hero-black .sub {
-  font-size: 1.7rem;
-  color: #d0d0d0;
+/* 메인 그리드 컨테이너 */
+.main-grid {
+  display: grid;
+  width: 100%;
+  height: 100vh; /* 화면 전체 높이 */
+  
+  /* 12칸 컬럼 그리드 (가장 유연함) */
+  grid-template-columns: repeat(12, 1fr);
+  
+  /* 행 높이 설정: 상단여백 / 제목영역 / 설명영역 / 하단여백 */
+  grid-template-rows: 150px minmax(200px, auto) auto 1fr;
+  
+  gap: 20px;
+  padding: 0 50px; /* 좌우 여백 */
+  position: relative;
 }
 
-/* ABOUT SECTION */
+/* (1) 이미지 영역 */
+.hero-image-container {
+  /* 가로: 5번 라인부터 끝까지 (오른쪽 배치) */
+  grid-column: 5 / -1; 
+  /* 세로: 처음부터 끝까지 꽉 차게 */
+  grid-row: 1 / -1;
+  
+  z-index: 1; /* 제일 뒤 */
+  overflow: hidden;
+  opacity: 0.8; /* 살짝 어둡게 처리 */
+}
+
+.hero-image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* 비율 유지하며 꽉 채우기 */
+  filter: grayscale(20%) contrast(1.1); /* 게임 아트 느낌 보정 */
+}
+
+/* (2) 텍스트 타이틀 영역 (이미지와 겹침!) */
+.hero-text-area {
+  /* 가로: 2번부터 8번 라인까지 */
+  grid-column: 2 / 9;
+  /* 세로: 2번 라인 (이미지 위쪽) */
+  grid-row: 2 / 3;
+  
+  z-index: 10; /* 이미지보다 위 */
+  align-self: end; /* 박스 안에서 아래로 정렬 */
+  pointer-events: none; /* 마우스가 글씨 통과해서 이미지 클릭 가능하게 */
+}
+
+.main-title {
+  font-size: 7vw; /* 화면 크기에 비례해서 커짐 */
+  line-height: 0.85;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: #fff;
+  margin: 0;
+  
+  /* 텍스트 겹침 효과 (선택사항) */
+  text-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.subtitle {
+  font-size: 1.5rem;
+  font-weight: 300;
+  color: #ccc;
+  margin-top: 30px;
+  line-height: 1.4;
+}
+
+/* (3) 소개글 및 버튼 영역 */
+.intro-box {
+  /* 가로: 2번부터 5번 라인까지 (왼쪽 하단) */
+  grid-column: 2 / 5;
+  /* 세로: 3번 라인 */
+  grid-row: 3 / 4;
+  
+  z-index: 10;
+  padding-top: 40px;
+}
+
+.intro-box p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 30px;
+  color: #ddd;
+}
+
+.cta-button {
+  display: inline-block;
+  padding: 12px 24px;
+  border: 1px solid rgba(255,255,255,0.3);
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+  font-weight: 600;
+  backdrop-filter: blur(4px);
+  transition: all 0.3s ease;
+}
+
+.cta-button:hover {
+  background: #fff;
+  color: #000;
+  border-color: #fff;
+}
+
+
+/* ───────────────────────────────
+   4. OTHER PAGES 
+   기존 스타일 유지하되 정리
+──────────────────────────────── */
+
+/* 섹션 공통 */
 .about-section {
   background: #fff;
   padding: 150px 0;
   border-top: 1px solid #eee;
 }
 
-.about-inner {
-  max-width: 900px;
-  margin: auto;
-  padding: 0 20px;
-}
-
-.about-section h2 {
-  font-size: 2.6rem;
-  font-weight: 700;
-  margin-top: 80px;
-  margin-bottom: 20px;
-}
-
-.about-section p {
-  font-size: 1.25rem;
-  line-height: 1.75;
-  color: #333;
-  margin-bottom: 20px;
-  max-width: 800px;
-}
-
-/* OVERVIEW layout (text + photo) */
-.overview-grid {
-  display: grid;
-  grid-template-columns: 1fr 260px; /* 텍스트 | 사진 */
-  gap: 60px;
-  align-items: center;
-  margin-top: 30px;
-  margin-bottom: 40px;
-}
-
-.overview-text p {
-  font-size: 1.25rem;
-  line-height: 1.75;
-  color: #333;
-  max-width: 650px;
-}
-
-.overview-photo img {
-  width: 220px;
-  height: 220px;
-  border-radius: 50%;
-  object-fit: cover;
-  display: block;
-  margin: 0 auto;
-  box-shadow: 0 6px 16px rgba(0,0,0,0.1);
-}
-
-/* Mobile */
-@media (max-width: 900px) {
-  .overview-grid {
-    grid-template-columns: 1fr;
-    gap: 30px;
-  }
-
-  .overview-photo img {
-    width: 160px;
-    height: 160px;
-  }
-}
-
-
-.skills-list {
-  list-style: none;
-  padding: 0;
-  margin: 0 0 20px 0;
-}
-
-.skills-list li {
-  font-size: 1.2rem;
-  color: #333;
-  margin-bottom: 10px;
-}
-
-.about-section a {
-  color: #111;
-  text-decoration: underline;
-}
-
-.about-section a:hover {
-  opacity: 0.6;
-}
-
-
-/* ───────────────────────────────
-   UNIFIED PAGE LAYOUT (Extra / Projects)
-──────────────────────────────── */
+.about-inner, 
 .page-container {
   max-width: 950px;
-  margin: 140px auto 100px; /* 아래로 밀어서 nav 공간 확보 */
+  margin: 0 auto;
   padding: 0 25px;
+}
+
+/* 페이지 컨테이너 (Projects, Extra 등) */
+.page-container {
+  margin-top: 140px; /* 네비게이션 공간 확보 */
+  margin-bottom: 100px;
 }
 
 .page-container h1 {
@@ -189,58 +210,73 @@ body.home .hero-black .sub {
   margin-bottom: 15px;
 }
 
-.subtitle,
-.page-description {
-  font-size: 1.25rem;
-  color: #555;
-  margin-bottom: 40px;
-  line-height: 1.5;
+/* 기존 About 스타일들 */
+.about-section h2 {
+  font-size: 2.6rem;
+  font-weight: 700;
+  margin-top: 80px;
+  margin-bottom: 20px;
 }
 
-.page-container h2 {
-  font-size: 1.6rem;
-  margin-top: 40px;
+.overview-grid {
+  display: grid;
+  grid-template-columns: 1fr 260px;
+  gap: 60px;
+  align-items: center;
+  margin-top: 30px;
 }
 
-.page-container p {
-  font-size: 1.05rem;
-  line-height: 1.65;
-  color: #444;
-  margin-bottom: 18px;
+.overview-photo img {
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.1);
 }
 
-/* PROJECT LIST */
-.project-list.clean {
-  list-style: none;
-  padding-left: 0;
+.skills-list li {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
 }
 
-.project-list.clean li {
-  margin: 12px 0;
-}
-
-.project-list.clean a {
-  font-size: 1.25rem;
-  color: #111;
-  font-weight: 600;
-  text-decoration: none;
-}
-
-.project-list.clean a:hover {
-  opacity: 0.6;
-}
-
-/* RESPONSIVE */
-@media (max-width: 800px) {
-  .fixed-nav {
-    padding: 15px 20px;
+/* ───────────────────────────────
+   5. RESPONSIVE (MOBILE)
+   모바일에서는 Grid를 풀고 일자로 배치
+──────────────────────────────── */
+@media (max-width: 900px) {
+  
+  /* 메인 그리드 해제 -> Flex 컬럼으로 변경 */
+  .main-grid {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    padding: 100px 20px 40px;
   }
 
-  .page-container {
-    padding: 0 18px;
+  /* 이미지 순서 조정 (모바일에서 위로 가거나 아래로 가거나) */
+  .hero-image-container {
+    order: -1; /* 이미지를 맨 위로 */
+    height: 400px;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  
+  .hero-text-area {
+    width: 100%;
+    text-align: left;
+  }
+  
+  .main-title {
+    font-size: 3.5rem;
   }
 
-  .page-container h1 {
-    font-size: 2.4rem;
+  .intro-box {
+    width: 100%;
+  }
+
+  /* About 페이지 반응형 */
+  .overview-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
   }
 }
