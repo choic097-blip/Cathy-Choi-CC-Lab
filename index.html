@@ -3,84 +3,129 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cathy Choi | Designer & Developer</title>
+    <title>Cathy Choi | Portfolio</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="style.css">
     <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
 </head>
 <body>
 
-    <nav class="navbar">
-        <div class="logo">CATHY CHOI</div>
-        <ul class="nav-links">
-            <li>About</li>
-            <li>Fall '25</li>
-            <li>Spring '26</li>
-            <li>Contact</li>
-        </ul>
-    </nav>
+    <div class="site-wrapper">
+        <nav class="navbar">
+            <div class="logo">CATHY CHOI</div>
+            <ul class="nav-links">
+                <li><a href="#">About</a></li>
+                <li><a href="#">Fall '25</a></li>
+                <li><a href="#">Spring '26</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
 
-    <main class="viewport-wrapper">
-        <section class="hero-grid">
-            <div class="main-image-container">
-                <img src="https://images.unsplash.com/photo-1494438639946-1ebd1d20bf85?auto=format&fit=crop&w=1500&q=80" alt="Hero">
-            </div>
-            
-            <div class="intro-overlay">
-                <div class="intro-content">
-                    <h1>Hi! I'm Cathy Choi.</h1>
-                    <p>I'm <span id="typed"></span></p>
+        <main>
+            <section class="hero-grid">
+                <div class="hero-image-area">
+                    <img src="https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?q=80&w=2070&auto=format&fit=crop" alt="Minimalist Interior">
                 </div>
-            </div>
-        </section>
+                
+                <div class="hero-text-area">
+                    <div class="glass-box">
+                        <span class="label">Introduction</span>
+                        <h1>Hi! I'm <br>Cathy Choi.</h1>
+                        <p class="typing-wrapper">I am <span id="typed"></span></p>
+                    </div>
+                </div>
+            </section>
 
-        <section class="project-section">
-            <div class="slider-wrapper">
-                <div class="slider-track" id="track">
-                    <div class="project-card"><span>Project 01</span></div>
-                    <div class="project-card"><span>Project 02</span></div>
-                    <div class="project-card"><span>Project 03</span></div>
-                    <div class="project-card"><span>Project 04</span></div>
-                    <div class="project-card"><span>Project 01</span></div>
-                    <div class="project-card"><span>Project 02</span></div>
-                    <div class="project-card"><span>Project 03</span></div>
-                    <div class="project-card"><span>Project 04</span></div>
+            <section class="slider-section">
+                <div class="slider-header">
+                    <h2>Selected Works</h2>
+                    <span class="scroll-hint">(Scroll or Drag)</span>
                 </div>
-            </div>
-        </section>
-    </main>
+                
+                <div class="slider-overflow">
+                    <div class="slider-track" id="track">
+                        <div class="card-item"><div class="card-inner">Project 01</div></div>
+                        <div class="card-item"><div class="card-inner">Project 02</div></div>
+                        <div class="card-item"><div class="card-inner">Project 03</div></div>
+                        <div class="card-item"><div class="card-inner">Project 04</div></div>
+                        <div class="card-item"><div class="card-inner">Project 05</div></div>
+                        
+                        <div class="card-item"><div class="card-inner">Project 01</div></div>
+                        <div class="card-item"><div class="card-inner">Project 02</div></div>
+                        <div class="card-item"><div class="card-inner">Project 03</div></div>
+                        <div class="card-item"><div class="card-inner">Project 04</div></div>
+                        <div class="card-item"><div class="card-inner">Project 05</div></div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
 
     <script>
-        // Typing Effect
+        // 1. Typing Effect
         new Typed('#typed', {
-            strings: ['a Visionary Designer.', 'a Creative Coder.', 'a Problem Solver.'],
+            strings: ['a UX/UI Designer.', 'a Creative Developer.', 'a Visual Storyteller.'],
             typeSpeed: 50,
             backSpeed: 30,
-            loop: true
+            startDelay: 1000,
+            loop: true,
+            showCursor: true
         });
 
-        // Smooth Scroll Acceleration
+        // 2. 부드러운 가속 무한 스크롤 (JS Physics)
         const track = document.getElementById('track');
-        let baseSpeed = 20; // 기본 애니메이션 시간 (초)
-        let targetSpeed = 20;
-        let currentSpeed = 20;
+        
+        let position = 0;
+        let speed = 1.5;      // 기본 속도
+        let baseSpeed = 1.5;  // 돌아올 기본 속도
+        let targetSpeed = 1.5;
+        
+        // 카드 하나의 너비 + 갭 (CSS와 맞춰야 함: 300px + 30px gap)
+        const itemWidth = 330; 
+        const totalItems = 5; // 원본 아이템 개수
+        const totalWidth = itemWidth * totalItems;
 
+        // 휠 이벤트: 속도를 가속시킴
         window.addEventListener('wheel', (e) => {
-            if (e.deltaY !== 0) {
-                targetSpeed = 5; // 휠 돌릴 때 빨라짐
-                clearTimeout(window.scrollTimeout);
-                window.scrollTimeout = setTimeout(() => {
-                    targetSpeed = 20; // 멈추면 서서히 복구
-                }, 500);
+            // 휠 방향에 따라 가속 (아래로 휠: 빨라짐)
+            if(e.deltaY > 0) {
+                targetSpeed = 8.0; 
+            } else {
+                targetSpeed = 8.0; // 위로 올려도 빨라지게 하거나, 반대로 하고 싶으면 -8.0
             }
+            
+            // 휠 멈추면 잠시 후 감속 시작
+            clearTimeout(window.scrollTimer);
+            window.scrollTimer = setTimeout(() => {
+                targetSpeed = baseSpeed;
+            }, 100);
         });
 
-        // 프레임마다 속도를 부드럽게 보간 (Lerp)
-        function update() {
-            currentSpeed += (targetSpeed - currentSpeed) * 0.05;
-            track.style.animationDuration = `${currentSpeed}s`;
-            requestAnimationFrame(update);
+        // 애니메이션 루프 (매 프레임 실행)
+        function animate() {
+            // 속도 보간 (부드러운 감속/가속) Lerp
+            speed += (targetSpeed - speed) * 0.05;
+
+            // 위치 이동
+            position -= speed;
+
+            // 무한 루프 로직 (위치 리셋)
+            // 위치가 전체 너비만큼 이동했으면 0으로 순간이동
+            if (position <= -totalWidth) {
+                position = 0;
+            }
+
+            // DOM 적용
+            track.style.transform = `translateX(${position}px)`;
+
+            requestAnimationFrame(animate);
         }
-        update();
+
+        animate();
     </script>
 </body>
 </html>
