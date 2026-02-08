@@ -23,9 +23,15 @@ header {
 }
 
 .logo {
-    font-weight: 700;
-    font-size: 1.2rem;
-    text-transform: uppercase;
+    /* 글자 관련 스타일은 지워도 되고, 냅둬도 상관없습니다 */
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    height: 40px; /* 로고 높이 (원하는 크기로 조절하세요: 30px ~ 60px 추천) */
+    width: auto;  /* 비율 자동 유지 */
+    display: block;
 }
 
 .nav-menu {
