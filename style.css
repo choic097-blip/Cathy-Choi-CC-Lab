@@ -5,74 +5,85 @@ body {
     font-family: 'Archivo', sans-serif;
     background-color: #fff;
     color: #000;
-    overflow-x: hidden; /* 가로 스크롤 방지 */
+    overflow-x: hidden;
 }
 
-/* 전체 컨테이너: 화면 중앙 정렬 */
 .container {
-    max-width: 1600px; /* 너무 넓게 퍼지지 않도록 제한 */
+    max-width: 1600px;
     margin: 0 auto;
     padding: 20px 40px;
 }
 
-/* 네비게이션 */
+/* --- Header & Navigation (수정됨) --- */
 header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 20px 0 40px 0;
-    font-weight: 700;
-    text-transform: uppercase;
-    font-size: 0.9rem;
 }
 
-header nav a {
-    margin-left: 20px;
+.logo {
+    font-weight: 700;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+}
+
+.nav-menu {
+    display: flex;
+    gap: 15px; /* 버튼 사이 간격 */
+}
+
+.nav-menu a {
     text-decoration: none;
     color: #000;
+    font-weight: 600;
+    font-size: 1.2rem; /* 글자 크기 키움 */
+    padding: 10px 20px; /* 클릭 영역 확보 */
+    border-radius: 30px; /* 둥근 버튼 모양 */
+    transition: all 0.3s ease; /* 부드러운 전환 */
 }
 
-/* --- 메인 그리드 (핵심 수정) --- */
+/* 마우스 올렸을 때 효과 (검정 배경 + 흰 글씨) */
+.nav-menu a:hover {
+    background-color: #000;
+    color: #fff;
+}
+
+/* --- Main Grid (유지) --- */
 .hero-grid {
     display: grid;
-    /* 12칸으로 나눕니다 */
     grid-template-columns: repeat(12, 1fr);
-    /* 높이를 화면의 70%로 고정 (이미지 폭주 방지) */
     height: 70vh; 
     min-height: 500px;
     margin-bottom: 60px;
     position: relative;
 }
 
-/* Grid 1: 이미지 (1번칸 ~ 10번칸 차지) */
 .hero-image {
     grid-column: 1 / 11;
-    grid-row: 1 / 2; /* 첫번째 줄 */
+    grid-row: 1 / 2;
     width: 100%;
     height: 100%;
     overflow: hidden;
-    border: 2px solid #000; /* 깔끔한 테두리 */
+    border: 2px solid #000;
 }
 
 .hero-image img {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* 비율 유지하며 꽉 채우기 */
+    object-fit: cover;
 }
 
-/* Grid 2: 텍스트 박스 (8번칸 ~ 12번칸 차지 -> 이미지랑 겹침!) */
 .hero-text-box {
-    grid-column: 9 / 13; /* 오른쪽 끝에 위치 */
-    grid-row: 1 / 2; /* 이미지와 같은 줄에 위치 (중요) */
-    
-    align-self: end; /* 아래쪽에 붙임 */
-    z-index: 10; /* 이미지보다 위에 */
-    
+    grid-column: 9 / 13;
+    grid-row: 1 / 2;
+    align-self: end;
+    z-index: 10;
     background-color: #fff;
     padding: 40px;
-    border: 2px solid #000; /* 테두리 */
-    margin-bottom: 40px; /* 바닥에서 살짝 띄움 */
-    margin-left: -20px; /* 왼쪽으로 살짝 당겨서 겹침 강조 */
+    border: 2px solid #000;
+    margin-bottom: 40px;
+    margin-left: -20px;
 }
 
 .hero-text-box h1 {
@@ -87,68 +98,63 @@ header nav a {
     color: #555;
 }
 
-/* --- Grid 3: 슬라이더 --- */
+/* --- Slider Section (수정됨) --- */
 .slider-section {
     width: 100%;
     border-top: 2px solid #000;
-    padding-top: 20px;
-}
-
-.slider-track-container {
-    overflow: hidden;
-    white-space: nowrap;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    overflow: hidden; /* 넘치는 부분 숨김 */
 }
 
 .slider-track {
     display: flex;
-    gap: 20px;
+    gap: 20px; /* 아이템 사이 간격 */
     width: max-content;
-    /* 기본 속도 20초 */
-    animation: scroll 20s linear infinite; 
-}
-
-/* 마우스 올리면 멈춤 */
-.slider-track:hover {
-    animation-play-state: paused;
+    will-change: transform; /* 성능 최적화 */
+    /* CSS 애니메이션 제거함 -> JS로 움직임 */
 }
 
 .project-box {
     width: 250px;
     height: 250px;
     border: 2px solid #000;
+    background: #fff;
     display: flex;
     align-items: center;
     justify-content: center;
-    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+/* 링크 스타일 */
+.project-box a {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: #000;
     font-weight: bold;
-    font-size: 1.1rem;
-    color: #000; /* 빨간색 대신 검정으로 세련되게 */
-    background: #fff;
-    cursor: pointer;
-    transition: background 0.3s, color 0.3s;
+    font-size: 1.2rem;
 }
 
 .project-box:hover {
-    background: #000;
+    background-color: #000;
+}
+.project-box:hover a {
     color: #fff;
 }
 
-/* 애니메이션 정의 */
-@keyframes scroll {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); } /* 전체 길이의 절반만큼 이동 */
-}
-
-/* 반응형 (화면 작아질 때) */
+/* 반응형 */
 @media (max-width: 900px) {
     .hero-grid {
         display: flex;
         flex-direction: column;
         height: auto;
     }
-    
     .hero-text-box {
         width: 90%;
-        margin: -50px auto 0 auto; /* 위로 끌어올려서 겹치게 */
+        margin: -50px auto 0 auto;
     }
 }
