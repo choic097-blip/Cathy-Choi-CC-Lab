@@ -3,61 +3,57 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-  
-  <title>Cathy Choi | Game Design Portfolio</title>
-
+  <title>Cathy Choi | Portfolio</title>
   <link rel="stylesheet" href="style.css" />
-  
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
 
 <body class="home">
 
-  <header class="fixed-nav">
-    <div class="nav-left">
-      <a href="index.html">©Cathy Choi</a>
+  <div class="portfolio-grid">
+
+    <header class="nav-area">
+      <div class="logo">©Cathy Choi</div>
+      <nav class="menu">
+        <a href="about.html">About</a>
+        <a href="old_work.html">Old Work</a>
+        <a href="new_work.html">New Work</a>
+        <a href="extra.html">Free</a>
+      </nav>
+    </header>
+
+
+    <div class="hero-image">
+       <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop" alt="Game Concept Art">
     </div>
 
-    <nav class="nav-center">
-      <a href="project_index.html">Projects</a>
-      <a href="about.html">About</a>
-      <a href="extra.html">Playground</a>
-    </nav>
 
-    <div class="nav-right">
-      <a href="mailto:choic097@newschool.edu">Contact ↗</a>
-    </div>
-  </header>
-
-
-  <main class="main-grid">
-    
-    <div class="hero-image-container">
-       <img src="https://images.unsplash.com/photo-1515462277126-2dd0c162007a?q=80&w=1000&auto=format&fit=crop" alt="Game Concept Art">
-    </div>
-
-    <div class="hero-text-area">
-      <h1 class="main-title">
-        CATHY <br> CHOI
-      </h1>
-      <p class="subtitle">
-        Game Designer & <br>
-        Interactive Storyteller <span id="typing"></span>
-      </p>
-    </div>
-
-    <div class="intro-box">
+    <div class="hero-text-box">
+      <h2>Creating Worlds,<br>One Pixel at a Time.</h2>
       <p>
-        Building immersive worlds through code and narrative.<br>
-        Currently exploring <strong>Dark Fantasy</strong> and <strong>Visual Novels</strong>.
+        I am a Game Design student specializing in Dark Fantasy & Interactive Storytelling.
+        Currently building "Erotomaniac".
       </p>
-      
-      <a href="project_index.html" class="cta-button">View Selected Works ↘</a>
     </div>
 
-  </main> 
 
-  <script src="typing.js"></script>
+    <section class="latest-projects">
+      
+      <div class="project-card">
+        <div class="thumb" style="background-image: url('https://source.unsplash.com/random/400x300/?game');"></div>
+        <span>Project A</span>
+      </div>
 
-</body>
+      <div class="project-card">
+        <div class="thumb" style="background-image: url('https://source.unsplash.com/random/400x300/?cyberpunk');"></div>
+        <span>Project B</span>
+      </div>
+
+      <a href="project_index.html" class="more-link">
+        More Projects <span>&rarr;</span>
+      </a>
+
+    </section>
+
+  </div> </body>
 </html>
