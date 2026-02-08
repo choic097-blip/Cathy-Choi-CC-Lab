@@ -17,9 +17,10 @@ body {
 /* --- Header & Navigation (수정됨) --- */
 header {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start; 
     align-items: center;
     padding: 20px 0 40px 0;
+    gap: 100px;
 }
 
 .logo {
