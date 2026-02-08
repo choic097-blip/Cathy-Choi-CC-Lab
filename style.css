@@ -1,140 +1,227 @@
+/* --- 변수 설정 (색상, 간격) --- */
 :root {
-    --bg-color: #ffffff;
-    --text-color: #1a1a1a;
-    --accent-color: #f4f4f4;
-    --border-style: 1px solid #e2e2e2;
+    --bg-color: #FDFBF8; /* 아주 연한 웜그레이 (종이 질감 느낌) */
+    --text-main: #111111;
+    --text-sub: #666666;
+    --font-serif: 'Playfair Display', serif;
+    --font-sans: 'Inter', sans-serif;
+    --grid-gap: 20px;
+    --container-width: 1400px; /* 줌아웃 시 컨텐츠 퍼짐 방지 */
 }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+/* 기본 초기화 */
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     background-color: var(--bg-color);
-    color: var(--text-color);
-    overflow-x: hidden;
+    color: var(--text-main);
+    font-family: var(--font-sans);
+    overflow-x: hidden; /* 가로 스크롤 방지 */
 }
 
-/* Navigation */
+/* 화면 중앙 정렬 래퍼 (줌아웃 문제 해결) */
+.site-wrapper {
+    max-width: var(--container-width);
+    margin: 0 auto; /* 중앙 정렬 */
+    padding: 0 40px;
+    min-height: 100vh;
+}
+
+/* --- Navigation --- */
 .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 30px 50px;
-    height: 80px;
-    letter-spacing: 1px;
+    padding: 40px 0;
+    margin-bottom: 20px;
 }
 
-.logo { font-weight: 800; font-size: 1.2rem; }
-.nav-links { display: flex; list-style: none; gap: 40px; font-size: 0.9rem; text-transform: uppercase; }
+.logo {
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: 1.2rem;
+    letter-spacing: -0.5px;
+}
 
-/* Main Layout */
-.viewport-wrapper {
+.nav-links {
     display: flex;
-    flex-direction: column;
-    height: calc(100vh - 80px); /* 나비게이션 제외 높이 */
-    padding: 0 50px 30px 50px;
+    gap: 40px;
+    list-style: none;
 }
 
-/* Hero Section (Grid) */
+.nav-links a {
+    text-decoration: none;
+    color: var(--text-main);
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: opacity 0.3s;
+}
+
+.nav-links a:hover { opacity: 0.5; }
+
+
+/* --- Grid System (핵심: 오버레이) --- */
 .hero-grid {
     display: grid;
+    /* 12칸 그리드 */
     grid-template-columns: repeat(12, 1fr);
-    grid-template-rows: 1fr;
-    flex: 1; /* 가용 공간 모두 차지 */
+    /* 행 높이 자동 */
+    grid-template-rows: auto;
+    margin-bottom: 100px;
     position: relative;
-    gap: 20px;
-    min-height: 400px;
 }
 
-.main-image-container {
-    grid-column: 1 / 13;
-    grid-row: 1;
+/* 이미지 영역: 왼쪽에서 시작해서 9칸 차지 */
+.hero-image-area {
+    grid-column: 1 / 10; 
+    grid-row: 1; /* 1번 행 */
+    height: 65vh; /* 화면 높이의 65% */
+    min-height: 500px;
+    background-color: #eee;
     overflow: hidden;
-    border-radius: 4px;
 }
 
-.main-image-container img {
+.hero-image-area img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    filter: grayscale(20%);
-    transition: filter 0.5s ease;
+    display: block;
 }
 
-/* Intro Overlay */
-.intro-overlay {
-    grid-column: 7 / 13;
-    grid-row: 1;
-    align-self: center;
-    z-index: 10;
-    padding-right: 5%;
-}
-
-.intro-content {
-    background: rgba(255, 255, 255, 0.9);
-    backdrop-filter: blur(10px);
-    padding: 40px;
-    border: var(--border-style);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-}
-
-.intro-content h1 { font-size: 2.5rem; margin-bottom: 10px; font-weight: 300; }
-#typed { font-weight: 600; color: #555; }
-
-/* Project Slider (Grid 3) */
-.project-section {
-    height: 250px;
-    margin-top: 30px;
+/* 텍스트 영역: 7번째 칸부터 끝까지 (이미지와 겹침) */
+.hero-text-area {
+    grid-column: 8 / 13; 
+    grid-row: 1; /* 똑같이 1번 행 (겹치기 핵심) */
+    z-index: 10; /* 이미지 위에 오게 함 */
+    
+    align-self: center; /* 수직 중앙 정렬 */
     display: flex;
-    align-items: center;
+    justify-content: flex-end; /* 박스를 오른쪽 끝으로 */
 }
 
-.slider-wrapper {
+/* Glassmorphism 박스 디자인 */
+.glass-box {
+    background: rgba(255, 255, 255, 0.75); /* 반투명 흰색 */
+    backdrop-filter: blur(15px); /* 뒤 배경 흐리게 */
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    padding: 60px 50px;
     width: 100%;
-    overflow: hidden;
-    /* 양 옆을 흐리게 만드는 세련된 효과 */
-    mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+}
+
+.label {
+    display: block;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--text-sub);
+    margin-bottom: 20px;
+}
+
+.glass-box h1 {
+    font-family: var(--font-serif);
+    font-size: 4rem;
+    line-height: 1.1;
+    font-weight: 400;
+    margin-bottom: 20px;
+}
+
+.typing-wrapper {
+    font-size: 1.1rem;
+    color: var(--text-sub);
+}
+
+
+/* --- Slider Section --- */
+.slider-section {
+    padding-bottom: 100px;
+}
+
+.slider-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 20px;
+}
+
+.slider-header h2 {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: 2rem;
+}
+
+.scroll-hint {
+    font-size: 0.8rem;
+    color: #999;
+}
+
+.slider-overflow {
+    width: 100%;
+    overflow: hidden; /* 넘치는 것 숨김 */
 }
 
 .slider-track {
     display: flex;
-    gap: 30px;
+    gap: 30px; /* 카드 사이 간격 */
     width: max-content;
-    animation: scroll 20s linear infinite;
+    will-change: transform; /* 성능 최적화 */
 }
 
-.project-card {
-    width: 220px;
-    height: 220px;
-    background: var(--accent-color);
-    border: var(--border-style);
+/* 프로젝트 카드 디자인 */
+.card-item {
+    width: 300px;
+    height: 380px;
+    flex-shrink: 0;
+}
+
+.card-inner {
+    width: 100%;
+    height: 100%;
+    background-color: #f0f0f0;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.8rem;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    font-size: 1.2rem;
+    font-family: var(--font-serif);
+    color: #aaa;
+    transition: all 0.3s ease;
     cursor: pointer;
 }
 
-.project-card:hover {
-    background: #000;
+.card-inner:hover {
+    background-color: #111;
     color: #fff;
-    transform: translateY(-10px);
 }
 
-@keyframes scroll {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(calc(-250px * 4)); } /* 카드 너비 + gap * 개수만큼 */
-}
 
-/* 반응형 조정 */
-@media (max-width: 900px) {
-    .intro-overlay { grid-column: 2 / 12; align-self: center; }
-    .intro-content h1 { font-size: 1.8rem; }
+/* --- 반응형 (모바일/태블릿) --- */
+@media (max-width: 1024px) {
+    .site-wrapper { padding: 0 20px; }
+    
+    .hero-grid {
+        grid-template-columns: 1fr; /* 1열로 변경 */
+        grid-template-rows: auto auto; /* 높이 자동 */
+    }
+
+    .hero-image-area {
+        grid-column: 1 / -1;
+        height: 50vh;
+    }
+
+    .hero-text-area {
+        grid-column: 1 / -1;
+        grid-row: 2; /* 이미지 아래로 */
+        margin-top: -50px; /* 살짝 위로 겹치게 */
+        padding: 0 20px;
+        justify-content: center;
+    }
+    
+    .glass-box {
+        width: 100%;
+        padding: 40px;
+    }
+
+    .glass-box h1 { font-size: 2.5rem; }
 }
