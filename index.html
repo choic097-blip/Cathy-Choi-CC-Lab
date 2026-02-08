@@ -3,150 +3,164 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cathy Choi Portfolio</title>
+  <title>Cathy Choi | Portfolio</title>
   
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 
   <style>
-    /* 1. 기본 초기화 */
+    /* 1. 기본 세팅 */
     * { box-sizing: border-box; margin: 0; padding: 0; }
     
     body {
-      background-color: #111; /* 다크 모드 배경 */
+      background-color: #111; /* 배경: 짙은 검정 */
       color: #fff;
       font-family: 'Inter', sans-serif;
+      overflow-x: hidden; /* 가로 스크롤 방지 */
     }
 
-    /* 2. 전체 레이아웃 (GRID 설정) ★ 여기가 핵심 ★ */
-    .grid-container {
+    /* 2. 그리드 컨테이너 (레이아웃의 핵심) 
+       화면을 바둑판처럼 쪼개서 위치를 강제 지정합니다.
+    */
+    .portfolio-grid {
       display: grid;
       width: 100%;
-      max-width: 1200px; /* 너무 넓게 퍼지지 않도록 고정 */
-      margin: 0 auto;    /* 화면 중앙 정렬 */
+      max-width: 1400px; /* 너무 넓어지는 것 방지 */
+      margin: 0 auto;    /* 중앙 정렬 */
       padding: 20px;
       
       /* 가로: 12칸으로 나눔 */
       grid-template-columns: repeat(12, 1fr);
       
-      /* 세로: 
-         1줄: 네비게이션 (80px)
-         2줄: 이미지 윗부분 (300px)
-         3줄: 겹치는 구간 (150px) -> 이미지와 텍스트가 만나는 곳
-         4줄: 텍스트 아랫부분 (150px)
-         5줄: 프로젝트 영역 (자동)
+      /* 세로(행) 높이 강제 지정 (중요!)
+         Row 1: 네비게이션 (80px)
+         Row 2: 이미지 윗부분 (350px)
+         Row 3: 겹치는 구간 (150px) -> 이미지와 텍스트가 만나는 곳
+         Row 4: 텍스트 아랫부분 (100px)
+         Row 5: 나머지 (프로젝트 목록)
       */
-      grid-template-rows: 80px 300px 150px 150px auto;
+      grid-template-rows: 80px 350px 150px 100px auto;
       
-      column-gap: 20px; /* 칸 사이 간격 */
+      gap: 20px; /* 칸 사이 간격 */
     }
 
-    /* 3. 네비게이션 (맨 윗줄) */
+    /* [A] 네비게이션 */
     header {
-      grid-column: 1 / -1; /* 처음부터 끝까지 가로지름 */
+      grid-column: 1 / -1; /* 가로 전체 사용 */
       grid-row: 1;         /* 첫 번째 줄 */
+      
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-size: 1.1rem;
+      font-size: 1.2rem;
       font-weight: 600;
-      z-index: 10;
+      z-index: 100;
     }
     
     header nav a {
-      color: #bbb;
+      color: #aaa;
       text-decoration: none;
-      margin-left: 20px;
+      margin-left: 25px;
+      transition: color 0.3s;
     }
     header nav a:hover { color: #fff; }
 
-    /* 4. 대형 히어로 이미지 (왼쪽 배치) */
-    .hero-image {
-      /* 가로: 1번 칸 ~ 9번 칸 (화면의 2/3 차지) */
-      grid-column: 1 / 9;
-      /* 세로: 2번 줄 ~ 4번 줄 (겹치는 구간까지 차지) */
+    /* [B] 대형 히어로 이미지 */
+    .hero-image-wrapper {
+      /* 위치: 왼쪽부터 9칸 차지 (가로 2/3 지점) */
+      grid-column: 1 / 10;
+      /* 높이: 2번 줄 ~ 4번 줄 (겹치는 구간까지) */
       grid-row: 2 / 4; 
       
       width: 100%;
-      height: 100%;
-      object-fit: cover; /* 비율 유지하며 꽉 채우기 */
-      border-radius: 4px;
-      filter: brightness(0.9);
-      z-index: 1; /* 뒤에 배치 */
+      height: 100%; /* 그리드 칸에 꽉 차게 */
+      position: relative;
+      z-index: 1; /* 뒤쪽 배치 */
     }
 
-    /* 5. 텍스트 박스 (오른쪽 아래 겹침) */
-    .text-box {
-      /* 가로: 7번 칸 ~ 13번 칸 (이미지 오른쪽 끝을 덮음) */
-      grid-column: 7 / 13;
-      /* 세로: 3번 줄 ~ 5번 줄 (겹치는 구간부터 아래로 내려옴) */
+    .hero-image-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover; /* 비율 유지하며 칸 채우기 */
+      border-radius: 8px;
+      opacity: 0.8; /* 살짝 어둡게 */
+    }
+
+    /* [C] 텍스트 박스 (겹침 효과) */
+    .hero-text-box {
+      /* 위치: 8번 칸 ~ 끝까지 (이미지 오른쪽을 덮음) */
+      grid-column: 8 / -1;
+      /* 높이: 3번 줄 ~ 5번 줄 (이미지 하단부와 겹침) */
       grid-row: 3 / 5;
       
-      background-color: rgba(30, 30, 30, 0.95); /* 살짝 투명한 검정 배경 */
-      border: 1px solid #444;
+      background-color: #1a1a1a; /* 박스 배경색 */
+      border: 1px solid #333;
       padding: 40px;
-      z-index: 2; /* 이미지보다 앞으로 튀어나옴 (중요!) */
+      
+      z-index: 10; /* 이미지보다 앞으로 튀어나오게 (중요!) */
+      box-shadow: -20px 20px 50px rgba(0,0,0,0.8); /* 그림자로 입체감 */
       
       display: flex;
       flex-direction: column;
       justify-content: center;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.5); /* 입체감 그림자 */
     }
 
-    .text-box h1 {
-      font-size: 2.8rem;
+    .hero-text-box h1 {
+      font-size: 3rem; /* 폰트 크게 */
       line-height: 1.1;
       margin-bottom: 20px;
+      color: #fff;
     }
 
-    .text-box p {
-      font-size: 1rem;
+    .hero-text-box p {
+      font-size: 1.1rem;
       color: #ccc;
       line-height: 1.6;
     }
 
-    /* 6. 하단 프로젝트 목록 */
+    /* [D] 하단 프로젝트 목록 */
     .project-section {
-      grid-column: 1 / -1; /* 전체 가로지름 */
-      grid-row: 5;         /* 5번째 줄 */
+      grid-column: 1 / -1; /* 가로 전체 */
+      grid-row: 5;         /* 맨 아랫줄 */
       
-      margin-top: 50px;    /* 위쪽과 간격 */
+      margin-top: 60px;
+      border-top: 1px dashed #333;
+      padding-top: 40px;
+      
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr; /* 3등분 */
+      grid-template-columns: repeat(3, 1fr); /* 3등분 */
       gap: 20px;
     }
 
     .project-card {
       background: #222;
-      border: 1px solid #333;
       padding: 15px;
+      border: 1px solid #333;
       text-align: center;
     }
     
-    .project-thumb {
-      width: 100%;
-      height: 200px;
+    .thumb {
       background-color: #444;
+      height: 200px;
+      width: 100%;
       margin-bottom: 15px;
       object-fit: cover;
     }
 
-    /* 모바일 대응 (화면 작을 때 깨짐 방지) */
-    @media (max-width: 768px) {
-      .grid-container {
-        grid-template-rows: auto; /* 높이 자동 */
-        display: flex;            /* Grid 풀고 그냥 일자로 쌓기 */
+    /* 모바일 대응 (화면 줄어들면 일자로 정렬) */
+    @media (max-width: 900px) {
+      .portfolio-grid {
+        display: flex;
         flex-direction: column;
-        gap: 30px;
       }
-      .hero-image { height: 300px; }
-      .project-section { grid-template-columns: 1fr; } /* 프로젝트 1개씩 */
+      .hero-image-wrapper { height: 300px; }
+      .project-section { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 
 <body>
 
-  <div class="grid-container">
+  <div class="portfolio-grid">
     
     <header>
       <div>CATHY CHOI</div>
@@ -154,33 +168,38 @@
         <a href="about.html">About</a>
         <a href="old.html">Old Work</a>
         <a href="new.html">New Work</a>
-        <a href="free.html">Playground</a>
+        <a href="extra.html">Free</a>
       </nav>
     </header>
 
-    <img class="hero-image" src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=2070&auto=format&fit=crop" alt="Game Art">
+    <div class="hero-image-wrapper">
+      <img src="https://images.unsplash.com/photo-1614726365723-49caaa56eb98?q=80&w=2574&auto=format&fit=crop" alt="Game Art">
+    </div>
 
-    <div class="text-box">
-      <h1>Creating Worlds,<br>Pixel by Pixel.</h1>
+    <div class="hero-text-box">
+      <h1>Creating Worlds,<br>One Pixel at a Time</h1>
       <p>
-        Hi, I'm Cathy. I design immersive games and dark fantasy visuals.
-        <br><br>
-        Current Project: <strong>Erotomaniac</strong>
+        I am a Game Design student specializing in Dark Fantasy & Interactive Storytelling.<br>
+        Currently building <strong>"Erotomaniac"</strong>.
       </p>
     </div>
 
-    <section class="project-section">
+    <div class="project-section">
       <div class="project-card">
-        <div class="project-thumb"></div> <h3>Project A</h3>
+        <img class="thumb" src="https://source.unsplash.com/random/400x300/?dark" alt="p1">
+        <h3>Project A</h3>
       </div>
       <div class="project-card">
-        <div class="project-thumb"></div> <h3>Project B</h3>
+        <img class="thumb" src="https://source.unsplash.com/random/400x300/?game" alt="p2">
+        <h3>Project B</h3>
       </div>
       <div class="project-card">
-        <div class="project-thumb" style="display:flex; align-items:center; justify-content:center;">More ↗</div>
+        <div class="thumb" style="display:flex; align-items:center; justify-content:center; background:#333;">
+          More ↗
+        </div>
         <h3>All Projects</h3>
       </div>
-    </section>
+    </div>
 
   </div>
 
