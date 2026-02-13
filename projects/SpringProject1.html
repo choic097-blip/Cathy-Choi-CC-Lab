@@ -9,52 +9,47 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.1/addons/p5.sound.min.js"></script>
     
     <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@900&family=Permanent+Marker&display=swap" rel="stylesheet">
-    
     <link rel="stylesheet" type="text/css" href="../css/style.css">
 
     <style>
-        /* 만화 패널 스타일링 (style.css에 합쳐도 됩니다) */
+        body { background-color: #f0f0f0; margin: 0; padding: 20px; }
+
         .comic-container {
             display: grid;
-            max-width: 1200px;
-            margin: 40px auto;
-            gap: 15px;
-            /* 2번 사진의 비대칭 느낌을 살린 그리드 */
-            grid-template-columns: 1fr 320px;
-            grid-template-rows: auto 1fr auto;
-            padding: 20px;
+            max-width: 1100px;
+            margin: 0 auto;
+            gap: 20px;
+            grid-template-columns: 1fr 300px;
+            grid-template-rows: auto 640px auto; /* 스케치 높이에 맞춤 */
         }
 
         .panel {
             background: white;
-            border: 5px solid black; /* 굵은 잉크 테두리 */
+            border: 6px solid black;
+            box-shadow: 12px 12px 0px black;
             padding: 20px;
-            color: black;
-            box-shadow: 10px 10px 0px black; /* 만화적인 그림자 */
-            position: relative;
         }
 
-        /* 헤더 패널 */
         .panel-header {
             grid-column: 1 / -1;
             font-family: 'Permanent Marker', cursive;
+            font-size: 1.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        /* 메인 스케치 패널 (p5.js) */
+        /* 스케치가 들어가는 메인 패널 */
         .panel-main {
             grid-column: 1 / 2;
-            min-height: 500px;
-            background: #fdfdfd;
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden;
+            background-color: #ffffff;
+            /* 내부 여백을 없애서 캔버스가 꽉 차보이게 함 */
+            padding: 10px; 
         }
 
-        /* 사이드 설명 패널 */
         .panel-side {
             grid-column: 2 / 3;
             font-family: 'Archivo', sans-serif;
@@ -64,56 +59,54 @@
             background: black;
             color: white;
             display: inline-block;
-            padding: 2px 10px;
-            margin-bottom: 15px;
-            transform: rotate(-2deg); /* 살짝 비틀기 */
+            padding: 5px 15px;
+            margin-bottom: 20px;
+            transform: rotate(-3deg);
         }
 
-        /* 하단 내비 패널 */
         .panel-footer {
             grid-column: 1 / -1;
             text-align: right;
-        }
-
-        .panel-footer a {
-            color: black;
-            text-decoration: none;
+            font-family: 'Archivo', sans-serif;
             font-weight: 900;
-            border-bottom: 3px solid black;
         }
 
-        /* p5.js 캔버스가 들어갈 곳 */
+        .panel-footer a { color: black; text-decoration: none; border-bottom: 3px solid black; }
+
+        /* p5.js 캔버스 스타일링 */
         #sketch-holder canvas {
-            border: 2px solid #333;
+            display: block;
+            border: 1px solid #ddd;
             max-width: 100%;
-            height: auto !important;
+            height: auto !important; /* 비율 유지 */
         }
     </style>
 </head>
-<body style="background-color: #eee;">
+<body>
 
     <div class="comic-container">
         <header class="panel panel-header">
-            <h1>SPRING_PROJECT_01: EXPERIMENT</h1>
-            <span>VOL. 2026</span>
+            <div>PROJECT_01: WIND_INTERACTION</div>
+            <div style="font-size: 1rem;">CATHY CHOI / GAME DESIGN</div>
         </header>
 
         <main class="panel panel-main">
-            <div id="sketch-holder">
-                </div>
+            <div id="sketch-holder"></div>
         </main>
 
         <aside class="panel panel-side">
-            <h2>DESCRIPTION</h2>
-            <p>
-                p5.js를 활용한 인터랙티브 코드 실험입니다. 
-                그리드 시스템을 활용하여 만화의 칸(Panel) 구조를 웹 레이아웃에 이식했습니다.
+            <h2>MISSION LOG</h2>
+            <p><strong>CONCEPT:</strong> WIND.</p>
+            <p><strong>TECH:</strong> p5.js, Perlin Noise, Particle System.</p>
+            <hr border="1">
+            <p style="font-size: 0.85rem; color: #555;">
+                Move ur mouse 
             </p>
         </aside>
 
         <footer class="panel panel-footer">
             <nav>
-                <a href="../main.html">EXIT_TO_MAIN</a> | 
+                <a href="../main.html">EXIT_TO_HOME</a> | 
                 <a href="project2.html">NEXT_ISSUE ↗</a>
             </nav>
         </footer>
