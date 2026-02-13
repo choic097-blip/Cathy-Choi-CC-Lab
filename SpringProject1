@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spring Project 1 | Cathy Choi</title>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.1/p5.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.1/addons/p5.sound.min.js"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@900&family=Permanent+Marker&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" type="text/css" href="../css/style.css">
+
+    <style>
+        /* 만화 패널 스타일링 (style.css에 합쳐도 됩니다) */
+        .comic-container {
+            display: grid;
+            max-width: 1200px;
+            margin: 40px auto;
+            gap: 15px;
+            /* 2번 사진의 비대칭 느낌을 살린 그리드 */
+            grid-template-columns: 1fr 320px;
+            grid-template-rows: auto 1fr auto;
+            padding: 20px;
+        }
+
+        .panel {
+            background: white;
+            border: 5px solid black; /* 굵은 잉크 테두리 */
+            padding: 20px;
+            color: black;
+            box-shadow: 10px 10px 0px black; /* 만화적인 그림자 */
+            position: relative;
+        }
+
+        /* 헤더 패널 */
+        .panel-header {
+            grid-column: 1 / -1;
+            font-family: 'Permanent Marker', cursive;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* 메인 스케치 패널 (p5.js) */
+        .panel-main {
+            grid-column: 1 / 2;
+            min-height: 500px;
+            background: #fdfdfd;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        /* 사이드 설명 패널 */
+        .panel-side {
+            grid-column: 2 / 3;
+            font-family: 'Archivo', sans-serif;
+        }
+
+        .panel-side h2 {
+            background: black;
+            color: white;
+            display: inline-block;
+            padding: 2px 10px;
+            margin-bottom: 15px;
+            transform: rotate(-2deg); /* 살짝 비틀기 */
+        }
+
+        /* 하단 내비 패널 */
+        .panel-footer {
+            grid-column: 1 / -1;
+            text-align: right;
+        }
+
+        .panel-footer a {
+            color: black;
+            text-decoration: none;
+            font-weight: 900;
+            border-bottom: 3px solid black;
+        }
+
+        /* p5.js 캔버스가 들어갈 곳 */
+        #sketch-holder canvas {
+            border: 2px solid #333;
+            max-width: 100%;
+            height: auto !important;
+        }
+    </style>
+</head>
+<body style="background-color: #eee;">
+
+    <div class="comic-container">
+        <header class="panel panel-header">
+            <h1>SPRING_PROJECT_01: EXPERIMENT</h1>
+            <span>VOL. 2026</span>
+        </header>
+
+        <main class="panel panel-main">
+            <div id="sketch-holder">
+                </div>
+        </main>
+
+        <aside class="panel panel-side">
+            <h2>DESCRIPTION</h2>
+            <p>
+                p5.js를 활용한 인터랙티브 코드 실험입니다. 
+                그리드 시스템을 활용하여 만화의 칸(Panel) 구조를 웹 레이아웃에 이식했습니다.
+            </p>
+        </aside>
+
+        <footer class="panel panel-footer">
+            <nav>
+                <a href="../main.html">EXIT_TO_MAIN</a> | 
+                <a href="project2.html">NEXT_ISSUE ↗</a>
+            </nav>
+        </footer>
+    </div>
+
+    <script src="sketch.js"></script>
+</body>
+</html>
