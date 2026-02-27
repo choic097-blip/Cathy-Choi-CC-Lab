@@ -462,6 +462,10 @@ header {
     padding: 20px;
     gap: 30px; /* 썸네일과 텍스트 사이 간격 */
     transition: transform 0.2s ease, box-shadow 0.2s ease;
+    text-decoration: none !important; /* 글씨 밑줄 절대 금지 */
+    color: inherit !important; /* 글씨 파란색/보라색으로 변하는 것 금지 */
+    cursor: pointer; /* 마우스 올리면 클릭하는 손가락 모양 띄우기 */
+    -webkit-tap-highlight-color: transparent; /* 모바일/태블릿에서 누를 때 깜빡이는 효과 제거 */
 }
 
 .comic-project-row:hover {
@@ -469,18 +473,15 @@ header {
     box-shadow: 15px 15px 0px #000;
 }
 
-/* 정사각형 썸네일 (검은 선 + 흰 배경) */
 .project-thumbnail {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 200px; /* 정사각형 가로 */
-    height: 200px; /* 정사각형 세로 */
-    flex-shrink: 0; /* 화면이 좁아져도 썸네일 크기 유지 */
+    width: 200px;
+    height: 200px;
+    flex-shrink: 0;
     background-color: #fff;
     border: 3px solid #000;
-    text-decoration: none;
-    color: #000;
     position: relative;
     overflow: hidden;
 }
