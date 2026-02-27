@@ -572,80 +572,158 @@ header {
     /* 만화 느낌을 내기 위해 흑백/대비 필터 적용 (원하시면 지워도 됩니다) */
     filter: grayscale(20%) contrast(110%);
 }
+/* =========================================
+   Contact Page Layout 
+   ========================================= */
 
-/* 텍스트 & 연락처 패널 */
-.contact-info-panel {
-    padding: 40px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+/* 전체 중앙 정렬 및 여백 */
+.comic-contact-wrapper {
+    max-width: 1200px; /* 이미지를 더 크게 가져가기 위해 너비 확대 */
+    margin: 40px auto; 
+    padding: 0 20px;
 }
 
-.contact-info-panel h1 {
+/* 레이어링의 기준이 되는 컨테이너 */
+.comic-contact-container {
+    position: relative; /* 자식 요소들의 absolute 좌표 기준점이 됨 */
+    width: 100%;
+}
+
+/* 하위 레이어: 배경 아트워크 이미지 (16:12 비율) */
+.artwork-panel-bg {
+    width: 100%;
+    /* 요청하신 16x12 비율 설정 (간단하게 4:3 비율과 같습니다) */
+    aspect-ratio: 16 / 12; 
+    border: 4px solid #000;
+    box-shadow: 12px 12px 0px #000; /* Main Image와 동일한 짙은 그림자 */
+    overflow: hidden;
+    background-color: #fff; /* fallback */
+}
+
+.artwork-panel-bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: grayscale(10%) contrast(105%); /* 만화 느낌을 위한 약간의 필터 */
+}
+
+/* 상위 레이어: 이미지 위에 겹쳐지는 모든 박스의 공통 스타일 */
+.comic-panel {
+    position: absolute; /* 배경 이미지 위로 좌표를 찍어 띄움 */
+    background-color: #ffffff;
+    border: 3px solid #000000;
+    box-shadow: 8px 8px 0px #000000;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.contact-title-box {
+    top: 30px;
+    left: 30px;
+    width: 45%; /* 이미지 너비의 45% 차지 */
+    padding: 25px;
+    z-index: 10; /* 가장 아래 레이어 박스 */
+    transform: rotate(-1deg); /* 만화적인 삐딱함 부여 */
+}
+
+.contact-title-box h1 {
     font-family: 'Playfair Display', serif;
-    font-size: 3rem;
+    font-size: 2.5rem;
     font-weight: 800;
-    margin-top: 0;
-    margin-bottom: 10px;
+    margin: 0 0 10px 0;
     line-height: 1.1;
 }
 
-.contact-desc {
+.contact-title-box p {
     font-family: 'Archivo', sans-serif;
-    font-size: 1.1rem;
+    font-size: 1rem;
     color: #444;
-    margin-bottom: 30px;
-    line-height: 1.6;
+    margin: 0;
 }
 
-/* 연락처 버튼들 컨테이너 */
-.contact-links {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
 
-/* 개별 연락처 박스 (버튼 스타일) */
-.contact-box {
+.contact-square-box {
+    width: 200px; /* 정사각형 크기 고정 */
+    height: 200px;
     display: flex;
     flex-direction: column;
-    padding: 15px 20px;
-    border: 3px solid #000;
-    background-color: #fff;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    text-align: center;
     text-decoration: none !important;
     color: #000 !important;
-    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+    cursor: pointer;
+    z-index: 15; /* 타이틀 박스보다 살짝 위 레이어 */
 }
 
-.contact-box:hover {
+.contact-square-box:hover {
     background-color: #f4f4f4;
-    transform: translate(-3px, -3px);
-    box-shadow: 6px 6px 0px #000; /* 마우스 올리면 작은 만화 그림자 생성 */
+    transform: scale(1.05) translate(-3px, -3px); /* 마우스 올리면 살짝 커지면서 둥실 뜸 */
+    box-shadow: 12px 12px 0px #000000;
 }
 
 .contact-label {
     font-family: 'Playfair Display', serif;
     font-weight: 800;
-    font-size: 1.2rem;
-    margin-bottom: 5px;
+    font-size: 1.4rem;
     text-transform: uppercase;
+    margin-bottom: 8px;
+    border-bottom: 2px solid #000;
 }
 
 .contact-detail {
     font-family: 'Archivo', sans-serif;
-    font-size: 1rem;
+    font-size: 0.9rem;
     color: #555;
+    word-break: break-all; /* 긴 이메일/링크가 칸 밖으로 나가는 것 방지 */
 }
 
-/* 반응형: 모바일에서는 위아래로 쌓이게 */
-@media (max-width: 768px) {
+
+/* 이메일: 타이틀 박스 오른쪽 아래에 겹치게 */
+.email-pos {
+    top: 180px;
+    left: 40%;
+    transform: rotate(2deg); /* 반대 방향으로 삐딱하게 */
+}
+
+/* 인스타그램: 이메일 아래쪽에 반쯤 겹치게 */
+.insta-pos {
+    bottom: 50px;
+    left: 30%;
+    transform: rotate(-3deg);
+    z-index: 20; /* 가장 위 레이어 */
+}
+
+/* 아트스테이션: 이미지 오른쪽 아래 구석에 배치 */
+.art-pos {
+    bottom: 30px;
+    right: 30px;
+    transform: rotate(1deg);
+}
+
+/* 반응형 모바일 설정: 폰 화면에서는 레이어링을 풀고 순서대로 쌓기 */
+@media (max-width: 800px) {
     .comic-contact-container {
-        grid-template-columns: 1fr;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
     }
-    .artwork-panel {
-        min-height: 300px;
+    
+    .artwork-panel-bg {
+        aspect-ratio: auto; /* 모바일에서는 비율 해제 */
+        height: 300px;
     }
-    .contact-info-panel h1 {
-        font-size: 2.5rem;
+    
+    .comic-panel {
+        position: relative; /* 좌표 무시하고 순서대로 배치 */
+        top: auto; left: auto; bottom: auto; right: auto;
+        width: 100%;
+        transform: none !important; /* 삐딱함 해제 */
+    }
+    
+    .contact-square-box {
+        height: auto;
+        padding: 30px;
     }
 }
