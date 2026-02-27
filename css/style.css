@@ -542,3 +542,110 @@ header {
     }
 }
 
+/* =========================================
+   Contact Page Layout
+   ========================================= */
+
+.comic-contact-container {
+    display: grid;
+    /* 가로 2칸으로 정확히 반반 나눔 */
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    max-width: 1000px;
+    margin: 50px auto;
+    padding: 0 20px;
+    align-items: stretch; /* 양쪽 패널 높이를 똑같이 맞춤 */
+}
+
+/* 아트워크 이미지 패널 */
+.artwork-panel {
+    padding: 0;
+    overflow: hidden;
+    min-height: 500px;
+}
+
+.artwork-panel img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    /* 만화 느낌을 내기 위해 흑백/대비 필터 적용 (원하시면 지워도 됩니다) */
+    filter: grayscale(20%) contrast(110%);
+}
+
+/* 텍스트 & 연락처 패널 */
+.contact-info-panel {
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.contact-info-panel h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    font-weight: 800;
+    margin-top: 0;
+    margin-bottom: 10px;
+    line-height: 1.1;
+}
+
+.contact-desc {
+    font-family: 'Archivo', sans-serif;
+    font-size: 1.1rem;
+    color: #444;
+    margin-bottom: 30px;
+    line-height: 1.6;
+}
+
+/* 연락처 버튼들 컨테이너 */
+.contact-links {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* 개별 연락처 박스 (버튼 스타일) */
+.contact-box {
+    display: flex;
+    flex-direction: column;
+    padding: 15px 20px;
+    border: 3px solid #000;
+    background-color: #fff;
+    text-decoration: none !important;
+    color: #000 !important;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.contact-box:hover {
+    background-color: #f4f4f4;
+    transform: translate(-3px, -3px);
+    box-shadow: 6px 6px 0px #000; /* 마우스 올리면 작은 만화 그림자 생성 */
+}
+
+.contact-label {
+    font-family: 'Playfair Display', serif;
+    font-weight: 800;
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+}
+
+.contact-detail {
+    font-family: 'Archivo', sans-serif;
+    font-size: 1rem;
+    color: #555;
+}
+
+/* 반응형: 모바일에서는 위아래로 쌓이게 */
+@media (max-width: 768px) {
+    .comic-contact-container {
+        grid-template-columns: 1fr;
+    }
+    .artwork-panel {
+        min-height: 300px;
+    }
+    .contact-info-panel h1 {
+        font-size: 2.5rem;
+    }
+}
