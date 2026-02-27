@@ -165,3 +165,142 @@ header {
         margin: -50px auto 0 auto;
     }
 }
+
+/* =========================================
+   About Page - Comic Book Grid Style 
+   ========================================= */
+
+.comic-about-grid {
+    display: grid;
+    /* 12칸 그리드로 세밀하게 쪼개서 겹치기 쉽게 만듦 */
+    grid-template-columns: repeat(12, 1fr);
+    grid-auto-rows: minmax(100px, auto);
+    gap: 20px;
+    padding: 60px 0;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* 만화 패널 공통 스타일: 투박한 검은 테두리와 짙은 그림자 */
+.comic-panel {
+    background-color: #ffffff;
+    border: 3px solid #1a1a1a;
+    box-shadow: 10px 10px 0px #1a1a1a;
+    position: relative;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.comic-panel:hover {
+    transform: translate(-4px, -4px);
+    box-shadow: 14px 14px 0px #1a1a1a;
+}
+
+.text-panel {
+    padding: 32px;
+}
+
+/* 패널 내부 폰트 스타일링 */
+.comic-panel h2, .comic-panel h3 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    margin-top: 0;
+    color: #1a1a1a;
+}
+
+.comic-panel h2 {
+    font-size: 2.5rem;
+    margin-bottom: 5px;
+}
+
+.comic-panel p {
+    font-family: 'Archivo', sans-serif;
+    line-height: 1.6;
+    color: #333;
+}
+
+/* --- 개별 패널 그리드 배치 (오버레이 핵심) --- */
+
+/* 1. 사진 패널: 크게 배치 */
+.photo-panel {
+    grid-column: 1 / 9; /* 1번부터 8번 칸까지 차지 */
+    grid-row: 1 / 4;    /* 세로로 3줄 차지 */
+    padding: 0;
+    overflow: hidden;
+}
+
+.photo-panel img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* 만화적인 느낌을 위해 채도를 낮추고 대비를 높임 */
+    filter: grayscale(80%) contrast(120%); 
+    transition: filter 0.3s ease;
+}
+
+.photo-panel:hover img {
+    filter: grayscale(0%) contrast(100%); /* 마우스 올리면 원래 색상 */
+}
+
+/* 2. 타이틀 오버레이: 사진 위에 겹치도록 설정 */
+.title-panel {
+    grid-column: 7 / 13; /* 사진과 겹치게 7번 칸부터 시작 */
+    grid-row: 2;
+    z-index: 5; /* 사진 위로 띄움 */
+    padding: 30px;
+    align-self: center;
+    transform: rotate(2deg); /* 약간 비틀어서 재미를 줌 */
+}
+
+.title-panel .subtitle {
+    font-weight: 700;
+    color: #555;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* 3. 스토리 패널 */
+.story-panel {
+    grid-column: 1 / 6;
+    grid-row: 4 / 6;
+    transform: rotate(-1deg);
+}
+
+/* 4. 스킬 패널 */
+.skill-panel {
+    grid-column: 6 / 13;
+    grid-row: 4 / 5;
+}
+
+.comic-list {
+    font-family: 'Archivo', sans-serif;
+    font-weight: 700;
+    list-style-type: square;
+    padding-left: 20px;
+    line-height: 2;
+}
+
+/* 5. 취향 패널 */
+.vibe-panel {
+    grid-column: 4 / 11;
+    grid-row: 6;
+    transform: rotate(1deg);
+    margin-top: -20px; /* 위쪽 패널들과 살짝 겹치게 끌어올림 */
+}
+
+/* 반응형 (모바일 사이즈) */
+@media (max-width: 768px) {
+    .comic-about-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+    }
+    .title-panel, .story-panel, .vibe-panel {
+        transform: none; /* 모바일에서는 회전 해제 */
+        margin: 0;
+    }
+    .title-panel {
+        margin-top: -50px; /* 모바일에서도 사진 위에 살짝 얹히게 */
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+}
