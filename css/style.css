@@ -304,3 +304,117 @@ header {
         margin-right: 10px;
     }
 }
+
+/* =========================================
+   About Page - Comic Layout
+   ========================================= */
+
+.comic-about-container {
+    display: grid;
+    /* 3열 그리드로 설정 */
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: minmax(150px, auto);
+    gap: 25px;
+    max-width: 1100px;
+    margin: 50px auto;
+    padding: 0 20px;
+}
+
+/* 모든 패널의 공통 만화 테두리 & 그림자 효과 (스크린샷 스타일 반영) */
+.comic-panel {
+    background-color: #ffffff;
+    border: 4px solid #000000;
+    box-shadow: 12px 12px 0px #000000;
+    position: relative;
+    /* 마우스 올렸을 때 살짝 움직이는 애니메이션 */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.comic-panel:hover {
+    transform: translate(-4px, -4px);
+    box-shadow: 16px 16px 0px #000000;
+}
+
+/* 텍스트 패널 여백 */
+.text-panel {
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* 패널별 내부 폰트 디자인 */
+.text-panel h2 {
+    font-family: 'Playfair Display', serif; /* 기존 폰트 활용 */
+    font-size: 2rem;
+    font-weight: 800;
+    margin-top: 0;
+    margin-bottom: 15px;
+    border-bottom: 3px solid #000;
+    padding-bottom: 10px;
+    display: inline-block;
+}
+
+.text-panel p {
+    font-family: 'Archivo', sans-serif;
+    line-height: 1.7;
+    font-size: 1.1rem;
+    color: #222;
+}
+
+.skill-list {
+    list-style-type: none;
+    padding: 0;
+    font-family: 'Archivo', sans-serif;
+    line-height: 1.8;
+    font-size: 1.1rem;
+}
+
+.skill-list li::before {
+    content: "✦ "; /* 불릿 포인트 대신 기호 사용 */
+    font-weight: bold;
+}
+
+/* --- 그리드 칸 배분 --- */
+
+/* 큰 이미지는 가로 2칸, 세로 2칸 차지 */
+.main-image-panel {
+    grid-column: 1 / span 2;
+    grid-row: 1 / span 2;
+    padding: 0; /* 이미지는 여백 없이 꽉 차게 */
+    overflow: hidden;
+}
+
+.main-image-panel img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* 자기소개는 이미지 오른쪽 1칸 차지 */
+.intro-panel {
+    grid-column: 3;
+    grid-row: 1;
+}
+
+/* 스킬 섹션은 자기소개 아래쪽 1칸 차지 */
+.skills-panel {
+    grid-column: 3;
+    grid-row: 2 / span 2;
+}
+
+/* 핵심 철학은 이미지 아래 가로로 길게 2칸 차지 */
+.philosophy-panel {
+    grid-column: 1 / span 2;
+    grid-row: 3;
+}
+
+/* 반응형 모바일 설정: 폰 화면에서는 일렬로 쭉 떨어지게 */
+@media (max-width: 800px) {
+    .comic-about-container {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+    }
+}
