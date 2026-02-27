@@ -573,26 +573,28 @@ header {
     filter: grayscale(20%) contrast(110%);
 }
 /* =========================================
-   Contact Page Layout (가출 방지용 완벽 좌표 수정본)
+   Contact Page Layout (가출 방지 & 텍스트 보호 완벽판)
    ========================================= */
 
-/* 전체 캔버스 크기 제어 및 튀어나가는 박스 보호용 여백 */
+/* 전체 래퍼: 좌우 여백을 줘서 박스들이 화면 밖으로 짤리지 않게 보호 */
 .comic-contact-wrapper {
-    max-width: 1000px; 
-    margin: 60px auto; 
-    padding: 0 50px; 
+    width: 100%;
+    padding: 60px 40px; 
+    box-sizing: border-box;
 }
 
-/* 레이어링의 기준점이 되는 컨테이너 */
+/* 🚨 레이어링의 절대적 기준점 (여기를 중앙으로 꽉 잡습니다) */
 .comic-contact-container {
     position: relative;
     width: 100%;
+    max-width: 900px; /* 그림의 최대 크기를 고정 (너무 커지면 박스들이 멀어짐) */
+    margin: 0 auto; /* 화면 정중앙 배치 */
 }
 
-/* 하위 레이어: 배경 아트워크 이미지 (비율 안정화) */
+/* 하위 레이어: 배경 아트워크 이미지 (16:10 비율) */
 .artwork-panel-bg {
     width: 100%;
-    aspect-ratio: 16 / 10; /* 16:12는 너무 높아질 수 있어 16:10 황금비율로 조정 */
+    aspect-ratio: 16 / 10;
     border: 4px solid #000;
     box-shadow: 12px 12px 0px #000;
     overflow: hidden;
@@ -614,12 +616,12 @@ header {
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* 1. 타이틀 박스: 왼쪽 위에 확실히 고정 */
+/* 1. 타이틀 박스: 그림의 '왼쪽 위' 모서리에 고정 (서로 침범 불가) */
 .contact-title-box {
-    top: 8%; 
-    left: -4%; /* 왼쪽으로 살짝 튀어나오게 (만화책 감성) */
+    top: -20px; 
+    left: -30px; 
     width: 45%; 
-    min-width: 320px;
+    min-width: 300px;
     padding: 30px;
     z-index: 10; 
     transform: rotate(-2deg); 
@@ -641,15 +643,14 @@ header {
     line-height: 1.5;
 }
 
-/* 2. 정사각형 콘택트 박스 공통 */
+/* 2. 정사각형 콘택트 박스 공통 (텍스트 안 튀어나가게 설정) */
 .contact-square-box {
-    width: 180px; /* 사이즈 약간 축소 (텍스트 잘림 방지) */
-    height: 180px;
+    width: 190px; 
+    padding: 25px 15px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 15px;
     text-align: center;
     text-decoration: none !important;
     color: #000 !important;
@@ -659,8 +660,8 @@ header {
 
 .contact-square-box:hover {
     background-color: #f4f4f4;
-    z-index: 20; /* 마우스 올리면 무조건 제일 위로 올라오게 */
-    transform: scale(1.05); /* 올리면 살짝 커지게 변경 */
+    z-index: 20;
+    transform: scale(1.05); 
 }
 
 .contact-label {
@@ -673,41 +674,39 @@ header {
     padding-bottom: 2px;
 }
 
-/* 글자 "co m" 쪼개짐 방지 완벽 처리 */
+/* 긴 이메일 주소 줄바꿈 강제 처리 */
 .contact-detail {
     font-family: 'Archivo', sans-serif;
     font-size: 0.85rem;
     color: #555;
-    word-break: keep-all; 
-    overflow-wrap: anywhere; 
+    word-break: break-all; /* co m 처럼 안 쪼개지고 칸에 맞춰 예쁘게 떨어짐 */
 }
 
-/* --- 🚨 테트리스 완벽 좌표계 (서로 절대 안 겹침!) --- */
+/* --- 🚨 테트리스 완벽 좌표계: 모서리 4등분 배치 --- */
 
-/* 이메일: 오른쪽 위 가장자리에 살짝 걸치게 */
+/* 이메일: 그림의 '오른쪽 위' 모서리에 고정 */
 .email-pos {
-    top: 15%;
-    right: -5%;
+    top: 30px;
+    right: -25px;
     transform: rotate(3deg);
 }
 
-/* 인스타: 아래쪽 중앙-왼쪽에 걸치게 */
+/* 인스타: 그림의 '왼쪽 아래' 모서리에 고정 */
 .insta-pos {
-    bottom: -8%;
-    left: 20%;
+    bottom: -20px;
+    left: 20px;
     transform: rotate(-3deg);
 }
 
-/* 아트스테이션: 오른쪽 밑에 얌전하게 위치 */
+/* 아트스테이션: 그림의 '오른쪽 아래' 모서리에 고정 */
 .art-pos {
-    bottom: 5%;
-    right: 12%;
-    transform: rotate(2deg);
+    bottom: -30px;
+    right: 30px;
+    transform: rotate(1deg);
 }
 
-/* 모바일 화면에서는 지저분하니까 레이어링 풀고 세로로 정렬 */
+/* 반응형 모바일 설정: 폰 화면에서는 겹침 풀고 깔끔하게 세로 정렬 */
 @media (max-width: 800px) {
-    .comic-contact-wrapper { padding: 0 20px; }
     .comic-contact-container {
         display: flex;
         flex-direction: column;
@@ -725,7 +724,6 @@ header {
     }
     .contact-square-box {
         width: 100%;
-        height: auto;
         padding: 30px;
     }
 }
