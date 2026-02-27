@@ -543,41 +543,39 @@ header {
 }
 
 /* =========================================
-   Contact Page Layout 
+   Contact Page Layout (최종 격리판: 절대 안 깨짐)
    ========================================= */
 
-/* 전체 래퍼: 중앙 정렬을 완벽하게 강제하고 여백을 충분히 줌 */
 .comic-contact-wrapper {
     width: 100%;
-    padding: 80px 40px; /* 박스들이 화면 밖으로 짤리지 않게 위아래 여백을 더 줌 */
+    padding: 80px 40px; 
     display: flex;
-    justify-content: center; /* 무조건 화면 정중앙 픽스 */
+    justify-content: center; 
 }
 
-/* 레이어링의 절대적 기준점  */
 .comic-contact-container {
     position: relative;
     width: 100%;
-    max-width: 1200px; /* 기존 900px에서 1200px로 확 키워서 웅장하게 만듦! */
+    max-width: 1200px; 
 }
 
 /* 하위 레이어: 배경 아트워크 이미지 */
-.artwork-panel-bg {
+.comic-contact-container .artwork-panel-bg {
     width: 100%;
-    aspect-ratio: 16 / 9; /* 16:10보다 조금 더 와이드하게(16:9) 빼서 시원한 느낌을 줌 */
+    aspect-ratio: 16 / 9; 
     border: 4px solid #000;
     box-shadow: 12px 12px 0px #000;
     overflow: hidden;
     background-color: #fff;
 }
 
-.artwork-panel-bg img {
+.comic-contact-container .artwork-panel-bg img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
 
-/* 상위 레이어 박스 공통 스타일 */
+/* 🚨 Contact 안에서만 띄우기 (About 페이지 간섭 완벽 차단) */
 .comic-contact-container .comic-panel {
     position: absolute;
     background-color: #ffffff;
@@ -586,18 +584,18 @@ header {
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* 1. 타이틀 박스: 왼쪽 위 모서리에 튼튼하게 고정 */
-.contact-title-box {
+/* 1. 타이틀 박스 */
+.comic-contact-container .contact-title-box {
     top: -30px; 
     left: -40px; 
-    width: 40%; /* 박스 너비를 살짝 줄여서 인스타 박스와의 거리를 더 확보 */
+    width: 40%; 
     min-width: 320px;
     padding: 40px;
     z-index: 10; 
     transform: rotate(-2deg); 
 }
 
-.contact-title-box h1 {
+.comic-contact-container .contact-title-box h1 {
     font-family: 'Playfair Display', serif;
     font-size: 2.2rem;
     font-weight: 800;
@@ -605,7 +603,7 @@ header {
     line-height: 1.2;
 }
 
-.contact-title-box p {
+.comic-contact-container .contact-title-box p {
     font-family: 'Archivo', sans-serif;
     font-size: 1rem;
     color: #444;
@@ -614,8 +612,8 @@ header {
 }
 
 /* 2. 정사각형 콘택트 박스 공통 */
-.contact-square-box {
-    width: 200px; /* 그림이 커졌으니 박스도 아주 살짝 키움 */
+.comic-contact-container .contact-square-box {
+    width: 200px !important; /* 가로로 미친듯이 늘어나는 버그 강제 차단 */
     padding: 25px 15px;
     display: flex;
     flex-direction: column;
@@ -628,13 +626,13 @@ header {
     z-index: 15; 
 }
 
-.contact-square-box:hover {
+.comic-contact-container .contact-square-box:hover {
     background-color: #f4f4f4;
     z-index: 20;
     transform: scale(1.05); 
 }
 
-.contact-label {
+.comic-contact-container .contact-label {
     font-family: 'Playfair Display', serif;
     font-weight: 800;
     font-size: 1.2rem;
@@ -644,37 +642,34 @@ header {
     padding-bottom: 2px;
 }
 
-/* 글씨 예쁘게 줄바꿈 */
-.contact-detail {
+.comic-contact-container .contact-detail {
     font-family: 'Archivo', sans-serif;
     font-size: 0.9rem;
     color: #555;
-    overflow-wrap: break-word; /* 긴 이메일이나 주소가 흉하게 쪼개지지 않도록 방어 */
+    overflow-wrap: break-word; 
 }
 
+/* --- 테트리스 좌표계 --- */
 
-/* 이메일: 그림의 '오른쪽 위' 모서리에 고정 */
-.email-pos {
+.comic-contact-container .email-pos {
     top: 40px;
     right: -30px;
     transform: rotate(3deg);
 }
 
-/* 인스타: 메인 텍스트와 겹치지 않게 바닥으로 확 끌어내림! */
-.insta-pos {
-    bottom: -60px; /* -20px에서 -60px로 거리를 대폭 벌림 */
-    left: 40px; /* 텍스트 박스 오른쪽 아래 빈 공간에 딱 맞게 배치 */
+.comic-contact-container .insta-pos {
+    bottom: -60px; 
+    left: 40px; 
     transform: rotate(-3deg);
 }
 
-/* 아트스테이션: 그림의 '오른쪽 아래' 모서리에 고정 */
-.art-pos {
+.comic-contact-container .art-pos {
     bottom: -40px;
     right: 50px;
     transform: rotate(1deg);
 }
 
-/* 반응형 모바일 (화면 작아지면 다시 얌전하게 세로로 정렬) */
+/* 반응형 모바일 설정 */
 @media (max-width: 900px) {
     .comic-contact-wrapper { padding: 40px 20px; }
     .comic-contact-container {
@@ -682,19 +677,17 @@ header {
         flex-direction: column;
         gap: 20px;
     }
-    .artwork-panel-bg {
+    .comic-contact-container .artwork-panel-bg {
         aspect-ratio: auto; 
         height: 350px;
     }
     .comic-contact-container .comic-panel {
         position: relative; 
         top: auto; left: auto; bottom: auto; right: auto;
-        width: 100%;
+        width: 100% !important; 
         transform: none !important; 
     }
-    }
-    .contact-square-box {
-        width: 100%;
+    .comic-contact-container .contact-square-box {
         padding: 30px;
     }
 }
