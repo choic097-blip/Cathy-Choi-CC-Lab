@@ -543,7 +543,7 @@ header {
 }
 
 /* =========================================
-   Contact Page Layout (그림 대폭 확대 & 인스타 가출 방지판)
+   Contact Page Layout 
    ========================================= */
 
 /* 전체 래퍼: 중앙 정렬을 완벽하게 강제하고 여백을 충분히 줌 */
@@ -551,10 +551,10 @@ header {
     width: 100%;
     padding: 80px 40px; /* 박스들이 화면 밖으로 짤리지 않게 위아래 여백을 더 줌 */
     display: flex;
-    justify-content: center; /* 🚨 무조건 화면 정중앙 픽스! */
+    justify-content: center; /* 무조건 화면 정중앙 픽스 */
 }
 
-/* 🚨 레이어링의 절대적 기준점 (그림 크기 대폭 확대) */
+/* 레이어링의 절대적 기준점  */
 .comic-contact-container {
     position: relative;
     width: 100%;
@@ -652,7 +652,6 @@ header {
     overflow-wrap: break-word; /* 긴 이메일이나 주소가 흉하게 쪼개지지 않도록 방어 */
 }
 
-/* --- 🚨 테트리스 완벽 좌표계 (새로운 거대한 그림 기준) --- */
 
 /* 이메일: 그림의 '오른쪽 위' 모서리에 고정 */
 .email-pos {
@@ -661,7 +660,7 @@ header {
     transform: rotate(3deg);
 }
 
-/* 🚨 인스타: 메인 텍스트와 겹치지 않게 바닥으로 확 끌어내림! */
+/* 인스타: 메인 텍스트와 겹치지 않게 바닥으로 확 끌어내림! */
 .insta-pos {
     bottom: -60px; /* -20px에서 -60px로 거리를 대폭 벌림 */
     left: 40px; /* 텍스트 박스 오른쪽 아래 빈 공간에 딱 맞게 배치 */
