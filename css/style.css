@@ -578,7 +578,7 @@ header {
 }
 
 /* 상위 레이어 박스 공통 스타일 */
-.comic-panel {
+.comic-contact-container .comic-panel {
     position: absolute;
     background-color: #ffffff;
     border: 3px solid #000000;
@@ -686,11 +686,12 @@ header {
         aspect-ratio: auto; 
         height: 350px;
     }
-    .comic-panel {
+    .comic-contact-container .comic-panel {
         position: relative; 
         top: auto; left: auto; bottom: auto; right: auto;
         width: 100%;
         transform: none !important; 
+    }
     }
     .contact-square-box {
         width: 100%;
