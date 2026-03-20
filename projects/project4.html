@@ -1,74 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8" />
-  <title>Project 4 – Exquisite Corpse – Cathy Choi</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exquisite Corpse | Cathy Choi</title>
 
-  <link rel="stylesheet" href="style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Noto+Sans+KR:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;600;700;900&family=Playfair+Display:ital,wght@0,500;1,500;1,800&display=swap" rel="stylesheet">
 
-  <!-- p5.js (다른 프로젝트들과 통일) -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.1/p5.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.1/p5.js"></script>
 
-  <style>
-    /* 캔버스 영역 통일 */
-    #sketch-container {
-      margin-top: 40px;
-      margin-bottom: 40px;
-      text-align: center;
-    }
-
-    canvas {
-      display: block;
-      margin: 0 auto;
-      border-radius: 10px;
-    }
-  </style>
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/project-style.css" />
 </head>
-
 <body>
 
-  <!-- FIXED NAV (통일) -->
-  <header class="fixed-nav">
-    <div class="nav-left">©Cathy Choi</div>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <a href="../index.html">
+                    <img src="../images/CathyLogo.png" alt="Cathy Choi Logo">
+                </a>
+            </div>
+            <nav class="nav-menu">
+                <a href="../about.html">About</a>
+                <a href="../fall25.html">Fall25</a>
+                <a href="../spring26.html">Spring26</a>
+                <a href="../contact.html">Contact</a>
+            </nav>
+        </header>
 
-    <nav class="nav-center">
-      <a href="index.html">Main</a>
-      <a href="project_index.html">Projects</a>
-      <a href="extra.html">Extra</a>
-    </nav>
+        <main class="project-detail-wrapper">
+            <div class="project-content-grid">
+                
+                <section class="comic-proj-panel visual-panel">
+                    <div id="sketch-container"></div>
+                    <p class="visual-label">
+                        <a href="https://editor.p5js.org/CathyChoi/full/WkTaKx25A" target="_blank">[Link to code]</a>
+                    </p>
+                </section>
 
-    <div class="nav-right">
-      <a href="#">Contact ↗</a>
+                <section class="comic-proj-panel title-panel">
+                    <h1>Exquisite<br>Corpse</h1>
+                    <p class="tagline">A playful p5.js experiment exploring fragmented bodies, rotation, and surreal interaction through mouse movement.</p>
+                </section>
+
+                <section class="comic-proj-panel description-panel">
+                    <h2>Description</h2>
+                    <p>This project reinterprets the surrealist “Exquisite Corpse” technique through code. Each body part rotates independently in response to mouse movement, creating unexpected and humorous recombinations.</p>
+                </section>
+
+                <div class="back-nav">
+                    <a href="../fall25.html">RETURN_TO_LIST ↩</a>
+                </div>
+
+            </div>
+        </main>
     </div>
-  </header>
 
-  <!-- 본문: page-container로 통일 -->
-  <div class="page-container">
-
-    <h1>Exquisite Corpse</h1>
-
-    <p class="page-description">
-      A playful p5.js experiment exploring fragmented bodies, rotation, and surreal interaction through mouse movement.
-    </p>
-
-    <!-- p5 캔버스 자리 -->
-    <div id="sketch-container"></div>
-
-    <h2>Description</h2>
-    <p>
-      This project reinterprets the surrealist “Exquisite Corpse” technique through code.
-      Each body part rotates independently in response to mouse movement, creating unexpected and humorous recombinations.
-    </p>
-
-  </div>
-
-  <!-- ========================= -->
-  <!-- p5.js SKETCH (원본 그대로) -->
-  <!-- ========================= -->
-  <script>
+    <script>
     function setup() {
+      // 캔버스를 sketch-container 안에 넣습니다.
       const c = createCanvas(400, 600);
       c.parent("sketch-container");
     }
@@ -247,7 +240,6 @@
       endShape(CLOSE);
       pop();
     }
-  </script>
-
+    </script>
 </body>
 </html>

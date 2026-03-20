@@ -1,176 +1,184 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8" />
-  <title>Project 5 – Optical Illusion – Cathy Choi</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Optical Illusion | Cathy Choi</title>
 
-  <!-- 공통 스타일 -->
-  <link rel="stylesheet" href="style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Noto+Sans+KR:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;600;700;900&family=Playfair+Display:ital,wght@0,500;1,500;1,800&display=swap" rel="stylesheet">
 
-  <!-- p5.js -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.1/p5.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.1/p5.js"></script>
 
-  <style>
-    #sketch-container {
-      margin: 40px 0;
-      text-align: center;
-    }
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/project-style.css" />
 
-    canvas {
-      display: block;
-      margin: 0 auto;
-      border-radius: 12px;
-    }
+    <style>
+        /* 웹캠 스냅 버튼을 위한 만화풍 스타일링 */
+        #sketch-container button {
+            margin-top: 20px;
+            padding: 12px 24px;
+            font-family: 'Archivo', sans-serif;
+            font-weight: 900;
+            text-transform: uppercase;
+            background-color: #fff;
+            border: 3px solid #000;
+            box-shadow: 5px 5px 0px #000;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
 
-    /* snap 버튼 정리 */
-    button {
-      margin-top: 15px;
-      padding: 8px 16px;
-      font-size: 0.95rem;
-      border-radius: 20px;
-      border: 1px solid #111;
-      background: white;
-      cursor: pointer;
-    }
+        #sketch-container button:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 7px 7px 0px #000;
+            background-color: #f0f0f0;
+        }
 
-    button:hover {
-      background: #111;
-      color: white;
-    }
-  </style>
+        #sketch-container button:active {
+            transform: translate(2px, 2px);
+            box-shadow: 0px 0px 0px #000;
+        }
+    </style>
 </head>
-
 <body>
 
-  <!-- FIXED NAV (통일) -->
-  <header class="fixed-nav">
-    <div class="nav-left">©Cathy Choi</div>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <a href="../index.html">
+                    <img src="../images/CathyLogo.png" alt="Cathy Choi Logo">
+                </a>
+            </div>
+            <nav class="nav-menu">
+                <a href="../about.html">About</a>
+                <a href="../fall25.html">Fall25</a>
+                <a href="../spring26.html">Spring26</a>
+                <a href="../contact.html">Contact</a>
+            </nav>
+        </header>
 
-    <nav class="nav-center">
-      <a href="index.html">Main</a>
-      <a href="project_index.html">Projects</a>
-      <a href="extra.html">Extra</a>
-    </nav>
+        <main class="project-detail-wrapper">
+            <div class="project-content-grid">
+                
+                <section class="comic-proj-panel visual-panel">
+                    <div id="sketch-container"></div>
+                    <p class="visual-label">
+                        <a href="https://editor.p5js.org/CathyChoi/full/M7mYY_FcF" target="_blank">[Link to code]</a>
+                    </p>
+                </section>
 
-    <div class="nav-right">
-      <a href="#">Contact ↗</a>
+                <section class="comic-proj-panel title-panel">
+                    <h1>Optical<br>Illusion</h1>
+                    <p class="tagline">A webcam-based p5.js experiment that transforms a captured image into a vibrant, abstract pattern based on brightness.</p>
+                </section>
+
+                <section class="comic-proj-panel description-panel">
+                    <h2>Description</h2>
+                    <p>This project captures a live webcam image and converts it into a colorful optical illusion. Brightness values are translated into size and hue, creating a dynamic, pixel-based abstraction of the captured moment.</p>
+                </section>
+
+                <div class="back-nav">
+                    <a href="../fall25.html">RETURN_TO_LIST ↩</a>
+                </div>
+
+            </div>
+        </main>
     </div>
-  </header>
 
-  <!-- 본문 -->
-  <div class="page-container">
+    <script>
+        let video;
+        let snapped = false;
+        let img;
 
-    <h1>Optical Illusion</h1>
+        function setup() {
+            // 캔버스를 8칸 너비의 visual-panel 박스에 맞게 생성
+            const c = createCanvas(600, 600);
+            c.parent("sketch-container");
 
-    <p class="page-description">
-      A webcam-based p5.js experiment that transforms a captured image into a vibrant,
-      abstract pattern based on brightness.
-    </p>
+            colorMode(HSB, 360, 100, 100);
+            video = createCapture(VIDEO);
+            video.size(600, 600);
+            video.hide();
 
-    <!-- 캔버스 -->
-    <div id="sketch-container"></div>
+            // 스냅 버튼 생성 및 부모 설정
+            let snapButton = createButton("SNAP MOMENT");
+            snapButton.parent("sketch-container");
+            snapButton.mouseClicked(takeSnap);
 
-    <h2>Description</h2>
-    <p>
-      This project captures a live webcam image and converts it into a colorful optical
-      illusion. Brightness values are translated into size and hue, creating a dynamic,
-      pixel-based abstraction of the captured moment.
-    </p>
-
-  </div>
-
-  <!-- ========================= -->
-  <!-- p5.js SKETCH (원본 그대로) -->
-  <!-- ========================= -->
-  <script>
-    let video;
-    let snapped = false;
-    let img;
-
-    function setup() {
-      const c = createCanvas(600, 600);
-      c.parent("sketch-container");
-
-      colorMode(HSB, 360, 100, 100);
-      video = createCapture(VIDEO);
-      video.size(600, 600);
-      video.hide();
-
-      let snapButton = createButton("snap");
-      snapButton.parent("sketch-container");
-      snapButton.mouseClicked(takeSnap);
-
-      noStroke();
-    }
-
-    function takeSnap() {
-      if (!snapped) {
-        image(video, 0, 0, width, height);
-        img = video.get();
-        snapped = true;
-        video.remove();
-        makeGrayscale(img);
-      }
-    }
-
-    function draw() {
-      if (snapped && img) {
-        background(0);
-        drawPattern(img);
-        noLoop();
-      }
-    }
-
-    function makeGrayscale(srcImg) {
-      srcImg.loadPixels();
-      for (let i = 0; i < srcImg.pixels.length; i += 4) {
-        let r = srcImg.pixels[i];
-        let g = srcImg.pixels[i + 1];
-        let b = srcImg.pixels[i + 2];
-        let avg = (r + g + b) / 3;
-        srcImg.pixels[i] = avg;
-        srcImg.pixels[i + 1] = avg;
-        srcImg.pixels[i + 2] = avg;
-      }
-      srcImg.updatePixels();
-    }
-
-    let size, hue;
-
-    function drawPattern(srcImg) {
-      let step = 20;
-      srcImg.loadPixels();
-
-      for (let y = 0; y < height; y += step) {
-        for (let x = 0; x < width; x += step) {
-          let idx = 4 * (x + y * width);
-          let bright = srcImg.pixels[idx];
-
-          if (bright > 200) {
-            size = step * 0.7;
-            hue = 30;
-          } else if (bright > 150) {
-            size = step * 0.6;
-            hue = 0;
-          } else if (bright > 100) {
-            size = step * 0.5;
-            hue = 120;
-          } else if (bright > 50) {
-            size = step * 0.4;
-            hue = 200;
-          } else {
-            size = step * 0.3;
-            hue = 250;
-          }
-
-          fill(hue, 80, 100);
-          ellipse(x, y, size);
+            noStroke();
         }
-      }
-    }
-  </script>
 
+        function takeSnap() {
+            if (!snapped) {
+                image(video, 0, 0, width, height);
+                img = video.get();
+                snapped = true;
+                video.remove();
+                makeGrayscale(img);
+                
+                // 스냅 후 버튼 숨기기 (선택 사항)
+                this.hide();
+            }
+        }
+
+        function draw() {
+            if (snapped && img) {
+                background(0);
+                drawPattern(img);
+                noLoop();
+            } else {
+                // 스냅 전에는 실시간 비디오 피드 표시
+                image(video, 0, 0, width, height);
+            }
+        }
+
+        function makeGrayscale(srcImg) {
+            srcImg.loadPixels();
+            for (let i = 0; i < srcImg.pixels.length; i += 4) {
+                let r = srcImg.pixels[i];
+                let g = srcImg.pixels[i + 1];
+                let b = srcImg.pixels[i + 2];
+                let avg = (r + g + b) / 3;
+                srcImg.pixels[i] = avg;
+                srcImg.pixels[i + 1] = avg;
+                srcImg.pixels[i + 2] = avg;
+            }
+            srcImg.updatePixels();
+        }
+
+        function drawPattern(srcImg) {
+            let step = 20;
+            srcImg.loadPixels();
+
+            for (let y = 0; y < height; y += step) {
+                for (let x = 0; x < width; x += step) {
+                    let idx = 4 * (x + y * width);
+                    let bright = srcImg.pixels[idx];
+
+                    let size, hue;
+                    if (bright > 200) {
+                        size = step * 0.7;
+                        hue = 30;
+                    } else if (bright > 150) {
+                        size = step * 0.6;
+                        hue = 0;
+                    } else if (bright > 100) {
+                        size = step * 0.5;
+                        hue = 120;
+                    } else if (bright > 50) {
+                        size = step * 0.4;
+                        hue = 200;
+                    } else {
+                        size = step * 0.3;
+                        hue = 250;
+                    }
+
+                    fill(hue, 80, 100);
+                    ellipse(x, y, size);
+                }
+            }
+        }
+    </script>
 </body>
 </html>

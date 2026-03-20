@@ -1,225 +1,191 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8" />
-  <title>Project 3 – Ice Coffee – Cathy Choi</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ice Coffee | Cathy Choi</title>
 
-  <link rel="stylesheet" href="style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Noto+Sans+KR:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;600;700;900&family=Playfair+Display:ital,wght@0,500;1,500;1,800&display=swap" rel="stylesheet">
 
-  <!-- p5.js (Project 1과 동일) -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.1/p5.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.1/addons/p5.sound.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.1/p5.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.1/addons/p5.sound.min.js"></script>
 
-  <style>
-    #sketch-container {
-      margin-top: 40px;
-      margin-bottom: 40px;
-      text-align: center;
-    }
-    canvas {
-      display: block;
-      margin: 0 auto;
-      border-radius: 10px;
-    }
-  </style>
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/project-style.css" />
 </head>
-
 <body>
 
-  <!-- 🔥 통일된 탑바 (Project 1과 동일) -->
-  <header class="fixed-nav">
-    <div class="nav-left">©Cathy Choi</div>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <a href="../index.html">
+                    <img src="../images/CathyLogo.png" alt="Cathy Choi Logo">
+                </a>
+            </div>
+            <nav class="nav-menu">
+                <a href="../about.html">About</a>
+                <a href="../fall25.html">Fall25</a>
+                <a href="../spring26.html">Spring26</a>
+                <a href="../contact.html">Contact</a>
+            </nav>
+        </header>
 
-    <nav class="nav-center">
-      <a href="index.html">Main</a>
-      <a href="project_index.html">Projects</a>
-      <a href="extra.html">Extra</a>
-    </nav>
+        <main class="project-detail-wrapper">
+            <div class="project-content-grid">
+                
+                <section class="comic-proj-panel visual-panel">
+                    <div id="sketch-container"></div>
+                    <p class="visual-label">
+                        <a href="https://editor.p5js.org/CathyChoi/full/rlr6BdoNS" target="_blank">[Link to code]</a>
+                    </p>
+                </section>
 
-    <div class="nav-right">
-      <a href="#">Contact ↗</a>
+                <section class="comic-proj-panel title-panel">
+                    <h1>Ice<br>Coffee</h1>
+                    <p class="tagline">A time-reactive iced coffee sketch: waves respond to mouse movement, and ice cubes float, melt, and regenerate.</p>
+                </section>
+
+                <section class="comic-proj-panel description-panel">
+                    <h2>Description</h2>
+                    <p>This sketch visualizes an iced coffee surface that reacts to your mouse motion and the real-world time of day. Ice cubes drift, bob, melt, and respawn to keep the scene alive.</p>
+                </section>
+
+                <div class="back-nav">
+                    <a href="../fall25.html">RETURN_TO_LIST ↩</a>
+                </div>
+
+            </div>
+        </main>
     </div>
-  </header>
 
-  <!-- 페이지 본문 (Project 1과 동일) -->
-  <div class="page-container">
+    <script>
+        // 전역 변수들
+        let cupX = 300;  
+        let cupY = 360;  
+        let cupR = 260;  
+        let coffeeTopY = 300;  
+        let coffeeBotY = 520;  
+        let topHalfW = 180;    
+        let botHalfW = 150;    
+        let topL = cupX - topHalfW; 
+        let topR = cupX + topHalfW; 
+        let botL = cupX - botHalfW; 
+        let botR = cupX + botHalfW; 
+        let wavePhase = 0;      
+        let iceList = [];       
 
-    <h1>Ice Coffee</h1>
+        function setup() { 
+            let c = createCanvas(600, 600); 
+            c.parent("sketch-container");
 
-    <p class="page-description">
-      A time-reactive iced coffee sketch: waves respond to mouse movement, and ice cubes float, melt, and regenerate.
-    </p>
+            for (let i = 0; i < 5; i++) { 
+                addIce(); 
+            } 
+        } 
 
-    <!-- 캔버스 자리 -->
-    <div id="sketch-container"></div>
+        function draw() {
+            let h = hour();
+            let m = minute();
+            let s = second();
 
-    <h2>Description</h2>
-    <p>
-      This sketch visualizes an iced coffee surface that reacts to your mouse motion and the real-world time of day.
-      Ice cubes drift, bob, melt, and respawn to keep the scene alive.
-    </p>
+            if (h >= 6 && h < 18) {
+                background(200, 220, 255); 
+            } else {
+                background(30, 30, 60); 
+            }
 
-  </div>
+            fill(255);
+            textSize(16);
+            textFont('Archivo');
+            text("Time: " + h + ":" + nf(m,2) + ":" + nf(s,2), 20, 30);
 
-  <!-- ========================= -->
-  <!-- p5.js code (원본 그대로) -->
-  <!-- ========================= -->
-  <script>
-    function setup() { 
-      let c = createCanvas(600, 600); 
-      c.parent("sketch-container");
+            drawCoffee(); 
 
-      // 시작 얼음 몇 개 
-      for (let i = 0; i < 5; i++) { 
-        addIce(); 
-      } 
-    } 
+            for (let ice of iceList) { 
+                updateIce(ice); 
+                drawIce(ice); 
+            } 
+        }
 
-    function draw() {
-      // 낮(6~18시)에는 밝은 색, 밤에는 어두운 색
-      let h = hour();
-      let m = minute();
-      let s = second();
+        function drawCoffee() { 
+            let mouseSpeed = abs(mouseX - pmouseX) + abs(mouseY - pmouseY); 
+            let amp = map(mouseSpeed, 0, 80, 2, 12, true); 
+            wavePhase += map(mouseSpeed, 0, 80, 0.02, 0.2, true); 
 
-      if (h >= 6 && h < 18) {
-        background(200, 220, 255); // 낮: 밝은 하늘색
-      } else {
-        background(30, 30, 60); // 밤: 남색
-      }
+            function surfaceY(x) { 
+                return coffeeTopY + sin((x + wavePhase * 60) * 0.05) * amp; 
+            } 
 
-      // 화면 좌측 상단에 시간 출력
-      fill(255);
-      textSize(16);
-      text("Time: " + h + ":" + nf(m,2) + ":" + nf(s,2), 20, 20);
+            noStroke(); 
+            fill(70, 35, 20);   
+            beginShape(); 
+            for (let x = topL; x <= topR; x += 4) { 
+                vertex(x, surfaceY(x)); 
+            } 
+            vertex(botR, coffeeBotY); 
+            vertex(botL, coffeeBotY); 
+            vertex(topL, surfaceY(topL)); 
+            endShape(CLOSE); 
+        } 
 
-      // 커피(사다리꼴) + 윗면 파동 
-      drawCoffee(); 
+        function addIce() { 
+            iceList.push({ 
+                x: cupX + random(-topHalfW + 20, topHalfW - 20), 
+                y: coffeeTopY, 
+                size: random(34, 50), 
+                alpha: 220, 
+                vx: random(-0.4, 0.4), 
+                bob: random(TWO_PI)    
+            }); 
+        } 
 
-      // 얼음 업데이트 + 그리기 
-      for (let ice of iceList) { 
-        updateIce(ice); 
-        drawIce(ice); 
-      } 
-    }
+        function updateIce(ice) { 
+            let mouseSpeed = abs(mouseX - pmouseX) + abs(mouseY - pmouseY); 
+            let amp = map(mouseSpeed, 0, 80, 2, 12, true); 
+            let surf = coffeeTopY + sin((ice.x + wavePhase * 60) * 0.05) * amp; 
 
-    // 커피를 그립니다: 사다리꼴 몸통 + 윗면 파동
-    function drawCoffee() { 
-      // 마우스를 빨리 움직일수록 파도가 커짐 
-      let mouseSpeed = abs(mouseX - pmouseX) + abs(mouseY - pmouseY); 
-      let amp = map(mouseSpeed, 0, 80, 2, 12, true); // 파도 높이 
-      wavePhase += map(mouseSpeed, 0, 80, 0.02, 0.2, true); // 파도 진행 속도 
+            ice.bob += 0.04; 
+            ice.y = surf + sin(ice.bob) * 2 + 3; 
 
-      // x값에 따른 수면 y값(단일 sin 파동만 사용해서 단순화) 
-      function surfaceY(x) { 
-        return coffeeTopY + sin((x + wavePhase * 60) * 0.05) * amp; 
-      } 
+            ice.vx += (mouseX - pmouseX) * 0.001 + random(-0.01, 0.01); 
+            ice.vx = constrain(ice.vx, -1, 1); 
+            ice.x += ice.vx; 
 
-      // 커피 채우기(몸통) 
-      noStroke(); 
-      fill(70, 35, 20);   // 커피색(갈색) 
-      beginShape(); 
-      // 윗면의 파동 라인 
-      for (let x = topL; x <= topR; x += 4) { 
-        vertex(x, surfaceY(x)); 
-      } 
-      // 아랫면으로 내려가서 모서리 닫기 
-      vertex(botR, coffeeBotY); 
-      vertex(botL, coffeeBotY); 
-      vertex(topL, surfaceY(topL)); 
-      endShape(CLOSE); 
-    } 
+            let minX = cupX - topHalfW + ice.size * 0.5; 
+            let maxX = cupX + topHalfW - ice.size * 0.5; 
+            if (ice.x < minX) { ice.x = minX; ice.vx *= -0.4; } 
+            if (ice.x > maxX) { ice.x = maxX; ice.vx *= -0.4; } 
 
-    // 얼음 하나를 배열에 추가 
-    function addIce() { 
-      iceList.push({ 
-        x: cupX + random(-topHalfW + 20, topHalfW - 20), // 윗면 폭 안에서 
-        y: coffeeTopY, 
-        size: random(34, 50), 
-        alpha: 220, 
-        vx: random(-0.4, 0.4), // 좌우 이동 속도 
-        bob: random(TWO_PI)    // 둥실(세로 흔들림) 위상 
-      }); 
-    } 
+            ice.size -= 0.015; 
+            ice.alpha -= 0.08; 
 
-    // 얼음의 움직임/녹는 것 업데이트 
-    function updateIce(ice) { 
-      // 마우스 속도 → 파도 크기 
-      let mouseSpeed = abs(mouseX - pmouseX) + abs(mouseY - pmouseY); 
-      let amp = map(mouseSpeed, 0, 80, 2, 12, true); 
+            if (ice.size < 6 || ice.alpha <= 0) { 
+                ice.x = cupX + random(-topHalfW + 20, topHalfW - 20); 
+                ice.y = coffeeTopY; 
+                ice.size = random(34, 50); 
+                ice.alpha = 220; 
+                ice.vx = random(-0.4, 0.4); 
+                ice.bob = random(TWO_PI); 
+            } 
+        } 
 
-      // 얼음의 x 위치에서의 수면 높이(= 윗면 파동) 
-      let surf = coffeeTopY + sin((ice.x + wavePhase * 60) * 0.05) * amp; 
+        function drawIce(ice) { 
+            noStroke(); 
+            fill(200, 240, 255, ice.alpha);   
+            rectMode(CENTER); 
+            rect(ice.x, ice.y, ice.size, ice.size, 8); 
 
-      // 둥실: 세로로 살짝 위아래(2px 정도) + 살짝 잠기게(+3) 
-      ice.bob += 0.04; 
-      ice.y = surf + sin(ice.bob) * 2 + 3; 
+            fill(255, 180); 
+            rect(ice.x - ice.size * 0.2, ice.y - ice.size * 0.2, ice.size * 0.45, ice.size * 0.45, 6); 
+        } 
 
-      // 좌우 이동: 마우스 흔들림에 영향 + 약간의 랜덤 드리프트 
-      ice.vx += (mouseX - pmouseX) * 0.001 + random(-0.01, 0.01); 
-      ice.vx = constrain(ice.vx, -1, 1); 
-      ice.x += ice.vx; 
-
-      // 윗면 폭 안에서만 움직이게(너무 밖으로 못 나가게) 
-      let minX = cupX - topHalfW + ice.size * 0.5; 
-      let maxX = cupX + topHalfW - ice.size * 0.5; 
-      if (ice.x < minX) { ice.x = minX; ice.vx *= -0.4; } 
-      if (ice.x > maxX) { ice.x = maxX; ice.vx *= -0.4; } 
-
-      // 녹기 
-      ice.size -= 0.015; 
-      ice.alpha -= 0.08; 
-
-      // 너무 작거나 투명해지면, 윗면 근처에서 새 얼음으로 교체 
-      if (ice.size < 6 || ice.alpha <= 0) { 
-        ice.x = cupX + random(-topHalfW + 20, topHalfW - 20); 
-        ice.y = coffeeTopY; 
-        ice.size = random(34, 50); 
-        ice.alpha = 220; 
-        ice.vx = random(-0.4, 0.4); 
-        ice.bob = random(TWO_PI); 
-      } 
-    } 
-
-    // 얼음을 그림 
-    function drawIce(ice) { 
-      noStroke(); 
-      fill(200, 240, 255, ice.alpha);   // 얼음 본체 
-      rectMode(CENTER); 
-      rect(ice.x, ice.y, ice.size, ice.size, 8); 
-
-      // 하이라이트(살짝 밝게) 
-      fill(255, 180); 
-      rect(ice.x - ice.size * 0.2, ice.y - ice.size * 0.2, ice.size * 0.45, ice.size * 0.45, 6); 
-    } 
-
-    // 컵 안을 클릭하면 얼음 추가 
-    function mousePressed() { 
-      if (dist(mouseX, mouseY, cupX, cupY) < cupR) { 
-        addIce(); 
-      } 
-    } 
-
-    /// 정의들 
-    let cupX = 300;  // 컵 중심 X 
-    let cupY = 360;  // 컵 중심 Y 
-    let cupR = 260;  // 컵 반지름(그림 크기) 
-
-    let coffeeTopY = 300;  // 커피 윗면 높이 
-    let coffeeBotY = 520;  // 커피 바닥 높이 
-    let topHalfW = 180;    // 윗면 반쪽 폭 
-    let botHalfW = 150;    // 아랫면 반쪽 폭 
-
-    // 사다리꼴 윗/아랫변 좌표 
-    let topL = cupX - topHalfW; 
-    let topR = cupX + topHalfW; 
-    let botL = cupX - botHalfW; 
-    let botR = cupX + botHalfW; 
-
-    let wavePhase = 0;      // 파도 진행값(시간) 
-    let iceList = [];       // 얼음들을 담는 배열
-  </script>
-
+        function mousePressed() { 
+            if (dist(mouseX, mouseY, cupX, cupY) < cupR) { 
+                addIce(); 
+            } 
+        } 
+    </script>
 </body>
 </html>

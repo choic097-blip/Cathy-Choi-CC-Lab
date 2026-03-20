@@ -1,48 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Project 7 – Autobiographical Game</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Say Something Normal | Cathy Choi</title>
 
-  <!-- ✅ 경로 수정 -->
-  <link rel="stylesheet" href="../style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;600;700;900&family=Playfair+Display:ital,wght@0,500;1,500;1,800&display=swap" rel="stylesheet">
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.1/p5.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.1/addons/p5.sound.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.1/p5.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.1/addons/p5.sound.min.js"></script>
+
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/project-style.css" />
 </head>
-
 <body>
 
-<header class="fixed-nav">
-  <div class="nav-left">©Cathy Choi</div>
-  <nav class="nav-center">
-    <a href="../index.html">Main</a>
-    <a href="../project_index.html">Projects</a>
-    <a href="../extra.html">Extra</a>
-  </nav>
-</header>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <a href="../index.html">
+                    <img src="../images/CathyLogo.png" alt="Cathy Choi Logo">
+                </a>
+            </div>
+            <nav class="nav-menu">
+                <a href="../about.html">About</a>
+                <a href="../fall25.html">Fall25</a>
+                <a href="../spring26.html">Spring26</a>
+                <a href="../contact.html">Contact</a>
+            </nav>
+        </header>
 
-<main class="page-container">
+        <main class="project-detail-wrapper">
+            <div class="project-content-grid">
+                
+                <section class="comic-proj-panel visual-panel">
+                    <div id="sketch-container"></div>
+                    <p class="visual-label">
+                        <a href="https://editor.p5js.org/CathyChoi/full/83zgYRZ_P" target="_blank">[Link to code]</a>
+                    </p>
+                </section>
 
-  <h1>Say Something Normal</h1>
-  <p class="page-description">
-    An interactive text-based game exploring censorship, self-expression,
-    and emotional filtering through player input.
-  </p>
+                <section class="comic-proj-panel title-panel">
+                    <h1>Say Something<br>Normal</h1>
+                    <p class="tagline">An interactive text-based game exploring censorship, self-expression, and emotional filtering through player input.</p>
+                </section>
 
-  <div id="sketch-container"></div>
+                <section class="comic-proj-panel description-panel">
+                    <h2>About This Project</h2>
+                    <p>This game reacts to the player’s words, slowly reshaping them into socially acceptable responses. It explores the tension between inner thoughts and outer expressions.</p>
+                    <p><strong>Controls:</strong> Type and press Enter. Click once to enable sound.</p>
+                </section>
 
-  <h2>About This Project</h2>
-  <p>
-    This game reacts to the player’s words, slowly reshaping them into
-    socially acceptable responses.
-  </p>
+                <div class="back-nav">
+                    <a href="../fall25.html">RETURN_TO_LIST ↩</a>
+                </div>
 
-  <p><strong>Controls:</strong> Type and press Enter. Click once to enable sound.</p>
+            </div>
+        </main>
+    </div>
 
-</main>
-
-<script src="sketch.js"></script>
-</body>
+    <script src="sketch.js"></script>
+    
+    </body>
 </html>
