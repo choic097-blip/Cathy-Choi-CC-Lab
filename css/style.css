@@ -716,101 +716,159 @@ header {
     }
 }
 
-/* --- COMIC BOOK STYLE FOR PROJECTS --- */
+/* =========================================
+   Project Detail Page Dedicated Style
+   ========================================= */
 
-.comic-page {
-    background-color: #fdfdf4; 
-    color: #000;
+/* 전체 래퍼 (기존 스타일과 충돌 방지) */
+.project-detail-wrapper {
+    width: 100%;
+    padding: 40px 20px;
 }
 
-.comic-wrapper {
+/* 12단 와이드 그리드 시스템 */
+.project-content-grid {
     display: grid;
-    max-width: 1200px;
-    margin: 120px auto 60px; 
-    padding: 20px;
+    grid-template-columns: repeat(12, 1fr);
+    grid-auto-rows: minmax(100px, auto);
     gap: 20px;
-
-    grid-template-columns: 1.2fr 0.8fr;
-    grid-template-rows: auto auto auto;
+    max-width: 1300px; /* 기존보다 훨씬 널찍하게 1300px로 확대 */
+    margin: 0 auto 80px auto;
 }
 
-/* 개별 만화 패널 */
-.panel {
-    background: #fff;
-    border: 5px solid #000; 
-    padding: 30px;
-    box-shadow: 12px 12px 0px #000; 
+/* 프로젝트 전용 만화 패널 공통 속성 */
+.comic-proj-panel {
+    background-color: #ffffff;
+    border: 4px solid #000000;
+    box-shadow: 12px 12px 0px #000000;
+    padding: 40px;
     position: relative;
-    overflow: hidden;
+    transition: transform 0.2s ease;
 }
 
-.panel-title {
-    grid-column: 1 / 2;
-}
-
-.panel-visual {
-    grid-column: 2 / 3;
-    grid-row: 1 / 3; 
+/* 1. 비주얼(p5.js) 패널: 왼쪽 7칸 차지 (메인) */
+.visual-panel {
+    grid-column: 1 / 8;
+    grid-row: 1 / 3; /* 세로로 2줄 차지 */
     display: flex;
     flex-direction: column;
+    align-items: center;
     justify-content: center;
-    align-items: center;
-    background: #eee;
+    background-color: #f4f4f4;
+    z-index: 1; /* 제일 바닥에 깔림 */
 }
 
-.panel-text {
-    grid-column: 1 / 2;
-}
-
-.panel-footer {
-    grid-column: 1 / -1;
+/* p5.js 캔버스가 튀어나가지 않게 강제 제어 */
+#sketch-container {
+    width: 100%;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 30px;
+    justify-content: center;
 }
 
-/* 타이틀 & 텍스트 스타일 */
-.comic-heading {
+#sketch-container canvas {
+    border: 3px solid #000;
+    max-width: 100% !important;
+    height: auto !important;
+    box-shadow: 6px 6px 0px rgba(0,0,0,0.1); /* 캔버스 전용 살짝 연한 그림자 */
+}
+
+.visual-label {
+    margin-top: 25px;
+    font-weight: 900;
     font-family: 'Archivo', sans-serif;
-    font-size: 4rem;
-    font-weight: 800;
-    line-height: 0.9;
-    margin-bottom: 20px;
-    letter-spacing: -2px;
-}
-
-.section-title {
-    background: #000;
-    color: #fff;
-    display: inline-block;
-    padding: 5px 15px;
-    font-size: 1.2rem;
-    font-family: 'Archivo', sans-serif;
-    margin-bottom: 20px;
-    transform: rotate(-1deg); 
-}
-
-.content-body p {
-    font-family: 'Inter', 'Noto Sans KR', sans-serif;
-    line-height: 1.8;
-    margin-bottom: 15px;
     font-size: 1.1rem;
+    letter-spacing: 1px;
+    border-bottom: 2px solid #000;
 }
 
-.panel-caption {
-    font-size: 0.8rem;
-    font-weight: bold;
-    margin-top: 15px;
-    border-top: 2px solid #000;
-    padding-top: 5px;
+/* 2. 타이틀 패널: 오른쪽 위, 비주얼 패널과 1칸(7열) 겹치게 오버레이! */
+.title-panel {
+    grid-column: 7 / 13; 
+    grid-row: 1;
+    z-index: 5; /* 캔버스 위로 올라옴 */
+    transform: rotate(2deg); /* 살짝 삐딱하게 해서 힙한 느낌 추가 */
+    align-self: center;
+    margin-top: 20px;
+}
+
+.title-panel h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 4rem; /* 제목 더 크게! */
+    font-weight: 800;
+    margin: 0 0 15px 0;
+    line-height: 1.1;
+}
+
+.title-panel p.tagline {
+    font-family: 'Archivo', sans-serif;
+    font-size: 1.2rem;
+    color: #444;
+    font-weight: 600;
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* 3. 설명 패널: 오른쪽 아래, 타이틀 아래에 배치 */
+.description-panel {
+    grid-column: 8 / 13; /* 비주얼 패널과 안 겹치게 오른쪽으로 살짝 밀음 */
+    grid-row: 2;
+    z-index: 2;
+    transform: rotate(-1deg);
+    margin-top: -30px; /* 타이틀 박스와 간격을 좁힘 */
+}
+
+.description-panel h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    margin: 0 0 20px 0;
+    border-bottom: 3px solid #000;
+    display: inline-block;
+}
+
+.description-panel p {
+    font-family: 'Archivo', sans-serif;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* 4. 뒤로가기 내비게이션 */
+.back-nav {
+    grid-column: 1 / 13;
+    text-align: right;
+    margin-top: 40px;
+}
+
+.back-nav a {
+    font-family: 'Archivo', sans-serif;
+    font-weight: 900;
+    color: #000;
+    text-decoration: none;
+    border-bottom: 4px solid #000;
+    font-size: 1.5rem;
+    transition: color 0.2s, border-color 0.2s;
+}
+
+.back-nav a:hover {
+    color: #555;
+    border-color: #555;
 }
 
 /* 반응형 (모바일) */
-@media (max-width: 900px) {
-    .comic-wrapper {
+@media (max-width: 1000px) {
+    .project-content-grid {
         display: flex;
         flex-direction: column;
+        gap: 40px;
     }
-    .comic-heading { font-size: 2.5rem; }
+    .title-panel, .description-panel {
+        transform: none; /* 모바일에서는 삐딱한 거 풀기 */
+        margin: 0;
+    }
+    .title-panel {
+        margin-top: -60px; /* 캔버스 위로 살짝 올라타게 */
+        margin-left: 20px;
+        margin-right: 20px;
+    }
 }
