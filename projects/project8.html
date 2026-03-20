@@ -36,7 +36,7 @@
             
             <div class="main-headline-comic">
                 <h1>[Interactive Typography]</h1>
-                <p>A collection of three generative sketches exploring the intersection of type, physics, and user interaction through code.</p>
+                <p>A collection of three Avatar-inspired interactive typographies exploring the intersection of type, physics, and user interaction through code.</p>
             </div>
 
             <div class="sub-projects-list">
@@ -101,7 +101,7 @@
             let fontSize = 180;
             let numBgParticles = 2000; // 성능을 위해 약간 축소
 
-            p.preload = () => { font = p.loadFont('../assets/fonts/Kim-Regular.ttf'); } // 폰트 경로 확인!
+            p.preload = () => { font = p.loadFont('../fonts/Kim-Regular.ttf'); }
 
             p.setup = () => {
                 let cnv = p.createCanvas(500, 500); // 쾌적한 세로 배치를 위해 500x500으로 축소
@@ -159,7 +159,7 @@
         const fishesSketch = (p) => {
             let font; let particles = []; let centerX, centerY; let fontSize = 120; // 500x500에 맞춰 조정
             
-            p.preload = () => { font = p.loadFont('../assets/fonts/Kim-Regular.ttf'); }
+            p.preload = () => { font = p.loadFont('../fonts/Kim-Regular.ttf'); }
 
             p.setup = () => {
                 let cnv = p.createCanvas(500, 500); cnv.parent("sketch-fishes");
@@ -190,7 +190,7 @@
             let font; let particles = []; let fontSize = 100; // 500x500에 맞춰 조정
             let shakeIntensity = 0;
             
-            p.preload = () => { font = p.loadFont('../assets/fonts/PartialSans-Regular.otf'); }
+            p.preload = () => { font = p.loadFont('../fonts/PartialSans-Regular.otf'); }
 
             p.setup = () => {
                 let cnv = p.createCanvas(500, 500); cnv.parent("sketch-heavy");
