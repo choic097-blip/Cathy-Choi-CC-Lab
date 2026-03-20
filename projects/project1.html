@@ -1,179 +1,135 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8" />
-  <title>Lost & Found – Cathy Choi</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lost & Found | Cathy Choi</title>
 
-  <link rel="stylesheet" href="style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Noto+Sans+KR:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@800&family=Inter:wght@400;600&family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
 
-  <!-- p5.js -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.1/p5.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.1/addons/p5.sound.min.js"></script>
-
-  <style>
-    #sketch-container {
-      margin-top: 40px;
-      margin-bottom: 40px;
-      text-align: center;
-    }
-    canvas {
-      display: block;
-      margin: 0 auto;
-      border-radius: 10px;
-    }
-  </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.1/p5.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.1/addons/p5.sound.min.js"></script>
 </head>
 
-<body>
+<body class="comic-page">
 
-  <header class="fixed-nav">
-    <div class="nav-left">©Cathy Choi</div>
+    <header class="fixed-nav">
+        <div class="nav-left">©Cathy Choi</div>
+        <nav class="nav-center">
+            <a href="../index.html">Main</a>
+            <a href="../project_index.html">Projects</a>
+            <a href="../extra.html">Extra</a>
+        </nav>
+        <div class="nav-right">
+            <a href="mailto:choic097@newschool.edu">Contact ↗</a>
+        </div>
+    </header>
 
-    <nav class="nav-center">
-      <a href="index.html">Main</a>
-      <a href="project_index.html">Projects</a>
-      <a href="extra.html">Extra</a>
-    </nav>
+    <div class="comic-wrapper">
+        
+        <section class="panel panel-title">
+            <h1 class="comic-heading">PROJECT:<br>LOST_&_FOUND</h1>
+            <p class="project-tagline">
+                A p5.js generative artwork inspired by interior spaces, framed landscapes, and warm reflected light.
+            </p>
+        </section>
 
-    <div class="nav-right">
-      <a href="#">Contact ↗</a>
+        <section class="panel panel-visual">
+            <div id="sketch-container"></div>
+            <div class="panel-caption">VISUAL_EXPERIMENT_01</div>
+        </section>
+
+        <section class="panel panel-text">
+            <h2 class="section-title">MISSION_LOG: INTERPRETATION</h2>
+            <div class="content-body">
+                <p>
+                    A room with kitchen and a balcony. Outside the balcony, there are mountains covered in snow. 
+                    Trees downstairs and bicycles aligned next to each other. In the middle of the room there are tables and chairs, 
+                    there are three sides of windows, each window reveals a different scenery.
+                </p>
+                <p>
+                    I interpreted the image in a more simplified, atmospheric way. 
+                    Instead of focusing on the full inventory of objects, I distilled it down to a mood: <strong>“Sunsetting Kitchen with window.”</strong>
+                </p>
+                <p>
+                    Across the stages, the image progressively became simpler and more abstract. 
+                    What begins as an abundance of detail is ultimately distilled into a minimal, abstract outcome.
+                </p>
+            </div>
+        </section>
+
+        <footer class="panel panel-footer">
+            <a href="../index.html" class="back-link">BACK_TO_HOME ↩</a>
+            <span class="page-number">VOL.26_PG.01</span>
+        </footer>
+
     </div>
-  </header>
 
+    <script>
+        function setup() {
+            let canvas = createCanvas(450, 450);
+            canvas.parent("sketch-container");
+        }
 
-  <!-- 페이지 본문 -->
-  <div class="page-container">
+        function draw() {
+            background(255, 235, 196);
+            push();
+            noStroke();
+            translate(10, 10);
+            fill(255, 194, 69);
+            beginShape();
+            vertex(-10, 330); vertex(120, 285); vertex(400, 285);
+            vertex(400, 75); vertex(120, 75); vertex(-10, 30);
+            endShape(CLOSE);
+            fill(145, 184, 165); rect(140, 100, 240, 170);
+            fill(93, 126, 109);
+            beginShape();
+            vertex(140, 230); vertex(200, 200); vertex(260, 220);
+            vertex(320, 200); vertex(380, 230); vertex(380, 270); vertex(140, 270);
+            endShape(CLOSE);
+            fill(46, 85, 69); triangle(200, 230, 215, 180, 230, 230); rect(212, 230, 6, 20);
+            triangle(270, 230, 285, 180, 300, 230); rect(282, 230, 6, 20);
+            fill(246, 246, 246); triangle(300, 170, 340, 130, 380, 170);
+            pop();
 
-    <h1>Lost & Found</h1>
+            push();
+            stroke(30, 60, 75); strokeWeight(4); noFill();
+            line(0, 120, 112, 146); line(50, 131, 50, 77); line(112, 146, 112, 100);
+            line(0, 223, 118, 226); line(118, 226, 118, 312); line(118, 226, 0, 240);
+            line(118, 312, 0, 385); rect(140, 100, 240, 170);
+            pop();
 
-    <p class="page-description">
-      A p5.js generative artwork inspired by interior spaces, framed landscapes, and warm reflected light.
-    </p>
+            c1 = color(104, 140, 222);
+            c2 = color(222, 255, 255);
+            push(); blendMode(BURN); setGradient(c1, c2); pop();
+            blendMode(BLEND);
+        }
 
-    <!-- 캔버스 자리 -->
-    <div id="sketch-container"></div>
+        function setGradient(c1, c2) {
+            noFill();
+            for (let y = 0; y < height; y++) {
+                let inter = map(y, 0, height, 0, 1);
+                stroke(lerpColor(c1, c2, inter));
+                line(0, y, width, y);
+            }
+            translate(30, 0);
+            push(); blendMode(OVERLAY);
+            let inner = color(255, 140, 0, 180);
+            let outer = color(255, 140, 0, 0);
+            radialGradient(245, 188, 150, inner, outer);
+            pop();
+            blendMode(BLEND);
+        }
 
-    <h2>Description</h2>
-    <p>
-
-      A room with kitchen and a balcony. Outside the balcony, there are mountains covered in snow. Trees downstairs and bicycles aligned next to each other. In the middle of the room there are tables and chairs, there are three sides of windows, each window reveals a different scenery. The right hand side - faraway snow mountain, middle - trees and bicycles, left - the mountain this building is on (closer scenery).
-      In contrast, I interpreted the image in a more simplified, atmospheric way. Instead of focusing on the full inventory of objects and scenes, I distilled it down to a mood: “Sunsetting Kitchen with window.” My interpretation emphasizes a singular emotional moment, while my partner’s language emphasized multiple layers of detail.
-      When I translated the image into code, I relied on abstracted methods such as lineworks and overlays. This reduced the complexity of the original description even further, condensing the scene into visual techniques rather than representational detail. The kitchen, the mountains, and the bicycles were no longer distinguishable as individual objects; instead, they became part of a coded pattern and visual system.
-      Across the stages, the image progressively became simpler and more abstract. My partner began with a descriptive narrative that captured the fullness of the scene, while my interpretation stripped it down into a poetic phrase. The coding stage then reduced the image even further, removing recognizable detail in favor of method and style. This shift demonstrates how interpretation often narrows from the richness of lived observation to the essentialized language of design. What begins as an abundance of detail is ultimately distilled into a minimal, abstract outcome.
-
-    </p>
-
-  </div>
-
-
-  <!-- p5.js code -->
-  <script>
-    function setup() {
-      let canvas = createCanvas(450, 450);
-      canvas.parent("sketch-container");
-    }
-
-    function draw() {
-      background(255, 235, 196);
-
-      push()
-      noStroke();
-      translate(10, 10)
-
-      fill(255, 194, 69)
-      beginShape();
-      vertex(-10, 330);
-      vertex(120, 285);
-      vertex(400, 285);
-      vertex(400, 75);
-      vertex(120, 75);
-      vertex(-10, 30);
-      endShape(CLOSE);
-
-      fill(145, 184, 165);
-      rect(140, 100, 240, 170);
-
-      fill(93, 126, 109);
-      beginShape();
-      vertex(140, 230); vertex(200, 200); vertex(260, 220);
-      vertex(320, 200); vertex(380, 230); vertex(380, 270);
-      vertex(140, 270);
-      endShape(CLOSE);
-
-      fill(46, 85, 69);
-      triangle(200, 230, 215, 180, 230, 230);
-      rect(212, 230, 6, 20);
-      triangle(270, 230, 285, 180, 300, 230);
-      rect(282, 230, 6, 20);
-
-      fill(246, 246, 246);
-      triangle(300, 170, 340, 130, 380, 170);
-      pop()
-
-      push()
-      stroke(30, 60, 75); strokeWeight(4); noFill();
-      line(0, 120, 112, 146)
-      line(50, 131, 50, 77)
-      line(112, 146, 112, 100)
-
-      line(31, 115, 31, 104)
-      line(101, 133, 101, 122)
-      line(0, 223, 118, 226)
-      line(118, 226, 118, 312)
-      line(118, 226, 0, 240)
-      line(118, 312, 0, 385)
-      line(36, 225, 36, 190)
-      line(36, 200, 70, 200)
-      line(20, 238, 20, 370)
-      line(75, 233, 75, 335)
-      line(57, 248, 57, 280)
-      line(103, 240, 103, 265)
-      line(0, 350, 117, 299)
-
-      rect(140, 100, 240, 170);
-      pop()
-
-      c1 = color(104, 140, 222);
-      c2 = color(222, 255, 255);
-
-      push();
-      blendMode(BURN);
-      setGradient(c1, c2);
-      pop();
-
-      blendMode(BLEND);
-    }
-
-    function setGradient(c1, c2) {
-      noFill();
-      for (let y = 0; y < height; y++) {
-        let inter = map(y, 0, height, 0, 1);
-        stroke(lerpColor(c1, c2, inter));
-        line(0, y, width, y);
-      }
-
-      translate(30, 0)
-      push();
-      blendMode(OVERLAY);
-      let inner = color(255, 140, 0, 180);
-      let outer = color(255, 140, 0, 0);
-      radialGradient(245, 188, 150, inner, outer);
-      pop();
-
-      blendMode(BLEND);
-    }
-
-    function radialGradient(cx, cy, radius, innerCol, outerCol) {
-      noStroke();
-      for (let r = radius; r > 0; --r) {
-        let inter = map(r, 5, radius, 0, 1);
-        fill(lerpColor(innerCol, outerCol, inter));
-        ellipse(cx, cy, r * 2, r * 2);
-      }
-    }
-  </script>
-
+        function radialGradient(cx, cy, radius, innerCol, outerCol) {
+            noStroke();
+            for (let r = radius; r > 0; --r) {
+                let inter = map(r, 5, radius, 0, 1);
+                fill(lerpColor(innerCol, outerCol, inter));
+                ellipse(cx, cy, r * 2, r * 2);
+            }
+        }
+    </script>
 </body>
 </html>
