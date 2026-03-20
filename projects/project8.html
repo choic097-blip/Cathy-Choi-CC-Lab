@@ -91,20 +91,23 @@
         };
 
         // =========================================
-        // [Sketch 01: Wind]
+        // [Sketch 01: Wind] - 수정본
         // =========================================
         const windSketch = (p) => {
             let font;
             let strips = [];
             let bgParticles = []; 
             let msg = "Wind";      
-            let fontSize = 180;
-            let numBgParticles = 2000; // 성능을 위해 약간 축소
+            let fontSize = 160; // 박스 크기에 맞춰 약간 축소
+            let numBgParticles = 1500; 
 
-            p.preload = () => { font = p.loadFont('../fonts/Kim-Regular.ttf'); }
+            p.preload = () => { 
+                // 경로에서 assets/ 를 확실히 제거했는지 확인하세요!
+                font = p.loadFont('../fonts/Kim-Regular.ttf'); 
+            }
 
             p.setup = () => {
-                let cnv = p.createCanvas(500, 500); // 쾌적한 세로 배치를 위해 500x500으로 축소
+                let cnv = p.createCanvas(500, 500);
                 cnv.parent("sketch-wind");
                 
                 for (let i = 0; i < numBgParticles; i++) {
@@ -112,44 +115,100 @@
                 }
 
                 if (font) {
-                    let points = font.textToPoints(msg, 70, 320, fontSize, { sampleFactor: 0.15, simplifyThreshold: 0 });
+                    let points = font.textToPoints(msg, 60, 320, fontSize, { 
+                        sampleFactor: 0.15, 
+                        simplifyThreshold: 0 
+                    });
                     for (let i = 0; i < points.length; i++) {
                         let p_pt = points[i];
-                        let len = p.random(15, 55); strip = new Strip(p, p_pt.x, p_pt.y, len); strips.push(strip);
+                        let len = p.random(15, 55); 
+                        // 🚨 'let'을 추가하여 선언 에러를 방지합니다.
+                        let strip = new Strip(p, p_pt.x, p_pt.y, len); 
+                        strips.push(strip);
                     }
                 }
             };
 
             p.draw = () => {
-                p.fill(250, 250, 255, 30); p.noStroke(); p.rect(0, 0, p.width, p.height);
+                // 배경을 약간 더 푸르게 조절하여 입자가 잘 보이게 합니다.
+                p.background(245, 248, 255); 
+                
                 for (let pt of bgParticles) { pt.update(); pt.show(); }
+                
                 let mouseVel = p.createVector(p.mouseX - p.pmouseX, p.mouseY - p.pmouseY);
                 for (let s of strips) { s.update(mouseVel); s.show(); }
             };
 
-            // --- Wind 관련 클래스 ---
             class Strip {
-                constructor(p, x, y, h) { this.p = p; this.home = p.createVector(x, y); this.pos = p.createVector(x, y); this.vel = p.createVector(0, 0); this.acc = p.createVector(0, 0); this.h = h; this.noiseOffset = p.random(1000); }
+                constructor(p, x, y, h) { 
+                    this.p = p; 
+                    this.home = p.createVector(x, y); 
+                    this.pos = p.createVector(x, y); 
+                    this.vel = p.createVector(0, 0); 
+                    this.acc = p.createVector(0, 0); 
+                    this.h = h; 
+                    this.noiseOffset = p.random(1000); 
+                }
                 update(mouseVel) {
-                    let n = this.p.noise(this.pos.x * 0.01, this.pos.y * 0.01, this.p.frameCount * 0.01 + this.noiseOffset); let windAngle = this.p.map(n, 0, 1, -this.p.PI, this.p.PI); let naturalWind = p5.Vector.fromAngle(windAngle); naturalWind.mult(0.02); this.applyForce(naturalWind);
-                    let d = this.p.dist(this.p.mouseX, this.p.mouseY, this.pos.x, this.pos.y); if (d < 100 && mouseVel.mag() > 0) { let force = mouseVel.copy(); force.mult(0.05); this.applyForce(force); }
-                    let desired = p5.VectorSub(this.home, this.pos); desired.mult(0.005); this.applyForce(desired);
-                    this.vel.add(this.acc); this.vel.mult(0.92); this.pos.add(this.vel); this.acc.mult(0);
+                    let n = this.p.noise(this.pos.x * 0.01, this.pos.y * 0.01, this.p.frameCount * 0.01 + this.noiseOffset); 
+                    let windAngle = this.p.map(n, 0, 1, -this.p.PI, this.p.PI); 
+                    let naturalWind = p5.Vector.fromAngle(windAngle); 
+                    naturalWind.mult(0.02); 
+                    this.applyForce(naturalWind);
+
+                    let d = this.p.dist(this.p.mouseX, this.p.mouseY, this.pos.x, this.pos.y); 
+                    if (d < 100 && mouseVel.mag() > 0) { 
+                        let force = mouseVel.copy(); 
+                        force.mult(0.05); 
+                        this.applyForce(force); 
+                    }
+                    let desired = p5.VectorSub(this.home, this.pos); 
+                    desired.mult(0.005); 
+                    this.applyForce(desired);
+
+                    this.vel.add(this.acc); 
+                    this.vel.mult(0.92); 
+                    this.pos.add(this.vel); 
+                    this.acc.mult(0);
                 }
                 applyForce(f) { this.acc.add(f); }
                 show() {
-                    let speed = this.vel.mag(); let alpha = this.p.map(speed, 0, 5, 40, 200, true); let weight = this.p.map(speed, 0, 5, 0.8, 3.0, true); let blueHue = this.p.map(speed, 0, 5, 150, 230, true); 
-                    this.p.stroke(0, 80 + speed * 10, blueHue, alpha); this.p.strokeWeight(weight); this.p.line(this.pos.x, this.pos.y - this.h/2, this.pos.x, this.pos.y + this.h/2);
+                    let speed = this.vel.mag(); 
+                    // 투명도(alpha) 최솟값을 높여서 더 잘 보이게 수정했습니다.
+                    let alpha = this.p.map(speed, 0, 5, 80, 220, true); 
+                    let weight = this.p.map(speed, 0, 5, 1.0, 3.5, true); 
+                    let blueHue = this.p.map(speed, 0, 5, 100, 200, true); 
+                    
+                    this.p.stroke(0, 50 + speed * 20, blueHue, alpha); 
+                    this.p.strokeWeight(weight); 
+                    this.p.line(this.pos.x, this.pos.y - this.h/2, this.pos.x, this.pos.y + this.h/2);
                 }
             }
+
             class WindParticle {
-                constructor(p) { this.p = p; this.pos = p.createVector(p.random(p.width), p.random(p.height)); this.vel = p.createVector(0, 0); }
-                update() {
-                    let n = this.p.noise(this.pos.x * 0.005, this.pos.y * 0.005, this.p.frameCount * 0.01); let windAngle = this.p.map(n, 0, 1, -this.p.PI, this.p.PI); let windForce = p5.Vector.fromAngle(windAngle);
-                    this.vel.add(windForce); this.vel.mult(0.98); this.vel.limit(1.5); this.pos.add(this.vel);
-                    if (this.pos.x > this.p.width) this.pos.x = 0; if (this.pos.x < 0) this.pos.x = this.p.width; if (this.pos.y > this.p.height) this.pos.y = 0; if (this.pos.y < 0) this.pos.y = this.p.height;
+                constructor(p) { 
+                    this.p = p; 
+                    this.pos = p.createVector(p.random(p.width), p.random(p.height)); 
+                    this.vel = p.createVector(0, 0); 
                 }
-                show() { this.p.stroke(0, 120, 220, 15); this.p.strokeWeight(1); this.p.point(this.pos.x, this.pos.y); }
+                update() {
+                    let n = this.p.noise(this.pos.x * 0.005, this.pos.y * 0.005, this.p.frameCount * 0.01); 
+                    let windAngle = this.p.map(n, 0, 1, -this.p.PI, this.p.PI); 
+                    let windForce = p5.Vector.fromAngle(windAngle);
+                    this.vel.add(windForce); 
+                    this.vel.mult(0.98); 
+                    this.vel.limit(1.2); 
+                    this.pos.add(this.vel);
+                    if (this.pos.x > this.p.width) this.pos.x = 0; 
+                    if (this.pos.x < 0) this.pos.x = this.p.width; 
+                    if (this.pos.y > this.p.height) this.pos.y = 0; 
+                    if (this.pos.y < 0) this.pos.y = this.p.height;
+                }
+                show() { 
+                    this.p.stroke(0, 100, 200, 40); // 배경 입자도 조금 더 진하게 수정
+                    this.p.strokeWeight(1.5); 
+                    this.p.point(this.pos.x, this.pos.y); 
+                }
             }
         };
 
