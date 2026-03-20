@@ -784,6 +784,18 @@ header {
     border-bottom: 2px solid #000;
 }
 
+/* 링크 스타일 초기화 및 꾸미기 */
+.visual-label a {
+    text-decoration: none; /* 밑줄 제거 */
+    color: #000; /* 글자색 검정 고정 */
+    transition: color 0.2s ease;
+}
+
+/* 마우스 올렸을 때 살짝 흐려지게 효과 (선택 사항) */
+.visual-label a:hover {
+    color: #666;
+}
+
 /* 2. 타이틀 패널: 캔버스가 커진 만큼 오른쪽으로 한 칸 밀어서 오버레이 */
 .title-panel {
     grid-column: 8 / 13; /* 시작을 8로 변경 */
