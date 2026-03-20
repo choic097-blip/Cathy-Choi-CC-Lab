@@ -138,8 +138,10 @@ header {
     flex-shrink: 0;
     width: 250px;
     height: 250px;
-    border: 2px solid #000;
+    border: 3px solid #000;
     background: #fff;
+    overflow: hidden; 
+    position: relative;
     transition: all 0.3s ease;
 }
 
@@ -158,23 +160,41 @@ header {
 .project-box a {
     width: 100%;
     height: 100%;
-    display: flex;
-    flex-direction: column; 
-    align-items: center;
-    justify-content: center;
+    display: block;
     text-decoration: none;
     color: #000;
-    font-weight: bold;
-    font-size: 1.2rem;
 }
 
 .project-box:hover {
-    background-color: #000;
-    transform: translateY(-5px); 
+    transform: translateY(-5px);
+    box-shadow: 10px 10px 0px #000;
 }
 
-.project-box:hover a {
+.project-box:hover img {
+    filter: grayscale(0%); /* 마우스 올리면 컬러로 변경 */
+    transform: scale(1.1); /* 살짝 확대 */
+}
+
+.project-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* 사진이 찌그러지지 않고 꽉 차게 자름 */
+    display: block;
+    filter: grayscale(100%); /* 평소에는 흑백 (만화 느낌) */
+    transition: all 0.3s ease;
+}
+
+.project-box span {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    background-color: #000;
     color: #fff;
+    padding: 2px 8px;
+    font-family: 'Archivo', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    z-index: 5;
 }
 
 /* 반응형 */
