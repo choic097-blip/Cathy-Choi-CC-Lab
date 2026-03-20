@@ -784,7 +784,6 @@ header {
     border-bottom: 2px solid #000;
 }
 
-/* 링크 스타일 초기화 및 꾸미기 */
 .visual-label a {
     text-decoration: none; /* 밑줄 제거 */
     color: #000; /* 글자색 검정 고정 */
