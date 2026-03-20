@@ -105,39 +105,61 @@ header {
     color: #555;
 }
 
-/* --- Slider Section (수정됨) --- */
+
 .slider-section {
     width: 100%;
     border-top: 2px solid #000;
     padding-top: 40px;
     padding-bottom: 40px;
-    overflow: hidden; /* 넘치는 부분 숨김 */
+    overflow: hidden; 
+    background-color: #fff;
+}
+
+.slider-track-container {
+    width: 100%;
+    overflow: hidden;
 }
 
 .slider-track {
     display: flex;
-    gap: 20px; /* 아이템 사이 간격 */
+    gap: 20px;
     width: max-content;
-    will-change: transform; /* 성능 최적화 */
-    /* CSS 애니메이션 제거함 -> JS로 움직임 */
+    
+
+    animation: scrollInfinite 40s linear infinite; 
+    will-change: transform;
+}
+
+.slider-track:hover {
+    animation-play-state: paused;
 }
 
 .project-box {
+    flex-shrink: 0;
     width: 250px;
     height: 250px;
     border: 2px solid #000;
     background: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: transform 0.3s ease;
+    transition: all 0.3s ease;
 }
 
-/* 링크 스타일 */
+/* --- 무한 루프 애니메이션 정의 --- */
+@keyframes scrollInfinite {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+
+        transform: translateX(calc(-50% - 10px)); /* gap 절반값을 고려한 보정 */
+    }
+}
+
+/* 링크 스타일 (유지) */
 .project-box a {
     width: 100%;
     height: 100%;
     display: flex;
+    flex-direction: column; 
     align-items: center;
     justify-content: center;
     text-decoration: none;
@@ -148,7 +170,9 @@ header {
 
 .project-box:hover {
     background-color: #000;
+    transform: translateY(-5px); 
 }
+
 .project-box:hover a {
     color: #fff;
 }
