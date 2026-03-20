@@ -747,18 +747,19 @@ header {
 }
 
 /* 1. 비주얼(p5.js) 패널: 왼쪽 7칸 차지 (메인) */
+/* 1. 비주얼(p5.js) 패널: 왼쪽 8칸 차지로 더 넓게 확장! */
 .visual-panel {
-    grid-column: 1 / 8;
-    grid-row: 1 / 3; /* 세로로 2줄 차지 */
+    grid-column: 1 / 9; /* 기존 7에서 9로 변경하여 영역 쫙 늘림 */
+    grid-row: 1 / 3; 
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     background-color: #f4f4f4;
-    z-index: 1; /* 제일 바닥에 깔림 */
+    z-index: 1; 
 }
 
-/* p5.js 캔버스가 튀어나가지 않게 강제 제어 */
+/* p5.js 캔버스가 박스 안에서 꽉 차게 보이도록 강제 제어 */
 #sketch-container {
     width: 100%;
     display: flex;
@@ -766,10 +767,12 @@ header {
 }
 
 #sketch-container canvas {
-    border: 3px solid #000;
-    max-width: 100% !important;
+    width: 100% !important; /* 🚨 이 한 줄이 핵심: 캔버스를 박스 너비에 맞춰 쫙 늘려줍니다 */
+    max-width: 650px !important; /* 단, 해상도 깨지지 않게 최대 크기 방어선 구축 */
     height: auto !important;
-    box-shadow: 6px 6px 0px rgba(0,0,0,0.1); /* 캔버스 전용 살짝 연한 그림자 */
+    aspect-ratio: 1 / 1; /* 정사각형 캔버스 비율 강제 유지 */
+    border: 3px solid #000;
+    box-shadow: 6px 6px 0px rgba(0,0,0,0.1); 
 }
 
 .visual-label {
@@ -781,19 +784,19 @@ header {
     border-bottom: 2px solid #000;
 }
 
-/* 2. 타이틀 패널: 오른쪽 위, 비주얼 패널과 1칸(7열) 겹치게 오버레이! */
+/* 2. 타이틀 패널: 캔버스가 커진 만큼 오른쪽으로 한 칸 밀어서 오버레이 */
 .title-panel {
-    grid-column: 7 / 13; 
+    grid-column: 8 / 13; /* 시작을 8로 변경 */
     grid-row: 1;
-    z-index: 5; /* 캔버스 위로 올라옴 */
-    transform: rotate(2deg); /* 살짝 삐딱하게 해서 힙한 느낌 추가 */
+    z-index: 5; 
+    transform: rotate(2deg); 
     align-self: center;
     margin-top: 20px;
 }
 
 .title-panel h1 {
     font-family: 'Playfair Display', serif;
-    font-size: 4rem; /* 제목 더 크게! */
+    font-size: 4rem; 
     font-weight: 800;
     margin: 0 0 15px 0;
     line-height: 1.1;
@@ -808,13 +811,13 @@ header {
     margin: 0;
 }
 
-/* 3. 설명 패널: 오른쪽 아래, 타이틀 아래에 배치 */
+/* 3. 설명 패널: 타이틀 박스 아래에 찰떡같이 맞춰서 이동 */
 .description-panel {
-    grid-column: 8 / 13; /* 비주얼 패널과 안 겹치게 오른쪽으로 살짝 밀음 */
+    grid-column: 9 / 13; /* 시작을 9로 변경 */
     grid-row: 2;
     z-index: 2;
     transform: rotate(-1deg);
-    margin-top: -30px; /* 타이틀 박스와 간격을 좁힘 */
+    margin-top: -30px; 
 }
 
 .description-panel h2 {
