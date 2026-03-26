@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Which Witch License | Cathy Choi</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;600;700;900&family=Playfair+Display:ital,wght@0,500;1,500;1,800&display=swap" rel="stylesheet">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.1/p5.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ml5/0.12.2/ml5.min.js"></script>
+
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/project-style.css">
+    
+    <style>
+        .terminal-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 30px;
+            padding: 20px;
+        }
+
+        #video-holder {
+            background: #000;
+            border: 5px solid #000;
+            box-shadow: 15px 15px 0px #000;
+            line-height: 0;
+            position: relative;
+        }
+
+        #video-holder canvas {
+            width: 100% !important;
+            height: auto !important;
+        }
+
+        .control-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .system-box {
+            background: #fff;
+            border: 3px solid #000;
+            padding: 20px;
+            box-shadow: 8px 8px 0px #000;
+        }
+
+        #system-dialogue {
+            font-family: 'Archivo', monospace;
+            font-weight: 700;
+            background: #000;
+            color: #0f0; /* 터미널 느낌의 초록색 */
+            padding: 15px;
+            min-height: 60px;
+            margin-bottom: 20px;
+        }
+
+        .scan-btn-style {
+            padding: 15px;
+            font-family: 'Archivo', sans-serif;
+            font-weight: 900;
+            background: #fff;
+            border: 4px solid #000;
+            cursor: pointer;
+            box-shadow: 5px 5px 0px #000;
+            transition: 0.2s;
+        }
+
+        .scan-btn-style:hover {
+            transform: translate(-3px, -3px);
+            box-shadow: 8px 8px 0px #000;
+        }
+
+        #id-card {
+            border: 4px solid #000;
+            background: #fff;
+            padding: 25px;
+            box-shadow: 12px 12px 0px #000;
+            transform: rotate(1deg);
+            margin-top: 10px;
+        }
+
+        #id-card.hidden { display: none; }
+
+        .id-header {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+            border-bottom: 3px solid #000;
+            margin-bottom: 15px;
+        }
+
+        .id-field {
+            margin-bottom: 10px;
+            font-family: 'Archivo', sans-serif;
+        }
+
+        .id-label { font-weight: 900; text-transform: uppercase; font-size: 0.8rem; }
+        .id-value { display: block; font-size: 1.1rem; border-left: 4px solid #eee; padding-left: 10px; }
+
+        #reset-btn {
+            margin-top: 15px;
+            background: #000;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div class="logo">
+                <a href="../index.html"><img src="../images/CathyLogo.png" alt="Cathy Choi"></a>
+            </div>
+            <nav class="nav-menu">
+                <a href="../about.html">About</a>
+                <a href="../fall25.html">Fall25</a>
+                <a href="../spring26.html" class="active">Spring26</a>
+                <a href="../contact.html">Contact</a>
+            </nav>
+        </header>
+
+        <main>
+            <div class="page-title-comic" style="max-width: 1200px; margin: 40px auto;">
+                <h1 style="font-family: 'Playfair Display'; font-size: 3.5rem;">[Which Witch License]</h1>
+                <p>AI-Powered Biometric Identification System for Magical Beings.</p>
+            </div>
+
+            <div class="terminal-container">
+                <div id="video-holder">
+                    </div>
+
+                <div class="control-panel">
+                    <div class="system-box">
+                        <div id="system-dialogue">SYSTEM: "Awaiting next subject."</div>
+                        <button id="scan-btn" class="scan-btn-style">INITIATE BIOMETRIC SCAN</button>
+                    </div>
+
+                    <div id="id-card" class="hidden">
+                        <div class="id-header">MAGICAL LICENSE</div>
+                        <div class="id-field">
+                            <span class="id-label">Name</span>
+                            <span id="witch-name" class="id-value">-</span>
+                        </div>
+                        <div class="id-field">
+                            <span class="id-label">Classification</span>
+                            <span id="witch-class" class="id-value">-</span>
+                        </div>
+                        <div class="id-field">
+                            <span class="id-label">Traits</span>
+                            <span id="witch-trait" class="id-value">-</span>
+                        </div>
+                        <div class="id-field">
+                            <span class="id-label">System Observation</span>
+                            <span id="system-observation" class="id-value" style="font-style: italic; color: #666;">-</span>
+                        </div>
+                        <button id="reset-btn">TERMINATE SESSION</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="back-nav" style="max-width: 1200px; margin: 0 auto 50px auto;">
+                <a href="../spring26.html">RETURN_TO_ARCHIVE ↩</a>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        let video;
+        let classifier;
+        let imageModelURL = 'https://teachablemachine.withgoogle.com/models/eqUpRzgb0/';
+
+        let appState = "IDLE"; 
+        let scanBtn, resetBtn, idCardDOM, domDialogue;
+        let nameField, classField, traitField, logField;
+        let sealLayer; 
+        let shirtColor; 
+
+        function preload() {
+            if (imageModelURL !== '') {
+                classifier = ml5.imageClassifier(imageModelURL + 'model.json');
+            }
+        }
+
+        function setup() {
+            let canvas = createCanvas(640, 480);
+            canvas.parent('video-holder');
+            video = createCapture(VIDEO);
+            video.size(640, 480);
+            video.hide();
+
+            shirtColor = color(255);
+            sealLayer = createGraphics(640, 480);
+            sealLayer.clear();
+            sealLayer.stroke(255, 150); 
+            sealLayer.strokeWeight(5);
+            sealLayer.noFill();
+            sealLayer.ellipse(320, 240, 300, 300); 
+            sealLayer.rectMode(CENTER);
+            sealLayer.rect(320, 240, 212, 212);   
+
+            scanBtn = select('#scan-btn');
+            scanBtn.mousePressed(startScan);
+            resetBtn = select('#reset-btn');
+            resetBtn.mousePressed(resetSystem);
+            
+            idCardDOM = select('#id-card');
+            domDialogue = select('#system-dialogue');
+            nameField = select('#witch-name');
+            classField = select('#witch-class');
+            traitField = select('#witch-trait');
+            logField = select('#system-observation');
+        }
+
+        function draw() {
+            background(0);
+            push();
+            translate(width, 0);
+            scale(-1, 1);
+            image(video, 0, 0, width, height);
+            pop();
+
+            if (appState === "IDLE") {
+                noFill();
+                stroke(0, 255, 0, 150);
+                strokeWeight(2);
+                ellipse(width / 2, height / 2, 200, 250);
+            } 
+            else if (appState === "SCANNING") {
+                fill(0, 255, 0);
+                textSize(30);
+                textAlign(CENTER);
+                textFont('Archivo');
+                text("ANALYZING SUBJECT...", width / 2, height / 2);
+            } 
+            else if (appState === "RESULT") {
+                video.loadPixels();
+                if (video.pixels.length > 0) {
+                    let cx = floor(video.width / 2);
+                    let cy = floor(video.height * 0.8); 
+                    let index = (cx + cy * video.width) * 4;
+                    let r = video.pixels[index];
+                    let g = video.pixels[index + 1];
+                    let b = video.pixels[index + 2];
+                    shirtColor = color(r, g, b);
+                }
+                tint(shirtColor);
+                image(sealLayer, 0, 0);
+                noTint();
+            }
+        }
+
+        function startScan() {
+            appState = "SCANNING";
+            domDialogue.html('SYSTEM: "Extracting biometric data. Do not move."');
+            scanBtn.hide();
+
+            setTimeout(() => {
+                if (classifier) {
+                    classifier.classify(video, gotResult);
+                } else {
+                    let mockResult = [{ label: random(["Glasses", "Hat", "Nothing"]) }];
+                    gotResult(null, mockResult);
+                }
+            }, 2000);
+        }
+
+        function gotResult(error, results) {
+            if (error) { console.error(error); return; }
+            let label = results[0].label; 
+            nameField.html("Subject_" + floor(random(1000, 9999)));
+
+            if (label === "Glasses") {
+                classField.html("Intelligent Witch");
+                traitField.html("Overly analytical, terrible stamina.");
+                logField.html('SYSTEM: "Glasses detected. Typical desk-jockey. Strong in theory."');
+            } else if (label === "Hat") {
+                classField.html("Reclusive Witch");
+                traitField.html("Anti-social, hides identity.");
+                logField.html('SYSTEM: "Hat detected. Subject is hiding their face. Highly suspicious."');
+            } else {
+                classField.html("Muggle (Classless)");
+                traitField.html("No magic potential. Tool-dependent.");
+                logField.html('SYSTEM: "No magical items found. Standard human (Muggle)."');
+            }
+            appState = "RESULT";
+            idCardDOM.removeClass('hidden');
+        }
+
+        function resetSystem() {
+            appState = "IDLE";
+            domDialogue.html('SYSTEM: "Awaiting next subject."');
+            idCardDOM.addClass('hidden');
+            scanBtn.show();
+        }
+    </script>
+</body>
+</html>
