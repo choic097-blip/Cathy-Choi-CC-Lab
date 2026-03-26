@@ -16,13 +16,59 @@
     <link rel="stylesheet" href="../css/project-style.css">
     
     <style>
+        /* --- 상단 문서화 영역 (나란히 배치) --- */
+        .doc-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+
+        .doc-box {
+            background: #fff;
+            border: 3px solid #000;
+            box-shadow: 8px 8px 0px #000;
+            padding: 20px;
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .doc-box h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            border-bottom: 2px solid #000;
+            margin-bottom: 15px;
+            padding-bottom: 5px;
+        }
+
+        .doc-content {
+            font-family: 'Archivo', sans-serif;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            overflow-y: auto; /* 내용이 길면 스크롤 */
+            flex-grow: 1;
+        }
+
+        /* 코드 폰트 스타일 */
+        pre {
+            background: #f4f4f4;
+            padding: 10px;
+            font-size: 0.85rem;
+            border-radius: 5px;
+            white-space: pre-wrap;
+        }
+
+        /* --- 하단 메인 작업물 영역 --- */
         .terminal-container {
             max-width: 1200px;
             margin: 40px auto;
             display: grid;
             grid-template-columns: 1.5fr 1fr;
             gap: 30px;
-            padding: 20px;
+            padding: 0 20px 40px 20px;
         }
 
         #video-holder {
@@ -30,7 +76,7 @@
             border: 5px solid #000;
             box-shadow: 15px 15px 0px #000;
             line-height: 0;
-            position: relative;
+            aspect-ratio: 4 / 3;
         }
 
         #video-holder canvas {
@@ -38,43 +84,21 @@
             height: auto !important;
         }
 
-        .control-panel {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
         .system-box {
             background: #fff;
             border: 3px solid #000;
             padding: 20px;
             box-shadow: 8px 8px 0px #000;
+            margin-bottom: 20px;
         }
 
         #system-dialogue {
             font-family: 'Archivo', monospace;
             font-weight: 700;
             background: #000;
-            color: #0f0; /* 터미널 느낌의 초록색 */
+            color: #0f0;
             padding: 15px;
-            min-height: 60px;
-            margin-bottom: 20px;
-        }
-
-        .scan-btn-style {
-            padding: 15px;
-            font-family: 'Archivo', sans-serif;
-            font-weight: 900;
-            background: #fff;
-            border: 4px solid #000;
-            cursor: pointer;
-            box-shadow: 5px 5px 0px #000;
-            transition: 0.2s;
-        }
-
-        .scan-btn-style:hover {
-            transform: translate(-3px, -3px);
-            box-shadow: 8px 8px 0px #000;
+            min-height: 80px;
         }
 
         #id-card {
@@ -83,36 +107,25 @@
             padding: 25px;
             box-shadow: 12px 12px 0px #000;
             transform: rotate(1deg);
-            margin-top: 10px;
         }
 
         #id-card.hidden { display: none; }
 
-        .id-header {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
-            font-weight: 800;
-            border-bottom: 3px solid #000;
-            margin-bottom: 15px;
-        }
-
-        .id-field {
-            margin-bottom: 10px;
-            font-family: 'Archivo', sans-serif;
-        }
-
-        .id-label { font-weight: 900; text-transform: uppercase; font-size: 0.8rem; }
-        .id-value { display: block; font-size: 1.1rem; border-left: 4px solid #eee; padding-left: 10px; }
-
-        #reset-btn {
-            margin-top: 15px;
-            background: #000;
-            color: #fff;
-            border: none;
-            padding: 10px;
-            font-weight: 700;
-            cursor: pointer;
+        .scan-btn-style {
             width: 100%;
+            margin-top: 15px;
+            padding: 15px;
+            font-family: 'Archivo', sans-serif;
+            font-weight: 900;
+            background: #fff;
+            border: 4px solid #000;
+            cursor: pointer;
+            box-shadow: 5px 5px 0px #000;
+        }
+
+        @media (max-width: 900px) {
+            .doc-grid, .terminal-container { grid-template-columns: 1fr; }
+            .doc-box { height: auto; }
         }
     </style>
 </head>
@@ -133,43 +146,53 @@
 
         <main>
             <div class="page-title-comic" style="max-width: 1200px; margin: 40px auto;">
-                <h1 style="font-family: 'Playfair Display'; font-size: 3.5rem;">[Which Witch License]</h1>
-                <p>AI-Powered Biometric Identification System for Magical Beings.</p>
+                <h1>[Which Witch License]</h1>
+                <p>Experimental AI Terminal: Bias-based Identification System</p>
             </div>
 
-            <div class="terminal-container">
-                <div id="video-holder">
+            <section class="doc-grid">
+                <div class="doc-box">
+                    <h3>01. Concept Proposal</h3>
+                    <div class="doc-content">
+                        <p>Stereotyping prejudice fantasy dance RPG that utilizes a camera to analyze your face, hair, and clothing color to assign in-game attributes based on blatant biases and stereotypes...</p>
+                        <p style="margin-top:10px; font-style:italic;">(중략: 제출하신 Proposal 전체 텍스트가 여기에 위치합니다.)</p>
                     </div>
+                </div>
+                <div class="doc-box">
+                    <h3>02. Technical White-box</h3>
+                    <div class="doc-content">
+                        <pre><code>let video;
+let classifier;
+// Core logic for biased classification
+class PlayerProfile {
+  constructor() {
+    this.roleClass = "Unknown";
+    this.auraColor = color(255, 100);
+  }
+  // ... (제출하신 White-box 코드가 여기에 들어갑니다)
+}</code></pre>
+                    </div>
+                </div>
+            </section>
 
+            <div class="terminal-container">
+                <div id="video-holder"></div>
                 <div class="control-panel">
                     <div class="system-box">
-                        <div id="system-dialogue">SYSTEM: "Awaiting next subject."</div>
+                        <div id="system-dialogue">SYSTEM: "Awaiting subject for bias-based analysis..."</div>
                         <button id="scan-btn" class="scan-btn-style">INITIATE BIOMETRIC SCAN</button>
                     </div>
-
                     <div id="id-card" class="hidden">
-                        <div class="id-header">MAGICAL LICENSE</div>
-                        <div class="id-field">
-                            <span class="id-label">Name</span>
-                            <span id="witch-name" class="id-value">-</span>
-                        </div>
-                        <div class="id-field">
-                            <span class="id-label">Classification</span>
-                            <span id="witch-class" class="id-value">-</span>
-                        </div>
-                        <div class="id-field">
-                            <span class="id-label">Traits</span>
-                            <span id="witch-trait" class="id-value">-</span>
-                        </div>
-                        <div class="id-field">
-                            <span class="id-label">System Observation</span>
-                            <span id="system-observation" class="id-value" style="font-style: italic; color: #666;">-</span>
-                        </div>
-                        <button id="reset-btn">TERMINATE SESSION</button>
+                        <div style="font-family:'Playfair Display'; font-size:1.5rem; border-bottom:3px solid #000; margin-bottom:15px;">MAGICAL LICENSE</div>
+                        <div class="id-field"><span class="id-label">Name:</span> <span id="witch-name" class="id-value">-</span></div>
+                        <div class="id-field"><span class="id-label">Class:</span> <span id="witch-class" class="id-value">-</span></div>
+                        <div class="id-field"><span class="id-label">Traits:</span> <span id="witch-trait" class="id-value">-</span></div>
+                        <div class="id-field"><span id="system-observation" style="font-style:italic; font-size:0.9rem;">-</span></div>
+                        <button id="reset-btn" style="width:100%; margin-top:10px; background:#000; color:#fff; border:none; padding:8px; cursor:pointer;">RE-SCAN</button>
                     </div>
                 </div>
             </div>
-            
+
             <div class="back-nav" style="max-width: 1200px; margin: 0 auto 50px auto;">
                 <a href="../spring26.html">RETURN_TO_ARCHIVE ↩</a>
             </div>
@@ -177,15 +200,13 @@
     </div>
 
     <script>
-        let video;
-        let classifier;
+        // --- 최종 작업물 로직 (Which Witch License 기반) ---
+        let video, classifier;
         let imageModelURL = 'https://teachablemachine.withgoogle.com/models/eqUpRzgb0/';
-
-        let appState = "IDLE"; 
+        let appState = "IDLE";
         let scanBtn, resetBtn, idCardDOM, domDialogue;
         let nameField, classField, traitField, logField;
-        let sealLayer; 
-        let shirtColor; 
+        let sealLayer, shirtColor;
 
         function preload() {
             if (imageModelURL !== '') {
@@ -203,18 +224,15 @@
             shirtColor = color(255);
             sealLayer = createGraphics(640, 480);
             sealLayer.clear();
-            sealLayer.stroke(255, 150); 
+            sealLayer.stroke(255, 150);
             sealLayer.strokeWeight(5);
             sealLayer.noFill();
-            sealLayer.ellipse(320, 240, 300, 300); 
+            sealLayer.ellipse(320, 240, 300, 300);
             sealLayer.rectMode(CENTER);
-            sealLayer.rect(320, 240, 212, 212);   
+            sealLayer.rect(320, 240, 212, 212);
 
-            scanBtn = select('#scan-btn');
-            scanBtn.mousePressed(startScan);
-            resetBtn = select('#reset-btn');
-            resetBtn.mousePressed(resetSystem);
-            
+            scanBtn = select('#scan-btn'); scanBtn.mousePressed(startScan);
+            resetBtn = select('#reset-btn'); resetBtn.mousePressed(resetSystem);
             idCardDOM = select('#id-card');
             domDialogue = select('#system-dialogue');
             nameField = select('#witch-name');
@@ -225,74 +243,45 @@
 
         function draw() {
             background(0);
-            push();
-            translate(width, 0);
-            scale(-1, 1);
-            image(video, 0, 0, width, height);
-            pop();
+            push(); translate(width, 0); scale(-1, 1); image(video, 0, 0, width, height); pop();
 
             if (appState === "IDLE") {
-                noFill();
-                stroke(0, 255, 0, 150);
-                strokeWeight(2);
+                noFill(); stroke(0, 255, 0, 150); strokeWeight(2);
                 ellipse(width / 2, height / 2, 200, 250);
-            } 
-            else if (appState === "SCANNING") {
-                fill(0, 255, 0);
-                textSize(30);
-                textAlign(CENTER);
-                textFont('Archivo');
-                text("ANALYZING SUBJECT...", width / 2, height / 2);
-            } 
-            else if (appState === "RESULT") {
+            } else if (appState === "SCANNING") {
+                fill(0, 255, 0); textSize(30); textAlign(CENTER); text("ANALYZING SUBJECT...", width / 2, height / 2);
+            } else if (appState === "RESULT") {
                 video.loadPixels();
                 if (video.pixels.length > 0) {
-                    let cx = floor(video.width / 2);
-                    let cy = floor(video.height * 0.8); 
+                    let cx = floor(video.width / 2); let cy = floor(video.height * 0.8);
                     let index = (cx + cy * video.width) * 4;
-                    let r = video.pixels[index];
-                    let g = video.pixels[index + 1];
-                    let b = video.pixels[index + 2];
-                    shirtColor = color(r, g, b);
+                    shirtColor = color(video.pixels[index], video.pixels[index+1], video.pixels[index+2]);
                 }
-                tint(shirtColor);
-                image(sealLayer, 0, 0);
-                noTint();
+                tint(shirtColor); image(sealLayer, 0, 0); noTint();
             }
         }
 
         function startScan() {
             appState = "SCANNING";
-            domDialogue.html('SYSTEM: "Extracting biometric data. Do not move."');
+            domDialogue.html('SYSTEM: "Scanning for visual stereotypes. Stay still."');
             scanBtn.hide();
-
-            setTimeout(() => {
-                if (classifier) {
-                    classifier.classify(video, gotResult);
-                } else {
-                    let mockResult = [{ label: random(["Glasses", "Hat", "Nothing"]) }];
-                    gotResult(null, mockResult);
-                }
+            setTimeout(() => { 
+                if (classifier) classifier.classify(video, gotResult);
+                else gotResult(null, [{label: "Nothing"}]);
             }, 2000);
         }
 
         function gotResult(error, results) {
-            if (error) { console.error(error); return; }
-            let label = results[0].label; 
+            let label = results[0].label;
             nameField.html("Subject_" + floor(random(1000, 9999)));
-
             if (label === "Glasses") {
-                classField.html("Intelligent Witch");
-                traitField.html("Overly analytical, terrible stamina.");
-                logField.html('SYSTEM: "Glasses detected. Typical desk-jockey. Strong in theory."');
-            } else if (label === "Hat") {
-                classField.html("Reclusive Witch");
-                traitField.html("Anti-social, hides identity.");
-                logField.html('SYSTEM: "Hat detected. Subject is hiding their face. Highly suspicious."');
+                classField.html("Mage (Intellectual)");
+                traitField.html("Low strength, high bias.");
+                logField.html('SYSTEM: "Wearing glasses? Clearly a desk-worker. Mage assigned."');
             } else {
-                classField.html("Muggle (Classless)");
-                traitField.html("No magic potential. Tool-dependent.");
-                logField.html('SYSTEM: "No magical items found. Standard human (Muggle)."');
+                classField.html("Tanker (Physical)");
+                traitField.html("Brute force over brain.");
+                logField.html('SYSTEM: "No glasses found. Purely physical role assigned."');
             }
             appState = "RESULT";
             idCardDOM.removeClass('hidden');
