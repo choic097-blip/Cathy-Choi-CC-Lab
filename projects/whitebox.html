@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Whitebox</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.js"></script>
+    <script src="https://unpkg.com/ml5@latest/dist/ml5.min.js"></script>
+    <style>
+        body { margin: 0; padding: 0; overflow: hidden; background: #141414; }
+        canvas { display: block; }
+    </style>
+</head>
+<body>
+    <script>
+        // 사용자님이 주신 화이트박스 코드 100% 원본
+        let video;
+        let classifier;
+        let imageModelURL = 'https://teachablemachine.withgoogle.com/models/YOUR_MODEL_ID/'; 
+
+        let gameState = "START"; 
+        let scanBtn;
+        let domDialogue;
+        let rhythmLayer;
+        let rhythmGame;
+        let player;
+
+        class PlayerProfile {
+          constructor() {
+            this.name = "Player"; 
+            this.roleClass = "Unknown";
+            this.threatLevel = "Unknown";
+            this.intelligence = "Unknown";
+            this.auraColor = color(255, 100);
+          }
+
+          extractAuraColor() {
+            video.loadPixels();
+            if (video.pixels.length > 0) {
+              let cx = floor(video.width / 2);
+              let cy = floor(video.height * 0.8);
+              let index = (cx + cy * video.width) * 4;
+              let r = video.pixels[index];
+              let g = video.pixels[index + 1];
+              let b = video.pixels[index + 2];
+              
+              this.auraColor = color(r, g, b, 180); 
+            }
+          }
+
+          drawAura() {
+            noStroke();
+            fill(this.auraColor);
+            let pulse = sin(frameCount * 0.1) * 30;
+            ellipse(width / 2, height / 2, 600 + pulse, 600 + pulse);
+          }
+
+          drawLabels() {
+            textAlign(CENTER);
+            textSize(24);
+            
+            fill(255);
+            text(`[ Subject: ${this.name} ]`, width / 2, height / 2 - 250);
+            fill(255, 100, 100);
+            text(`Class: ${this.roleClass}`, width / 2, height / 2 - 210);
+            fill(100, 255, 100);
+            text(`Threat Level: ${this.threatLevel}`, width / 2, height / 2 - 170);
+            fill(100, 150, 255);
+            text(`Est. Intelligence: ${this.intelligence}`, width / 2, height / 2 - 130);
+          }
+        }
+
+        class Note {
+          constructor() {
+            this.x = windowWidth + 50;
+            this.y = 100; 
+            this.speed = random(4, 8); 
+            this.active = true;
+
+            let types = ['A', 'S', 'D']; 
+            this.type = random(types);
+          }
+
+          update() {
+            this.x -= this.speed;
+          }
+
+          draw(g) {
+            if (!this.active) return;
+            g.fill(this.type === 'A' ? 'blue' : this.type === 'S' ? 'red' : 'green');
+            g.ellipse(this.x, this.y, 60, 60);
+            g.fill(255);
+            g.textSize(32);
+            g.textAlign(CENTER, CENTER);
+            g.text(this.type, this.x, this.y);
+          }
+        }
+
+        class RhythmGame {
+          constructor() {
+            this.notes = [];
+            this.score = 0;
+            this.hitZoneX = 150; 
+          }
+
+          spawnNote() {
+            if (frameCount % 60 === 0) { 
+              this.notes.push(new Note());
+            }
+          }
+
+          updateAndDraw(g) {
+            g.clear();
+            g.background(10, 10, 10, 220);
+            
+            g.fill(255);
+            g.textSize(24);
+            g.textAlign(LEFT, TOP);
+            g.text(`SCORE: ${this.score}`, 20, 20);
+            g.textAlign(CENTER, TOP);
+            g.text("Press A (Read), S (Flex), D (Attack) when note hits the zone!", g.width / 2, 20);
+
+            g.stroke(255, 255, 0, 150);
+            g.strokeWeight(4);
+            g.line(this.hitZoneX, 40, this.hitZoneX, 160);
+            g.noStroke();
+
+            this.spawnNote();
+            for (let i = this.notes.length - 1; i >= 0; i--) {
+              let n = this.notes[i];
+              n.update();
+              n.draw(g);
+
+              if (n.x < -50) {
+                this.notes.splice(i, 1);
+              }
+            }
+          }
+
+          checkHit(keyInput) {
+            let hitRadius = 50; 
+            for (let i = 0; i < this.notes.length; i++) {
+              let n = this.notes[i];
+              if (n.active && abs(n.x - this.hitZoneX) < hitRadius) {
+                if (n.type.toLowerCase() === keyInput.toLowerCase()) {
+                  n.active = false; 
+                  this.score += 100; 
+                  return;
+                }
+              }
+            }
+            this.score -= 10;
+          }
+        }
+
+        function preload() {
+          if (imageModelURL !== 'https://teachablemachine.withgoogle.com/models/YOUR_MODEL_ID/') {
+            classifier = ml5.imageClassifier(imageModelURL + 'model.json');
+          }
+        }
+
+        function setup() {
+          createCanvas(windowWidth, windowHeight);
+          
+          video = createCapture(VIDEO);
+          video.size(640, 480);
+          video.hide();
+
+          player = new PlayerProfile();
+          rhythmGame = new RhythmGame();
+
+          scanBtn = createButton('System: Starting subject bias analysis');
+          scanBtn.position(width / 2 - 150, height / 2 + 200);
+          scanBtn.mousePressed(startAnalysis);
+          scanBtn.style('padding', '15px');
+          scanBtn.style('font-size', '16px');
+          scanBtn.style('cursor', 'pointer');
+          scanBtn.style('background-color', 'black');
+          scanBtn.style('color', 'white');
+          scanBtn.style('border', '2px solid white');
+
+          domDialogue = createDiv('');
+          domDialogue.position(width / 2 - 300, 50);
+          domDialogue.style('color', 'white');
+          domDialogue.style('font-size', '20px');
+          domDialogue.style('background', 'rgba(255, 0, 0, 0.9)');
+          domDialogue.style('padding', '15px');
+          domDialogue.style('width', '600px');
+          domDialogue.style('text-align', 'center');
+          domDialogue.style('border', '2px solid white');
+          domDialogue.hide();
+
+          rhythmLayer = createGraphics(windowWidth, 200);
+        }
+
+        function draw() {
+          background(20);
+
+          push();
+          translate(width / 2, height / 2);
+          imageMode(CENTER);
+          scale(-1, 1);
+          image(video, 0, 0, 640, 480);
+          pop();
+
+          if (gameState === "START") {
+            textAlign(CENTER);
+            fill(255);
+            textSize(36);
+            text("Stereotype & Prejudice Fantasy Dance RPG", width / 2, height / 2 - 280);
+          } 
+          else if (gameState === "ANALYZING") {
+            player.extractAuraColor();
+            player.drawAura();
+            fill(255, 0, 0, 50);
+            rect(width/2 - 320, height/2 - 240, 640, abs(sin(frameCount * 0.05)) * 480);
+          } 
+          else if (gameState === "PLAYING") {
+            player.drawAura();
+            player.drawLabels();
+            
+            rhythmGame.updateAndDraw(rhythmLayer);
+            imageMode(CORNER);
+            image(rhythmLayer, 0, height - 200);
+          }
+        }
+
+        function startAnalysis() {
+          gameState = "ANALYZING";
+          scanBtn.hide();
+          
+          if (classifier) {
+            classifier.classify(video, gotResult);
+          } else {
+            setTimeout(assignMockStereotype, 2000);
+          }
+        }
+
+        function gotResult(error, results) {
+          if (error) { console.error(error); return; }
+          let label = results[0].label; 
+          applyStereotype(label);
+        }
+
+        function assignMockStereotype() {
+          let mockClasses = ["Glasses", "Male_NoGlasses", "Female_NoGlasses"];
+          applyStereotype(random(mockClasses));
+        }
+
+        function applyStereotype(resultLabel) {
+          if (resultLabel === "Glasses") {
+            player.roleClass = "Mage";
+            player.threatLevel = "Low (Physical)";
+            player.intelligence = "Over 9000";
+            domDialogue.html('System: “You are wearing glasses. You must be a desk jockey, so your physical strength is probably terrible. I will classify you as a mage.”');
+          } else if (resultLabel === "Male_NoGlasses") {
+            player.roleClass = "Tanker";
+            player.threatLevel = "High";
+            player.intelligence = "Below Average";
+            domDialogue.html('System: "This guy has no glasses. A tank who just charges in recklessly is the perfect fit."');
+          } else {
+            player.roleClass = "Dealer (DPS)";
+            player.threatLevel = "Medium";
+            player.intelligence = "Average";
+            domDialogue.html('System: "This woman is not wearing glasses. No Idea what to assign. You take on the role of the dealer."');
+          }
+          domDialogue.show();
+          gameState = "PLAYING";
+        }
+
+        function keyPressed() {
+          if (gameState === "PLAYING") {
+            if (key === 'a' || key === 'A' || key === 's' || key === 'S' || key === 'd' || key === 'D') {
+              rhythmGame.checkHit(key);
+            }
+          }
+        }
+
+        function windowResized() {
+          resizeCanvas(windowWidth, windowHeight);
+          rhythmLayer = createGraphics(windowWidth, 200);
+        }
+    </script>
+</body>
+</html>

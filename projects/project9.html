@@ -16,7 +16,6 @@
     <link rel="stylesheet" href="../css/project-style.css">
     
     <style>
-        /* --- 상단 문서화 영역 (Proposal & White-box) --- */
         .doc-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -30,17 +29,17 @@
             background: #fff;
             border: 3px solid #000;
             box-shadow: 8px 8px 0px #000;
-            padding: 20px;
-            height: 500px;
+            height: 550px; /* 실행 화면을 위해 높이를 좀 더 키웠습니다 */
             display: flex;
             flex-direction: column;
+            overflow: hidden; /* iframe이 튀어나가지 않게 */
         }
 
         .doc-box h3 {
             font-family: 'Playfair Display', serif;
             font-size: 1.5rem;
             border-bottom: 3px solid #000;
-            margin-bottom: 15px;
+            margin: 20px 20px 15px 20px;
             padding-bottom: 5px;
         }
 
@@ -50,24 +49,15 @@
             line-height: 1.6;
             overflow-y: auto; 
             flex-grow: 1;
-            padding-right: 10px;
+            padding: 0 20px 20px 20px;
         }
 
-        pre {
-            background: #f4f4f4;
-            padding: 10px;
-            font-size: 0.8rem;
-            border-radius: 5px;
-            white-space: pre-wrap;
-            border: 1px solid #ddd;
-        }
-
-        /* --- 하단 최종 프로젝트 영역 (사용자님 원본 CSS 이식) --- */
+        /* 최종 프로젝트 영역 스타일 (이전과 동일) */
         .terminal-wrapper {
             max-width: 1200px;
             margin: 40px auto;
             padding: 40px;
-            background: #111; /* 원본 검정 배경 */
+            background: #111; 
             border: 5px solid #000;
             box-shadow: 15px 15px 0px #000;
             font-family: monospace;
@@ -77,78 +67,42 @@
         }
 
         #app-container { display: flex; gap: 40px; flex-wrap: wrap; justify-content: center; }
-        
         #video-section { position: relative; width: 640px; }
         
         #system-dialogue { 
-            position: absolute; 
-            top: 10px; 
-            left: 10px; 
-            background: rgba(200, 0, 0, 0.9); 
-            padding: 10px; 
-            width: 600px; 
-            text-align: center; 
-            font-weight: bold; 
-            border: 2px solid red; 
-            z-index: 10;
-            box-sizing: border-box;
+            position: absolute; top: 10px; left: 10px; background: rgba(200, 0, 0, 0.9); 
+            padding: 10px; width: 600px; text-align: center; font-weight: bold; 
+            border: 2px solid red; z-index: 10; box-sizing: border-box;
         }
         
         #scan-btn { 
-            display: block; 
-            width: 100%; 
-            margin-top: 15px; 
-            padding: 15px; 
-            background: #0f0; 
-            color: black; 
-            font-weight: bold; 
-            font-family: monospace; 
-            font-size: 16px;
-            cursor: pointer; 
-            border: none; 
-            transition: 0.2s;
+            display: block; width: 100%; margin-top: 15px; padding: 15px; 
+            background: #0f0; color: black; font-weight: bold; font-family: monospace; 
+            font-size: 16px; cursor: pointer; border: none; transition: 0.2s;
         }
         #scan-btn:hover { background: #0c0; }
 
-        /* ID Card Area */
         #id-card { 
-            border: 2px solid #555; 
-            background: #222; 
-            width: 350px; 
-            padding: 20px; 
-            display: flex; 
-            flex-direction: column; 
-            gap: 15px; 
-            box-sizing: border-box;
+            border: 2px solid #555; background: #222; width: 350px; padding: 20px; 
+            display: flex; flex-direction: column; gap: 15px; box-sizing: border-box;
         }
-        
         #id-card.hidden { display: none !important; }
-        
         .row span:first-child { color: #aaa; display: inline-block; width: 120px; }
         
         #system-observation { 
-            margin-top: 20px; 
-            padding: 15px; 
-            background: rgba(255, 0, 0, 0.15); 
-            border: 1px solid red; 
-            color: #ff9999; 
-            min-height: 80px;
+            margin-top: 20px; padding: 15px; background: rgba(255, 0, 0, 0.15); 
+            border: 1px solid red; color: #ff9999; min-height: 80px;
         }
         
         #reset-btn { 
-            padding: 10px; 
-            background: #444; 
-            color: white; 
-            border: none; 
-            cursor: pointer; 
-            font-family: monospace; 
-            margin-top: auto;
+            padding: 10px; background: #444; color: white; border: none; cursor: pointer; 
+            font-family: monospace; margin-top: auto;
         }
         #reset-btn:hover { background: #666; }
 
         @media (max-width: 1100px) {
             .doc-grid { grid-template-columns: 1fr; }
-            .doc-box { height: auto; max-height: 600px; }
+            .doc-box { height: 500px; }
             #app-container { flex-direction: column; align-items: center; }
         }
     </style>
@@ -175,297 +129,17 @@
             </div>
 
             <section class="doc-grid">
+                
                 <div class="doc-box">
                     <h3>01. Concept Proposal</h3>
                     <div class="doc-content">
-                        <p>Sterotyping prejudice fantasy dance RPG that utilizes a camera to analyze your face, hair, and clothing color to assign in-game attributes based on blatant biases and stereotypes. The core mechanic relies on blatant stereotypes: wearing glasses automatically classifies the player as a Mage, while the absence of glasses assigns them to other roles. Furthermore, the system categorizes players based on perceived gender, assigning those recognized as male to the Tanker role and those recognized as female to the Dealer (DPS) role. To highlight the inherent bias of the camera, the game explicitly voices its "prejudices" through dialogue, such as, "I see you're wearing glasses; you must lack physical strength." Utilizing the loadPixels() function, the sketch generates a dynamic 'Aura' around the player that matches the color of their clothing—for instance, black clothing manifests as a dark-attribute aura. The UI further dehumanizes the player by displaying floating labels over their head, such as 'Class Name', 'Threat Level', and 'Estimated Intelligence'. The gameplay follows the rhythm-based mechanics of Pump It Up or DDR, with arrows and pose icons flowing across the bottom of the screen. Each class requires specific "Skill Poses" to trigger abilities, such as a "pretending to read a book" pose for Mages or a "muscle flexing" pose for Tankers. These poses must be performed in a precise sequence as the difficulty scales with increasing speed and enemy density.</p>
+                        <p>Stereotyping prejudice fantasy dance RPG that utilizes a camera to analyze your face, hair, and clothing color to assign in-game attributes based on blatant biases and stereotypes. The core mechanic relies on blatant stereotypes: wearing glasses automatically classifies the player as a Mage, while the absence of glasses assigns them to other roles. Furthermore, the system categorizes players based on perceived gender, assigning those recognized as male to the Tanker role and those recognized as female to the Dealer (DPS) role. To highlight the inherent bias of the camera, the game explicitly voices its "prejudices" through dialogue, such as, "I see you're wearing glasses; you must lack physical strength." Utilizing the loadPixels() function, the sketch generates a dynamic 'Aura' around the player that matches the color of their clothing—for instance, black clothing manifests as a dark-attribute aura. The UI further dehumanizes the player by displaying floating labels over their head, such as 'Class Name', 'Threat Level', and 'Estimated Intelligence'. The gameplay follows the rhythm-based mechanics of Pump It Up or DDR, with arrows and pose icons flowing across the bottom of the screen. Each class requires specific "Skill Poses" to trigger abilities, such as a "pretending to read a book" pose for Mages or a "muscle flexing" pose for Tankers. These poses must be performed in a precise sequence as the difficulty scales with increasing speed and enemy density.</p>
                     </div>
                 </div>
 
-                <div class="doc-box">
-                    <h3>02. Technical White-box (p5.js)</h3>
-                    <div class="doc-content">
-                        <p style="margin-bottom:10px; font-weight:bold; color:#555;">* This is the initial logic architecture programmed in p5.js.</p>
-                        <pre><code>let video;
-let classifier;
-let imageModelURL = 'https://teachablemachine.withgoogle.com/models/YOUR_MODEL_ID/'; 
-
-let gameState = "START"; 
-let scanBtn;
-let domDialogue;
-let rhythmLayer;
-let rhythmGame;
-let player;
-
-class PlayerProfile {
-  constructor() {
-    this.name = "Player"; 
-    this.roleClass = "Unknown";
-    this.threatLevel = "Unknown";
-    this.intelligence = "Unknown";
-    this.auraColor = color(255, 100);
-  }
-
-  extractAuraColor() {
-    video.loadPixels();
-    if (video.pixels.length > 0) {
-      let cx = floor(video.width / 2);
-      let cy = floor(video.height * 0.8);
-      let index = (cx + cy * video.width) * 4;
-      let r = video.pixels[index];
-      let g = video.pixels[index + 1];
-      let b = video.pixels[index + 2];
-      
-      this.auraColor = color(r, g, b, 180); 
-    }
-  }
-
-  drawAura() {
-    noStroke();
-    fill(this.auraColor);
-    let pulse = sin(frameCount * 0.1) * 30;
-    ellipse(width / 2, height / 2, 600 + pulse, 600 + pulse);
-  }
-
-  drawLabels() {
-    textAlign(CENTER);
-    textSize(24);
-    
-    fill(255);
-    text(`[ Subject: ${this.name} ]`, width / 2, height / 2 - 250);
-    fill(255, 100, 100);
-    text(`Class: ${this.roleClass}`, width / 2, height / 2 - 210);
-    fill(100, 255, 100);
-    text(`Threat Level: ${this.threatLevel}`, width / 2, height / 2 - 170);
-    fill(100, 150, 255);
-    text(`Est. Intelligence: ${this.intelligence}`, width / 2, height / 2 - 130);
-  }
-}
-
-// 리듬 게임의 노트를 관리하는 클래스
-class Note {
-  constructor() {
-    this.x = windowWidth + 50;
-    this.y = 100; // rhythmLayer 기준 Y 좌표
-    this.speed = random(4, 8); // 난이도에 따른 속도 스케일링
-    this.active = true;
-
-    let types = ['A', 'S', 'D']; 
-    this.type = random(types);
-  }
-
-  update() {
-    this.x -= this.speed;
-  }
-
-  draw(g) {
-    if (!this.active) return;
-    g.fill(this.type === 'A' ? 'blue' : this.type === 'S' ? 'red' : 'green');
-    g.ellipse(this.x, this.y, 60, 60);
-    g.fill(255);
-    g.textSize(32);
-    g.textAlign(CENTER, CENTER);
-    g.text(this.type, this.x, this.y);
-  }
-}
-
-
-class RhythmGame {
-  constructor() {
-    this.notes = [];
-    this.score = 0;
-    this.hitZoneX = 150; 
-  }
-
-  spawnNote() {
-    if (frameCount % 60 === 0) { 
-      this.notes.push(new Note());
-    }
-  }
-
-  updateAndDraw(g) {
-    g.clear();
-    g.background(10, 10, 10, 220);
-    
-    g.fill(255);
-    g.textSize(24);
-    g.textAlign(LEFT, TOP);
-    g.text(`SCORE: ${this.score}`, 20, 20);
-    g.textAlign(CENTER, TOP);
-    g.text("Press A (Read), S (Flex), D (Attack) when note hits the zone!", g.width / 2, 20);
-
-    g.stroke(255, 255, 0, 150);
-    g.strokeWeight(4);
-    g.line(this.hitZoneX, 40, this.hitZoneX, 160);
-    g.noStroke();
-
-    this.spawnNote();
-    for (let i = this.notes.length - 1; i >= 0; i--) {
-      let n = this.notes[i];
-      n.update();
-      n.draw(g);
-
-      if (n.x < -50) {
-        this.notes.splice(i, 1);
-      }
-    }
-  }
-
-  checkHit(keyInput) {
-    let hitRadius = 50; 
-    for (let i = 0; i < this.notes.length; i++) {
-      let n = this.notes[i];
-      if (n.active && abs(n.x - this.hitZoneX) < hitRadius) {
-        if (n.type.toLowerCase() === keyInput.toLowerCase()) {
-          n.active = false; // 노트 제거
-          this.score += 100; // 점수 획득
-          return;
-        }
-      }
-    }
-    // 틀린 키를 누르거나 타이밍이 안 맞으면 감점
-    this.score -= 10;
-  }
-}
-
-function preload() {
-  if (imageModelURL !== 'https://teachablemachine.withgoogle.com/models/YOUR_MODEL_ID/') {
-    classifier = ml5.imageClassifier(imageModelURL + 'model.json');
-  }
-}
-
-function setup() {
-  createCanvas(windowWidth, windowHeight);
-  
-  video = createCapture(VIDEO);
-  video.size(640, 480);
-  video.hide();
-
-  player = new PlayerProfile();
-  rhythmGame = new RhythmGame();
-
-  // DOM 설정
-  scanBtn = createButton('System: Starting subject bias analysis');
-  scanBtn.position(width / 2 - 150, height / 2 + 200);
-  scanBtn.mousePressed(startAnalysis);
-  scanBtn.style('padding', '15px');
-  scanBtn.style('font-size', '16px');
-  scanBtn.style('cursor', 'pointer');
-  scanBtn.style('background-color', 'black');
-  scanBtn.style('color', 'white');
-  scanBtn.style('border', '2px solid white');
-
-  domDialogue = createDiv('');
-  domDialogue.position(width / 2 - 300, 50);
-  domDialogue.style('color', 'white');
-  domDialogue.style('font-size', '20px');
-  domDialogue.style('background', 'rgba(255, 0, 0, 0.9)');
-  domDialogue.style('padding', '15px');
-  domDialogue.style('width', '600px');
-  domDialogue.style('text-align', 'center');
-  domDialogue.style('border', '2px solid white');
-  domDialogue.hide();
-
-  rhythmLayer = createGraphics(windowWidth, 200);
-}
-
-function draw() {
-  background(20);
-
-  push();
-  translate(width / 2, height / 2);
-  imageMode(CENTER);
-  scale(-1, 1);
-  image(video, 0, 0, 640, 480);
-  pop();
-
-  if (gameState === "START") {
-    textAlign(CENTER);
-    fill(255);
-    textSize(36);
-    text("Stereotype & Prejudice Fantasy Dance RPG", width / 2, height / 2 - 280);
-  } 
-  else if (gameState === "ANALYZING") {
-    player.extractAuraColor();
-    player.drawAura();
-    fill(255, 0, 0, 50);
-    rect(width/2 - 320, height/2 - 240, 640, abs(sin(frameCount * 0.05)) * 480);
-  } 
-  else if (gameState === "PLAYING") {
-    player.drawAura();
-    player.drawLabels();
-    
-    // 리듬 게임 업데이트 및 화면 출력
-    rhythmGame.updateAndDraw(rhythmLayer);
-    imageMode(CORNER);
-    image(rhythmLayer, 0, height - 200);
-  }
-}
-
-function startAnalysis() {
-  gameState = "ANALYZING";
-  scanBtn.hide();
-  
-  if (classifier) {
-    // 실제 모델이 로드된 경우
-    classifier.classify(video, gotResult);
-  } else {
-    // 모델 URL을 아직 안 넣었을 경우 작동하는 Fallback 로직
-    setTimeout(assignMockStereotype, 2000);
-  }
-}
-
-// Teachable Machine 실제 결과 콜백 함수
-function gotResult(error, results) {
-  if (error) {
-    console.error(error);
-    return;
-  }
-  let label = results[0].label; // 제일 확률이 높은 클래스
-  applyStereotype(label);
-}
-
-function assignMockStereotype() {
-  let mockClasses = ["Glasses", "Male_NoGlasses", "Female_NoGlasses"];
-  applyStereotype(random(mockClasses));
-}
-
-function applyStereotype(resultLabel) {
-  if (resultLabel === "Glasses") {
-    player.roleClass = "Mage";
-    player.threatLevel = "Low (Physical)";
-    player.intelligence = "Over 9000";
-    domDialogue.html('System: “You are wearing glasses. You must be a desk jockey, so your physical strength is probably terrible. I will classify you as a mage.”');
-  } else if (resultLabel === "Male_NoGlasses") {
-    player.roleClass = "Tanker";
-    player.threatLevel = "High";
-    player.intelligence = "Below Average";
-    domDialogue.html('System: "This guy has no glasses. A tank who just charges in recklessly is the perfect fit."');
-  } else {
-    player.roleClass = "Dealer (DPS)";
-    player.threatLevel = "Medium";
-    player.intelligence = "Average";
-    domDialogue.html('System: "This woman is not wearing glasses. No Idea what to assign. You take on the role of the dealer."');
-  }
-
-  domDialogue.show();
-  gameState = "PLAYING";
-}
-
-// 키보드를 눌렀을 때 리듬 게임 판정
-function keyPressed() {
-  if (gameState === "PLAYING") {
-    if (key === 'a' || key === 'A' || key === 's' || key === 'S' || key === 'd' || key === 'D') {
-      rhythmGame.checkHit(key);
-    }
-  }
-}
-
-function windowResized() {
-  resizeCanvas(windowWidth, windowHeight);
-  rhythmLayer = createGraphics(windowWidth, 200);
-}</code></pre>
-                    </div>
+                <div class="doc-box" style="padding: 0;">
+                    <h3>02. Technical White-box</h3>
+                    <iframe src="whitebox.html" style="width: 100%; height: 100%; border: none;"></iframe>
                 </div>
             </section>
 
@@ -479,24 +153,10 @@ function windowResized() {
 
                     <div id="id-card" class="hidden">
                         <h2 style="margin: 0; border-bottom: 1px solid #555; padding-bottom: 10px;">WITCH'S LICENSE</h2>
-                        
-                        <div class="row">
-                            <span>Subject ID:</span> 
-                            <span id="witch-name">---</span>
-                        </div>
-                        
-                        <div class="row">
-                            <span>Assigned Class:</span> 
-                            <span id="witch-class">---</span>
-                        </div>
-                        
-                        <div class="row">
-                            <span>Detected Trait:</span> 
-                            <span id="witch-trait">---</span>
-                        </div>
-                        
+                        <div class="row"><span>Subject ID:</span> <span id="witch-name">---</span></div>
+                        <div class="row"><span>Assigned Class:</span> <span id="witch-class">---</span></div>
+                        <div class="row"><span>Detected Trait:</span> <span id="witch-trait">---</span></div>
                         <div id="system-observation"></div>
-                        
                         <button id="reset-btn">Scan Next Subject</button>
                     </div>
                 </div>
@@ -511,14 +171,11 @@ function windowResized() {
     <script>
         let video;
         let classifier;
-        // TODO: Put your Teachable Machine model URL here
         let imageModelURL = 'https://teachablemachine.withgoogle.com/models/eqUpRzgb0/';
-
         let appState = "IDLE"; 
         let scanBtn, resetBtn, idCardDOM, domDialogue;
         let nameField, classField, traitField, logField;
-        let sealLayer; 
-        let shirtColor; 
+        let sealLayer, shirtColor; 
 
         function preload() {
           if (imageModelURL !== 'https://teachablemachine.withgoogle.com/models/eqUpRzgb0/') {
@@ -533,8 +190,7 @@ function windowResized() {
           video.size(640, 480);
           video.hide();
 
-          shirtColor = color(255); // Default color (White)
-
+          shirtColor = color(255);
           sealLayer = createGraphics(640, 480);
           sealLayer.clear();
           sealLayer.stroke(255, 150); 
@@ -544,58 +200,30 @@ function windowResized() {
           sealLayer.rectMode(CENTER);
           sealLayer.rect(320, 240, 212, 212);   
           
-          scanBtn = select('#scan-btn');
-          scanBtn.mousePressed(startScan);
-          resetBtn = select('#reset-btn');
-          resetBtn.mousePressed(resetSystem);
-          
-          idCardDOM = select('#id-card');
-          domDialogue = select('#system-dialogue');
-          nameField = select('#witch-name');
-          classField = select('#witch-class');
-          traitField = select('#witch-trait');
-          logField = select('#system-observation');
+          scanBtn = select('#scan-btn'); scanBtn.mousePressed(startScan);
+          resetBtn = select('#reset-btn'); resetBtn.mousePressed(resetSystem);
+          idCardDOM = select('#id-card'); domDialogue = select('#system-dialogue');
+          nameField = select('#witch-name'); classField = select('#witch-class');
+          traitField = select('#witch-trait'); logField = select('#system-observation');
         }
 
         function draw() {
           background(0);
-
-          // Draw camera (mirrored)
-          push();
-          translate(width, 0);
-          scale(-1, 1);
-          image(video, 0, 0, width, height);
-          pop();
+          push(); translate(width, 0); scale(-1, 1); image(video, 0, 0, width, height); pop();
 
           if (appState === "IDLE") {
-            noFill();
-            stroke(0, 255, 0, 150);
-            strokeWeight(2);
-            ellipse(width / 2, height / 2, 200, 250);
-          } 
-          else if (appState === "SCANNING") {
-            fill(0, 255, 0);
-            textSize(30);
-            textAlign(CENTER);
-            text("ANALYZING SUBJECT...", width / 2, height / 2);
-          } 
-          else if (appState === "RESULT") {
+            noFill(); stroke(0, 255, 0, 150); strokeWeight(2); ellipse(width / 2, height / 2, 200, 250);
+          } else if (appState === "SCANNING") {
+            fill(0, 255, 0); textSize(30); textAlign(CENTER); text("ANALYZING SUBJECT...", width / 2, height / 2);
+          } else if (appState === "RESULT") {
             video.loadPixels();
             if (video.pixels.length > 0) {
-              let cx = floor(video.width / 2);
-              let cy = floor(video.height * 0.8); 
+              let cx = floor(video.width / 2); let cy = floor(video.height * 0.8); 
               let index = (cx + cy * video.width) * 4;
-              
-              let r = video.pixels[index];
-              let g = video.pixels[index + 1];
-              let b = video.pixels[index + 2];
+              let r = video.pixels[index], g = video.pixels[index + 1], b = video.pixels[index + 2];
               shirtColor = color(r, g, b);
             }
-
-            // Tint our Magic Seal with the shirt color and draw it
-            tint(shirtColor);
-            image(sealLayer, 0, 0);
-            noTint(); // Reset tint
+            tint(shirtColor); image(sealLayer, 0, 0); noTint(); 
           }
         }
 
@@ -603,51 +231,35 @@ function windowResized() {
           appState = "SCANNING";
           domDialogue.html('SYSTEM: "Extracting biometric data. Do not move."');
           scanBtn.hide();
-
           setTimeout(() => {
-            if (classifier) {
-              classifier.classify(video, gotResult);
-            } else {
-              let mockResult = [{ label: random(["Glasses", "Hat", "Nothing"]) }];
-              gotResult(null, mockResult);
-            }
+            if (classifier) { classifier.classify(video, gotResult); } 
+            else { let mockResult = [{ label: random(["Glasses", "Hat", "Nothing"]) }]; gotResult(null, mockResult); }
           }, 2000);
         }
 
         function gotResult(error, results) {
-            if (error) {
-              console.error(error);
-              return;
-            }
-
+            if (error) { console.error(error); return; }
             let label = results[0].label; 
-            
             nameField.html("Subject_" + floor(random(1000, 9999)));
 
             if (label === "Glasses") {
-              classField.html("Intelligent Witch");
-              traitField.html("Overly analytical, terrible stamina.");
+              classField.html("Intelligent Witch"); traitField.html("Overly analytical, terrible stamina.");
               logField.html('SYSTEM: "Glasses detected. Typical desk-jockey. Strong in theory, useless in physical combat."');
-            } 
-            else if (label === "Hat") {
-              classField.html("Reclusive Witch");
-              traitField.html("Anti-social, hides identity.");
+            } else if (label === "Hat") {
+              classField.html("Reclusive Witch"); traitField.html("Anti-social, hides identity.");
               logField.html('SYSTEM: "Hat detected. Subject is hiding their face. Highly suspicious and unable to cooperate."');
-            } 
-            else {
-              classField.html("Muggle (Classless)");
-              traitField.html("No magic potential. Tool-dependent.");
+            } else {
+              classField.html("Muggle (Classless)"); traitField.html("No magic potential. Tool-dependent.");
               logField.html('SYSTEM: "No magical items found. Standard human (Muggle). Recommend immediate removal."');
             }
-
             appState = "RESULT";
-            idCardDOM.removeClass('hidden'); // Show the ID Card
+            idCardDOM.removeClass('hidden'); 
         }
 
         function resetSystem() {
           appState = "IDLE";
           domDialogue.html('SYSTEM: "Awaiting next subject."');
-          idCardDOM.addClass('hidden'); // Hide the ID Card
+          idCardDOM.addClass('hidden'); 
           scanBtn.show();
         }
     </script>
