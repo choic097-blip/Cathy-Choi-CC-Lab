@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Creator Daily Quiz — Today's Creative State</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <span class="logo">CREATOR.DAILY</span>
+    <span class="date" id="todayDate"></span>
+  </header>
+
+  <section class="hero">
+    <p class="eyebrow">A Daily Diagnostic for Creators</p>
+    <h1>What state is your<br>brain in <em>today?</em></h1>
+    <p class="lead">
+      The more talented a creator, the more things they want to do — and wanting
+      to <em>watch</em> a comic is not the same as wanting to <em>draw</em> one.
+      This 9-question diagnostic sorts your current energy into four existential states
+      and suggests the kind of creative work that fits <em>now</em>.
+    </p>
+
+    <a href="quiz.html" class="btn">Start Diagnostic →</a>
+  </section>
+
+  <section>
+    <h2>The Four States</h2>
+    <p>Based on your answers, you're classified into one of these states.</p>
+
+    <div class="type-grid">
+      <div class="type-chip">
+        <div class="code">ARC</div>
+        <div class="name">The Archive</div>
+        <div class="desc">Emptiness & absorption — you need to refill.</div>
+      </div>
+      <div class="type-chip">
+        <div class="code">LOG</div>
+        <div class="name">The Logic Gate</div>
+        <div class="desc">Analysis & structure — scattered data needs sorting.</div>
+      </div>
+      <div class="type-chip">
+        <div class="code">CAT</div>
+        <div class="name">The Catalyst</div>
+        <div class="desc">Emotion & release — burn it before it evaporates.</div>
+      </div>
+      <div class="type-chip">
+        <div class="code">RUN</div>
+        <div class="name">The Runtime</div>
+        <div class="desc">Execution & building — time to ship.</div>
+      </div>
+    </div>
+
+    <p style="font-size: 0.9rem; color: var(--ink-faint);">
+      Reframe your quiet hours not as <em>rest</em>, but as <em>existential recharge</em>.
+    </p>
+
+    <div class="actions">
+      <a href="quiz.html" class="btn">Start Diagnostic</a>
+      <a href="analysis.html" class="btn btn-ghost">Browse All Types</a>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <p>Project 4 · Interactive Tool for Creators</p>
+  </footer>
+
+  <script>
+    const d = new Date();
+    const pad = n => String(n).padStart(2, '0');
+    const months = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+    document.getElementById('todayDate').textContent =
+      `${months[d.getMonth()]} ${pad(d.getDate())} · ${d.getFullYear()}`;
+  </script>
+</body>
+</html>

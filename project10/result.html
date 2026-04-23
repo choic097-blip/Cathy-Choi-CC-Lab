@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Diagnosis — Creator Daily Quiz</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <a href="index.html" style="color: inherit; text-decoration: none;">
+      <span class="logo">← CREATOR.DAILY</span>
+    </a>
+    <span class="date" id="resultDate"></span>
+  </header>
+
+  <main id="resultRoot">
+    <div class="empty-state" id="emptyState" hidden>
+      <p class="mono-label">NO DATA</p>
+      <p style="margin: 1rem 0;">No diagnostic yet. Take the quiz first.</p>
+      <a href="quiz.html" class="btn">Start Diagnostic</a>
+    </div>
+
+    <div id="resultContent" hidden>
+      <section class="result-hero">
+        <div class="label">YOUR STATE TODAY</div>
+        <div class="type-name" id="typeName">—</div>
+        <div class="type-sub" id="typeSub">—</div>
+        <p class="tagline" id="typeTagline">—</p>
+      </section>
+
+      <section class="score-bars">
+        <h3>Score Distribution</h3>
+        <div id="scoreBars"></div>
+      </section>
+
+      <section>
+        <h3>Diagnosis</h3>
+        <p id="typeShort">—</p>
+      </section>
+
+      <section class="activities">
+        <h3>Recommended Activities</h3>
+        <ul id="activityList"></ul>
+      </section>
+
+      <div class="actions">
+        <a href="#" id="analysisLink" class="btn">Deep Dive Into Your Type →</a>
+        <a href="quiz.html" class="btn btn-ghost">Retake Quiz</a>
+        <button class="btn btn-ghost" id="resetBtn">Clear Record</button>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <p>Creator Daily Quiz · Your data lives only in this browser.</p>
+  </footer>
+
+  <script src="data/questions.js"></script>
+  <script src="js/result.js"></script>
+</body>
+</html>

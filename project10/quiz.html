@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Diagnosing… — Creator Daily Quiz</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <a href="index.html" style="color: inherit; text-decoration: none;">
+      <span class="logo">← CREATOR.DAILY</span>
+    </a>
+    <span class="date" id="questionCounter">01 / 09</span>
+  </header>
+
+  <!-- Progress bar: visible fill + underlying <input type="range"> for requirement -->
+  <div class="progress-wrap">
+    <div class="progress-meta">
+      <span>Scanning Mental State</span>
+      <span id="progressPct">0%</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progressFill"></div>
+      <input type="range" class="progress" id="progressBar" min="0" max="9" value="0" step="1" readonly aria-label="Quiz progress">
+    </div>
+  </div>
+
+  <main id="quizContainer">
+    <div class="question-num" id="qNum">QUESTION 01</div>
+    <h2 class="question-text" id="qText">Loading…</h2>
+    <ul class="options" id="qOptions"></ul>
+  </main>
+
+  <footer class="site-footer">
+    <p>Answers are saved automatically as you go.</p>
+  </footer>
+
+  <script src="data/questions.js"></script>
+  <script src="js/quiz.js"></script>
+</body>
+</html>

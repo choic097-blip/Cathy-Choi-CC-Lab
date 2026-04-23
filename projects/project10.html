@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creator Daily Quiz | Cathy Choi</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;600;700;900&family=Playfair+Display:ital,wght@0,500;1,500;1,800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/project-style.css">
+    
+    <style>
+        .proposal-box {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+
+        .proposal-box .inner {
+            background: #fff;
+            border: 3px solid #000;
+            box-shadow: 8px 8px 0px #000;
+            padding: 30px 35px;
+        }
+
+        .proposal-box h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            border-bottom: 3px solid #000;
+            margin: 0 0 20px 0;
+            padding-bottom: 8px;
+        }
+
+        .proposal-box .content {
+            font-family: 'Archivo', sans-serif;
+            font-size: 0.97rem;
+            line-height: 1.7;
+        }
+
+        .proposal-box .content p {
+            margin-bottom: 14px;
+        }
+
+        .proposal-box .content strong {
+            font-weight: 700;
+        }
+
+        /* Live demo wrapper — matches terminal-wrapper visual weight */
+        .demo-wrapper {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 25px;
+            background: #f2ede3;
+            border: 5px solid #000;
+            box-shadow: 15px 15px 0px #000;
+        }
+
+        .demo-wrapper h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            margin: 0 0 15px 0;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #000;
+        }
+
+        .demo-wrapper .demo-meta {
+            font-family: 'Archivo', sans-serif;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .demo-wrapper .demo-meta a {
+            color: #000;
+            font-weight: 700;
+            border-bottom: 2px solid #000;
+            text-decoration: none;
+        }
+
+        .demo-frame {
+            width: 100%;
+            height: 850px;
+            border: 3px solid #000;
+            background: #fff;
+        }
+
+        @media (max-width: 1100px) {
+            .demo-frame { height: 720px; }
+            .proposal-box .inner { padding: 20px 22px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div class="logo">
+                <a href="../index.html"><img src="../images/CathyLogo.png" alt="Cathy Choi"></a>
+            </div>
+            <nav class="nav-menu">
+                <a href="../about.html">About</a>
+                <a href="../fall25.html">Fall25</a>
+                <a href="../spring26.html" class="active">Spring26</a>
+                <a href="../contact.html">Contact</a>
+            </nav>
+        </header>
+
+        <main>
+            <div class="page-title-comic" style="max-width: 1200px; margin: 40px auto;">
+                <h1>[Creator Daily Quiz]</h1>
+                <p>A Daily Diagnostic for Creators — Today's Creative State</p>
+            </div>
+
+            <!-- 01. Proposal -->
+            <section class="proposal-box">
+                <div class="inner">
+                    <h3>01. Concept Proposal</h3>
+                    <div class="content">
+                        <p><strong>Community —</strong> Creators. Specifically, self-directed creative practitioners (illustrators, writers, game designers, student designers) who work across multiple creative modes and rarely have external structure telling them what to work on today. This is a community I belong to directly.</p>
+
+                        <p><strong>The Challenge —</strong> Talented creators tend to have <em>too many</em> interesting options. The problem isn't a shortage of ideas; it's an imbalance between Input and Output. Wanting to <em>watch</em> a comic is not the same as wanting to <em>draw</em> one. Wanting to <em>absorb</em> a worldbuilding reference is not the same as wanting to <em>build</em> one. Most creative-productivity tools treat creators as uniformly "productive" or "resting." They don't account for the fact that different mental states demand genuinely different activities.</p>
+
+                        <p><strong>The Solution —</strong> A 9-question daily diagnostic that maps the user onto one of four existential types: <strong>ARC</strong> (The Archive — drained, needs input), <strong>LOG</strong> (The Logic Gate — data overload, needs structuring), <strong>CAT</strong> (The Catalyst — pressure peak, needs release), <strong>RUN</strong> (The Runtime — prepped, needs to ship). Each option contributes a point to one of the four types; the highest-scoring type is the user's state for the day. The result page shows their type, a score distribution, and a curated list of activities. A secondary analysis page dives deeper into each type's diagnosis.</p>
+
+                        <p><strong>Why a Quiz —</strong> A low-friction checkpoint. A few minutes of structured reflection with no tracking, no logins, no moralizing. It reflects the creator's state back to them in a legible form and proposes a small next step — reframing their quiet hours not as "rest vs work" but as distinct existential states with their own optimal activities.</p>
+
+                        <p><strong>Stack —</strong> HTML, CSS, Vanilla JavaScript. No libraries. Data persists in localStorage. Four pages: landing → quiz → result → analysis.</p>
+
+                        <p><strong>References —</strong> Julia Cameron <em>(The Artist's Way)</em> on the input/output creative cycle, Cal Newport <em>(Deep Work)</em> on states of focus, Are.na's framing of archival-as-creation, MBTI / Enneagram as cautionary models — studying what they get right (the satisfaction of a named state) and what to avoid (treating a dynamic state as fixed identity).</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 02. Live Demo -->
+            <div class="demo-wrapper">
+                <h3>02. Live Prototype</h3>
+                <p class="demo-meta">
+                    A working diagnostic — four pages, nine questions, four outcome types, with localStorage persistence so results survive refreshes.
+                    For the best experience, <a href="../project10/index.html" target="_blank">open in a new tab ↗</a>.
+                </p>
+                <iframe 
+                    class="demo-frame"
+                    src="../project10/index.html" 
+                    title="Creator Daily Quiz">
+                </iframe>
+            </div>
+
+            <div class="back-nav" style="max-width: 1200px; margin: 0 auto 50px auto;">
+                <a href="../spring26.html">RETURN_TO_ARCHIVE ↩</a>
+            </div>
+        </main>
+    </div>
+
+</body>
+</html>

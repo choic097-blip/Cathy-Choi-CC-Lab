@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Deep Dive — Creator Daily Quiz</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <a href="index.html" style="color: inherit; text-decoration: none;">
+      <span class="logo">← CREATOR.DAILY</span>
+    </a>
+    <span class="date">ANALYSIS</span>
+  </header>
+
+  <section>
+    <p class="mono-label">DEEP DIVE</p>
+    <h1>The Four Existential States</h1>
+    <p>Each type describes where a creator currently sits in the balance between <em>Input</em> and <em>Output</em>. Your result (if you've taken the quiz) is highlighted below.</p>
+  </section>
+
+  <div class="type-selector" id="typeSelector">
+    <button data-type="ARC">ARC — Archive</button>
+    <button data-type="LOG">LOG — Logic Gate</button>
+    <button data-type="CAT">CAT — Catalyst</button>
+    <button data-type="RUN">RUN — Runtime</button>
+  </div>
+
+  <main id="analysisContent"></main>
+
+  <div class="actions" style="margin-top: 3rem;">
+    <a href="quiz.html" class="btn">Take Today's Diagnostic</a>
+    <a href="result.html" class="btn btn-ghost">Back to My Result</a>
+  </div>
+
+  <footer class="site-footer">
+    <p>Creator Daily Quiz · A Tool for Input/Output Balance</p>
+  </footer>
+
+  <script src="data/questions.js"></script>
+  <script src="js/analysis.js"></script>
+</body>
+</html>
