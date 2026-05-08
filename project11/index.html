@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>The Mushroom Kingdom Oracle</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'VT323', monospace;
+    background: linear-gradient(180deg, #5C94FC 0%, #5C94FC 70%, #E39F4B 70%, #E39F4B 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  /* 배경 구름 */
+  body::before {
+    content: '☁';
+    position: absolute;
+    top: 10%;
+    left: 8%;
+    font-size: 80px;
+    color: white;
+    opacity: 0.9;
+    animation: float 6s ease-in-out infinite;
+  }
+
+  body::after {
+    content: '☁';
+    position: absolute;
+    top: 25%;
+    right: 10%;
+    font-size: 60px;
+    color: white;
+    opacity: 0.9;
+    animation: float 8s ease-in-out infinite reverse;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+  }
+
+  .container {
+    width: 100%;
+    max-width: 580px;
+    background: #FFF8E7;
+    border: 5px solid #000;
+    border-radius: 4px;
+    padding: 32px;
+    box-shadow: 8px 8px 0 #000;
+    position: relative;
+    z-index: 1;
+  }
+
+  h1 {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 18px;
+    color: #E52521;
+    text-align: center;
+    margin-bottom: 8px;
+    text-shadow: 3px 3px 0 #000;
+    line-height: 1.6;
+  }
+
+  .subtitle {
+    font-size: 18px;
+    color: #555;
+    text-align: center;
+    margin-bottom: 28px;
+    letter-spacing: 1px;
+  }
+
+  .step {
+    margin-bottom: 20px;
+  }
+
+  .step-label {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 9px;
+    color: #E52521;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 20px;
+    color: #222;
+  }
+
+  textarea {
+    width: 100%;
+    min-height: 90px;
+    padding: 12px;
+    font-family: 'VT323', monospace;
+    font-size: 20px;
+    border: 3px solid #000;
+    border-radius: 2px;
+    background: #fff;
+    resize: vertical;
+    color: #222;
+  }
+
+  textarea:focus {
+    outline: none;
+    box-shadow: 4px 4px 0 #E52521;
+    transform: translate(-2px, -2px);
+    transition: all 0.1s;
+  }
+
+  .ritual-zone {
+    text-align: center;
+    padding: 24px 0 12px;
+  }
+
+  .question-block {
+    width: 90px;
+    height: 90px;
+    background: linear-gradient(135deg, #FBD000 0%, #E89400 100%);
+    border: 4px solid #000;
+    border-radius: 4px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 40px;
+    color: #fff;
+    cursor: pointer;
+    user-select: none;
+    box-shadow: 5px 5px 0 #000, inset 0 -8px 0 rgba(0,0,0,0.2);
+    transition: all 0.1s;
+    text-shadow: 3px 3px 0 #000;
+    animation: blockBounce 2s ease-in-out infinite;
+  }
+
+  @keyframes blockBounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+
+  .question-block:hover {
+    transform: translateY(-3px) scale(1.05);
+    animation: none;
+  }
+
+  .question-block:active {
+    transform: translateY(3px);
+    box-shadow: 2px 2px 0 #000, inset 0 -8px 0 rgba(0,0,0,0.2);
+  }
+
+  .question-block.disabled {
+    background: linear-gradient(135deg, #888 0%, #555 100%);
+    cursor: not-allowed;
+    animation: none;
+  }
+
+  .ritual-instruction {
+    font-size: 20px;
+    color: #555;
+    margin-top: 16px;
+    font-style: italic;
+  }
+
+  .result {
+    border: 4px solid #000;
+    border-radius: 4px;
+    padding: 20px;
+    background: #fff;
+    box-shadow: 5px 5px 0 #000;
+    display: none;
+    animation: popIn 0.4s ease-out;
+  }
+
+  @keyframes popIn {
+    0% { transform: scale(0.5); opacity: 0; }
+    60% { transform: scale(1.05); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  .result.visible { display: block; }
+
+  .result-character {
+    text-align: center;
+    margin-bottom: 16px;
+  }
+
+  .character-img {
+    width: 140px;
+    height: 140px;
+    object-fit: contain;
+    background: linear-gradient(180deg, #87CEEB 0%, #B8E0F5 100%);
+    border: 3px solid #000;
+    border-radius: 4px;
+    padding: 8px;
+  }
+
+  .character-name {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 14px;
+    color: #E52521;
+    margin-top: 12px;
+    text-shadow: 2px 2px 0 #000;
+  }
+
+  .energy-tag {
+    display: inline-block;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 8px;
+    padding: 6px 10px;
+    background: #FBD000;
+    color: #000;
+    border: 2px solid #000;
+    margin-top: 10px;
+    letter-spacing: 1px;
+  }
+
+  .oracle-message {
+    border-top: 3px dashed #E52521;
+    padding-top: 16px;
+    margin-top: 16px;
+    font-size: 22px;
+    line-height: 1.5;
+    color: #222;
+    text-align: center;
+    font-style: italic;
+  }
+
+  .reset-btn {
+    display: block;
+    margin: 20px auto 0;
+    padding: 10px 24px;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 11px;
+    color: #fff;
+    background: #E52521;
+    border: 3px solid #000;
+    border-radius: 2px;
+    cursor: pointer;
+    box-shadow: 3px 3px 0 #000;
+    transition: all 0.1s;
+    letter-spacing: 1px;
+  }
+
+  .reset-btn:hover {
+    background: #FF3B36;
+    transform: translate(-1px, -1px);
+    box-shadow: 4px 4px 0 #000;
+  }
+
+  .reset-btn:active {
+    transform: translate(2px, 2px);
+    box-shadow: 1px 1px 0 #000;
+  }
+
+  .loading {
+    text-align: center;
+    font-size: 20px;
+    color: #E52521;
+    padding: 16px;
+    font-style: italic;
+  }
+
+  .loading::after {
+    content: '';
+    animation: dots 1.4s steps(4, end) infinite;
+  }
+
+  @keyframes dots {
+    0%, 20% { content: '.'; }
+    40% { content: '..'; }
+    60%, 100% { content: '...'; }
+  }
+
+  .error {
+    color: #E52521;
+    font-size: 18px;
+    padding: 12px;
+    text-align: center;
+    border: 2px dashed #E52521;
+    border-radius: 4px;
+  }
+
+  @media (max-width: 600px) {
+    h1 { font-size: 14px; }
+    .container { padding: 20px; }
+    body::before, body::after { font-size: 50px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <h1>🍄 MUSHROOM<br>KINGDOM ORACLE 🍄</h1>
+  <p class="subtitle">~ summon a power-up for your soul ~</p>
+
+  <div class="step">
+    <div class="step-label">▸ STEP 1 — WHISPER YOUR WORRY</div>
+    <label for="worry">What is troubling you today?</label>
+    <textarea id="worry" placeholder="Type the question you carry in your heart..."></textarea>
+  </div>
+
+  <div class="step">
+    <div class="step-label">▸ STEP 2 — STRIKE THE BLOCK</div>
+    <div class="ritual-zone">
+      <div class="question-block" id="block">?</div>
+      <p class="ritual-instruction">Hold your worry in mind. Then strike the block.</p>
+    </div>
+  </div>
+
+  <div class="result" id="result">
+    <div class="step-label">▸ YOUR POWER-UP HAS ARRIVED</div>
+    <div class="result-character">
+      <img class="character-img" id="charImg" alt="">
+      <div class="character-name" id="charName"></div>
+      <div class="energy-tag" id="energyTag"></div>
+    </div>
+    <div class="oracle-message" id="message"></div>
+    <button class="reset-btn" id="resetBtn">ASK AGAIN</button>
+  </div>
+
+</div>
+
+<script>
+const oracleMessages = {
+  power: [
+    "Smash through the brick wall in front of you. It is thinner than it looks.",
+    "Your next move requires a running start. Do not hesitate at the edge.",
+    "The fire flower is yours today — use it once, boldly, then let it go."
+  ],
+  star: [
+    "You are temporarily invincible. Move now, before the music ends.",
+    "An unexpected door will open. Walk through it without checking your map.",
+    "What feels like a delay is actually a warp pipe. Trust the detour."
+  ],
+  mushroom: [
+    "You are smaller than you should be. Eat. Rest. Grow back into yourself.",
+    "The 1-Up you need is hiding in something you already have. Look again.",
+    "Save your progress here. The next world will still be there tomorrow."
+  ]
+};
+
+const energyLabels = {
+  power: "FIRE FLOWER ENERGY",
+  star: "STAR ENERGY",
+  mushroom: "MUSHROOM ENERGY"
+};
+
+const heavyWords = ["tired", "sad", "lost", "alone", "exhausted", "broken", "stuck", "anxious"];
+const fearWords = ["scared", "afraid", "worried", "fear", "nervous", "doubt"];
+
+const block = document.getElementById("block");
+const worryInput = document.getElementById("worry");
+const result = document.getElementById("result");
+const charImg = document.getElementById("charImg");
+const charName = document.getElementById("charName");
+const energyTag = document.getElementById("energyTag");
+const messageEl = document.getElementById("message");
+const resetBtn = document.getElementById("resetBtn");
+
+function chooseEnergy(text) {
+  const lower = text.toLowerCase();
+  if (heavyWords.some(w => lower.includes(w))) return "mushroom";
+  if (fearWords.some(w => lower.includes(w))) return "power";
+  if (text.length < 20) return "power";
+  if (text.length > 80) return "mushroom";
+  return "star";
+}
+
+function pickRandom(arr) {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+
+async function performRitual() {
+  const worry = worryInput.value.trim();
+  if (!worry) {
+    alert("You must whisper a worry first.");
+    return;
+  }
+
+  block.classList.add("disabled");
+  result.classList.add("visible");
+  messageEl.innerHTML = '<div class="loading">Consulting the kingdom</div>';
+  charName.textContent = "";
+  energyTag.textContent = "";
+  charImg.src = "";
+
+  try {
+    const res = await fetch("https://www.amiiboapi.org/api/amiibo/?gameseries=Super%20Mario");
+    if (!res.ok) throw new Error("API request failed");
+    const data = await res.json();
+    const characters = data.amiibo;
+
+    const energy = chooseEnergy(worry);
+    const character = pickRandom(characters);
+    const message = pickRandom(oracleMessages[energy]);
+
+    charImg.src = character.image;
+    charImg.alt = character.name;
+    charName.textContent = character.name;
+    energyTag.textContent = energyLabels[energy];
+    messageEl.textContent = '"' + message + '"';
+
+    result.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+  } catch (err) {
+    messageEl.innerHTML = '<div class="error">The oracle is silent. (' + err.message + ') Try again.</div>';
+    console.error(err);
+  }
+}
+
+function reset() {
+  result.classList.remove("visible");
+  block.classList.remove("disabled");
+  worryInput.value = "";
+  worryInput.focus();
+}
+
+block.addEventListener("click", () => {
+  if (!block.classList.contains("disabled")) performRitual();
+});
+resetBtn.addEventListener("click", reset);
+</script>
+
+</body>
+</html>

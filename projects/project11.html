@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mushroom Kingdom Oracle | Cathy Choi</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;600;700;900&family=Playfair+Display:ital,wght@0,500;1,500;1,800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/project-style.css">
+    
+    <style>
+        .proposal-box {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+
+        .proposal-box .inner {
+            background: #fff;
+            border: 3px solid #000;
+            box-shadow: 8px 8px 0px #000;
+            padding: 30px 35px;
+        }
+
+        .proposal-box h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            border-bottom: 3px solid #000;
+            margin: 0 0 20px 0;
+            padding-bottom: 8px;
+        }
+
+        .proposal-box .content {
+            font-family: 'Archivo', sans-serif;
+            font-size: 0.97rem;
+            line-height: 1.7;
+        }
+
+        .proposal-box .content p {
+            margin-bottom: 14px;
+        }
+
+        .proposal-box .content strong {
+            font-weight: 700;
+        }
+
+        /* Live demo wrapper — matches the visual weight of project9's terminal-wrapper */
+        .demo-wrapper {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 25px;
+            background: #5C94FC; /* Mario sky blue */
+            border: 5px solid #000;
+            box-shadow: 15px 15px 0px #000;
+        }
+
+        .demo-wrapper h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: #fff;
+            margin: 0 0 15px 0;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #000;
+            text-shadow: 3px 3px 0 #000;
+        }
+
+        .demo-wrapper .demo-meta {
+            font-family: 'Archivo', sans-serif;
+            font-size: 0.9rem;
+            color: #fff;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .demo-wrapper .demo-meta a {
+            color: #fff;
+            font-weight: 700;
+            border-bottom: 2px solid #fff;
+            text-decoration: none;
+        }
+
+        .demo-frame {
+            width: 100%;
+            height: 850px;
+            border: 3px solid #000;
+            background: #fff;
+        }
+
+        @media (max-width: 1100px) {
+            .demo-frame { height: 720px; }
+            .proposal-box .inner { padding: 20px 22px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div class="logo">
+                <a href="../index.html"><img src="../images/CathyLogo.png" alt="Cathy Choi"></a>
+            </div>
+            <nav class="nav-menu">
+                <a href="../about.html">About</a>
+                <a href="../fall25.html">Fall25</a>
+                <a href="../spring26.html" class="active">Spring26</a>
+                <a href="../contact.html">Contact</a>
+            </nav>
+        </header>
+
+        <main>
+            <div class="page-title-comic" style="max-width: 1200px; margin: 40px auto;">
+                <h1>[Mushroom Kingdom Oracle]</h1>
+                <p>Summon a power-up for your soul — a Mario-themed divination tool</p>
+            </div>
+
+            <!-- 01. Proposal -->
+            <section class="proposal-box">
+                <div class="inner">
+                    <h3>01. Concept Proposal</h3>
+                    <div class="content">
+                        <p><strong>The Idea —</strong> What if a Mario question block could give you life advice? The Mushroom Kingdom Oracle is a small ritual: type a worry you're carrying, strike the block, and receive a "power-up" — a randomly summoned Mario character paired with one of three energy types (Fire Flower, Star, or Mushroom) and a short oracle message that reframes your situation in Mario's logic.</p>
+
+                        <p><strong>Why Mario —</strong> The Mario universe has its own emotional grammar. A fire flower is power. A star is a fleeting window of invincibility. A mushroom is recovery — getting bigger, getting your second chance. These aren't just game mechanics; they map surprisingly well onto real emotional states. The oracle uses that mapping to deliver advice that feels playful, not preachy.</p>
+
+                        <p><strong>How It Works —</strong> The user types their worry into a textarea. The script reads the text and looks for emotional keywords — "tired," "stuck," "alone" suggest a Mushroom (recovery) reading; "scared," "afraid," "doubt" suggest a Fire Flower (power) reading; ambiguous or short text defaults to Star (momentum). Once the energy type is chosen, the script fetches a random character from the public Amiibo API and pairs it with a hand-written oracle message from the matching energy bucket.</p>
+
+                        <p><strong>Visual Direction —</strong> Old-school NES aesthetic. <em>Press Start 2P</em> for headers, <em>VT323</em> for body text, the iconic Mario sky-blue gradient with floating clouds, and a 3D question block that bounces in place until you click it. The block has the chunky pixel-art shadows and inset highlights that signal "this is interactable" without needing a label.</p>
+
+                        <p><strong>Stack —</strong> Single-file HTML, CSS, Vanilla JavaScript. Live API call to <code>amiiboapi.org</code> for Mario character data. No frameworks, no build step.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 02. Live Demo -->
+            <div class="demo-wrapper">
+                <h3>02. Live Oracle</h3>
+                <p class="demo-meta">
+                    Type a worry, strike the block, receive your power-up. 
+                    For the best experience, <a href="../project11/index.html" target="_blank">open in a new tab ↗</a>.
+                </p>
+                <iframe 
+                    class="demo-frame"
+                    src="../project11/index.html" 
+                    title="Mushroom Kingdom Oracle">
+                </iframe>
+            </div>
+
+            <div class="back-nav" style="max-width: 1200px; margin: 0 auto 50px auto;">
+                <a href="../spring26.html">RETURN_TO_ARCHIVE ↩</a>
+            </div>
+        </main>
+    </div>
+
+</body>
+</html>
